@@ -1,11 +1,10 @@
 // main.scss
 
 // Import variables and mixins
-@use './abstracts/variables';
-@use './abstracts/mixins';
-@use './base/global';
+@use './abstracts/index' as *;
 
 // Import base style
+@use './base/global';
 @use 'base/font';
 @use 'base/reset';
 
