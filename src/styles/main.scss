@@ -1,12 +1,12 @@
 // main.scss
 
-// Import variables and mixins
-@use './abstracts/index' as *;
+// Import variables, mixins, utilities
+@use './abstracts' as *;
 
 // Import base style
+@use 'base/base';
 @use 'base/font';
 @use 'base/reset';
 
 // Import layout
-
 // Import component
