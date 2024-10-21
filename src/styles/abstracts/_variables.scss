@@ -12,13 +12,20 @@ $color-border: #e5e7eb;
 $color-error: #ef4444;
 
 // Typography
-$font-family-base: 'Inter', sans-serif;
+//$font-family-base: 'Gothic A1', sans-serif;
+
+// Font size
 $font-size-base: 1rem;
 $font-size-sm: 0.875rem;
 $font-size-lg: 1.125rem;
+
+// Font weight
+$font-weight-light: 200;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
 $font-weight-bold: 700;
+$font-weight-extra-bold: 800;
+$font-weight-black: 900;
 
 // Spacing
 $spacing-1: 0.25rem;

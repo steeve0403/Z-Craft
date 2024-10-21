@@ -9,4 +9,9 @@
 @use 'base/reset';
 
 // Import layout
+@use 'layout/layout';
+@use 'layout/header';
+
 // Import component
+@use 'component/button';
+

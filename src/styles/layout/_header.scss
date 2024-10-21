@@ -1,0 +1,77 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+@use 'sass:color';
+
+.header {
+  background-color: $color-background;
+  padding: $spacing-4 0;
+  border-bottom: 1px solid $color-border;
+  transition: background-color $transition-base;
+
+  &__container {
+    @include flex(row, space-between, center);
+    @include responsive(md) {
+      padding: 0 $spacing-8;
+    }
+  }
+
+  &__logo {
+    @include flex(row, center, center);
+    color: $color-primary;
+    text-decoration: none;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+
+    &-icon {
+      margin-right: $spacing-2;
+      font-size: $font-size-lg;
+    }
+
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  &__nav {
+    @include flex(row, center, center);
+
+    &-item {
+      margin-right: $spacing-6;
+      color: $color-secondary;
+      text-decoration: none;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      transition: color $transition-base;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  .button--outline {
+    @include button-base;
+    border-color: $color-primary;
+    color: $color-primary;
+    background-color: transparent;
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-background;
+    }
+  }
+
+  .button--sm {
+    font-size: $font-size-sm;
+    padding: $spacing-1 $spacing-2;
+  }
+}
+
+.dark .header {
+  background-color: $color-background-dark;
+  color: $color-text-dark;
+}
