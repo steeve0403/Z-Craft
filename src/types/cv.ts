@@ -1,8 +1,7 @@
 export interface CV {
     id: string;
     title: string;
-    firstName: string;
-    lastName: string;
+    fullName: string;
     email: string;
     phone: string;
     address: string;
