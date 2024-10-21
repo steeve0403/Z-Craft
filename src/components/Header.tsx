@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, NavLink} from 'react-router-dom';
 import {useTheme} from '../contexts/ThemeContext';
 import {Button} from './ui/Button';
 import {Sun, Moon, FileText} from 'lucide-react';
@@ -16,12 +16,12 @@ const Logo = memo(() => (
 // Subcomponent for Navigation
 const Navigation = () => (
     <nav className="header__nav">
-        <Link to="/cvs" className="header__navItem">
+        <NavLink to="/cvs" className={({ isActive }) => (isActive ? "header__nav-item active" : "header__nav-item")}>
             My CVs
-        </Link>
-        <Link to="/cv/new" className="header__navItem">
+        </NavLink>
+        <NavLink to="/cv/new" className={({ isActive }) => (isActive ? "header__nav-item active" : "header__nav-item")}>
             Create CV
-        </Link>
+        </NavLink>
     </nav>
 );
 

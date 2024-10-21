@@ -46,7 +46,15 @@
       &:hover {
         color: $color-primary;
       }
+
+      &.active {
+        color: $color-primary;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-black;
+        border-bottom: 2px solid $color-primary-dark;
+      }
     }
+
 
     &:last-child {
       margin-right: 0;
