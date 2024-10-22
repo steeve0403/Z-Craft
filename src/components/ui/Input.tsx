@@ -17,7 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                     {label}
                     <input
                         ref={ref}
-                        className={`input ${errorMessage ? 'input--error' : ''}`}
+                        className="input-field"
                         list={list}
                         value={value || ''}
                         {...props} />
@@ -27,3 +27,5 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         );
     }
 );
+
+Input.displayName = 'Input';

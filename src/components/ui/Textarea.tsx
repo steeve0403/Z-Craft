@@ -16,7 +16,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
                     {label}
                     <textarea
                         ref={ref}
-                        className={`textarea ${errorMessage ? 'textarea--error' : ''}`}
+                        className="textarea-field"
                         value={value || ''}
                         {...props} />
                 </label>
@@ -25,3 +25,5 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
         );
     }
 );
+
+Textarea.displayName = 'Textarea';

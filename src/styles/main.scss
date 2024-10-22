@@ -17,6 +17,8 @@
 @use 'component/sidebar';
 @use 'component/button';
 @use 'component/loading_spinner';
+@use 'component/input';
+@use 'component/textarea';
 
 // Import Pages
 @use 'page/home';
