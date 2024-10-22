@@ -1,13 +1,28 @@
 // main.scss
 
-// Import variables and mixins
-@use './abstracts/index' as *;
+// Import variables, mixins, utilities
+@use './abstracts' as *;
 
 // Import base style
-@use './base/global';
-@use 'base/font';
 @use 'base/reset';
+@use 'base/base';
+@use 'base/font';
 
 // Import layout
+@use 'layout/layout';
+@use 'layout/header';
+@use 'layout/footer';
+@use 'layout/sections';
 
 // Import component
+@use 'component/sidebar';
+@use 'component/button';
+@use 'component/loading_spinner';
+@use 'component/input';
+@use 'component/textarea';
+
+// Import Pages
+@use 'page/home';
+@use 'page/cv_editor';
+
+

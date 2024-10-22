@@ -1,0 +1,37 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.cv-editor {
+  margin: $spacing-8 0;
+
+  h2 {
+    margin-bottom: $spacing-6;
+  }
+
+  .error-message {
+    padding: $spacing-4;
+    background-color: $color-error;
+    color: $color-background;
+    border-radius: $border-radius-full;
+    margin-bottom: $spacing-6;
+    font-size: $font-size-base;
+    font-weight: $font-weight-medium;
+  }
+
+  .loading-spinner {
+    display: flex;
+    justify-content: center;
+    margin-top: $spacing-4;
+  }
+}
+
+.dark .cv-editor {
+  h1 {
+    color: $color-text-dark;
+  }
+
+  .error-message {
+    background-color: darken($color-error, 10%);
+    color: $color-text-dark;
+  }
+}

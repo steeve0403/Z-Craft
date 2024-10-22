@@ -1,0 +1,123 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+@use 'sass:color';
+
+.header {
+  z-index: 100;
+  position: relative;
+  top: 0;
+  width: 100%;
+  background-color: $color-background;
+  padding: $spacing-4 0;
+  transition: background-color $transition-base, color $transition-base; /* Transition pour le dark mode */
+
+  &__container {
+    @include flex(row, space-between, center);
+    @include responsive(md) {
+      padding: 0 $spacing-8;
+    }
+  }
+
+  &__logo {
+    @include flex(row, center, center);
+    color: $color-primary;
+    text-decoration: none;
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+
+    &-icon {
+      margin-right: $spacing-2;
+      font-size: $font-size-lg;
+    }
+
+    &:hover {
+      color: $color-primary-dark;
+    }
+  }
+
+  &__nav {
+    @include flex(row, center, center);
+
+    &-item {
+      margin-right: $spacing-6;
+      color: $color-secondary;
+      text-decoration: none;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      transition: color $transition-base;
+
+      &:hover {
+        color: $color-primary;
+      }
+
+      &.active {
+        color: $color-primary;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-black;
+        border-bottom: 2px solid $color-primary-dark;
+      }
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  /* Boutons dans le header */
+  .button--outline {
+    @include button-base;
+    border-color: $color-primary;
+    color: $color-primary;
+    background-color: transparent;
+    transition: background-color $transition-base, color $transition-base; /* Transition fluide */
+
+    &:hover {
+      background-color: $color-primary;
+      color: $color-background;
+    }
+  }
+
+  .button--sm {
+    font-size: $font-size-sm;
+    padding: $spacing-1 $spacing-2;
+  }
+}
+
+/* Gestion du dark mode */
+.dark .header {
+  background-color: $color-background-dark;
+  color: $color-text-dark;
+
+  &__logo {
+    color: $color-primary-dark;
+
+    &:hover {
+      color: lighten($color-primary-dark, 10%);
+    }
+  }
+
+  &__nav {
+    &-item {
+      color: $color-text-dark;
+
+      &:hover {
+        color: $color-primary-dark;
+      }
+
+      &.active {
+        color: $color-primary-dark;
+        border-bottom: 2px solid lighten($color-primary-dark, 10%);
+      }
+    }
+  }
+
+  .button--outline {
+    border-color: $color-primary-dark;
+    color: $color-primary-dark;
+
+    &:hover {
+      background-color: $color-primary-dark;
+      color: $color-background-dark;
+    }
+  }
+}

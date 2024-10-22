@@ -1,0 +1,48 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.layout {
+  position: relative;
+  @include flex(column, center, center);
+  min-height: 100vh;
+  transition: transform $transition-base, scale $transition-base;
+
+  &__main {
+    width: 100%;
+    @include flex(column, space-between, center);
+    flex: 1;
+    padding: $spacing-8 0;
+    transition: transform $transition-base, scale $transition-base;
+
+  }
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
+  }
+
+  /* Dark mode */
+  //.dark & {
+  //  background-color: $color-background-dark;
+  //  color: $color-text-dark;
+  //}
+}
+
+.main--shifted {
+  transform: scale(0.9) translateX(-250px);
+  transition: transform $transition-base, scale $transition-base;
+}
+
+.layout__main:not(.main--shifted) {
+  transform: scale(1) translateX(0);
+}
+
+@media (max-width: $breakpoint-md) {
+  .main--shifted {
+    transform: scale(0.95) translateX(-150px);
+  }
+}
+

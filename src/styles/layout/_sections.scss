@@ -1,0 +1,74 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.cv-form__section {
+  margin-bottom: $spacing-8;
+
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-4;
+    color: $color-text;
+  }
+
+  .cv-form__item {
+    margin-bottom: $spacing-6;
+    padding: $spacing-4;
+    background-color: $color-background;
+    border: 1px solid $color-border;
+    border-radius: $border-radius-md;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: background-color $transition-base, box-shadow $transition-base;
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .cv-form__dates {
+      display: flex;
+      gap: $spacing-4;
+      margin-bottom: $spacing-4;
+
+      & > * {
+        flex: 1;
+      }
+    }
+  }
+
+  .button--add {
+    margin-top: $spacing-4;
+    background-color: $color-primary;
+    color: $color-background;
+
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+  }
+
+  .button--remove {
+    background-color: $color-error;
+    color: $color-background;
+    margin-top: $spacing-4;
+
+    &:hover {
+      background-color: darken($color-error, 10%);
+    }
+  }
+}
+
+// Dark mode styles
+.dark .cv-form__section {
+  h3 {
+    color: $color-text-dark;
+  }
+
+  .cv-form__item {
+    background-color: $color-background-dark;
+    border-color: $color-border;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+    }
+  }
+}

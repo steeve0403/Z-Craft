@@ -1,0 +1,112 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+.home {
+  text-align: center;
+
+  /* Titre principal */
+  h1 {
+    font-size: 2.5rem;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-6;
+    color: $color-text;
+
+    @include responsive(md) {
+      font-size: 3rem;
+    }
+  }
+
+  /* Sous-titre */
+  p {
+    font-size: $font-size-lg;
+    margin-bottom: $spacing-8;
+    color: $color-secondary;
+  }
+
+  /* Actions principales (boutons) */
+  .home__actions {
+    margin-bottom: $spacing-8;
+
+    .button {
+      width: 100%;
+
+      @include responsive(sm) {
+        width: auto;
+      }
+    }
+  }
+
+  /* Section des avantages */
+  .home__benefits {
+    margin-top: $spacing-12;
+
+    h2 {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+      margin-bottom: $spacing-4;
+    }
+
+    .home__benefit-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: $spacing-6;
+
+      @include responsive(md) {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  }
+
+  .home__benefit-card {
+    background-color: $color-background;
+    padding: $spacing-6;
+    border-radius: $border-radius-lg;
+    box-shadow: $box-shadow-light;
+    transition: transform $transition-base, box-shadow $transition-base;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: $box-shadow-dark;
+    }
+
+    .icon-container {
+      margin-bottom: $spacing-4;
+      font-size: 2rem;
+    }
+
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-medium;
+      margin-bottom: $spacing-2;
+    }
+
+    p {
+      color: $color-secondary;
+      font-size: $font-size-base;
+    }
+  }
+}
+
+/* Dark mode */
+.dark .home {
+  h1, h2 {
+    color: $color-text-dark;
+  }
+
+  p {
+    color: $color-text-dark;
+  }
+
+  .home__benefit-card {
+    background-color: $color-background-dark;
+    box-shadow: $box-shadow-dark;
+
+    &:hover {
+      box-shadow: $box-shadow-light;
+    }
+
+    p {
+      color: $color-text-dark;
+    }
+  }
+}

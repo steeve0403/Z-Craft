@@ -1,10 +1,12 @@
-/*
-import your fonts here
-for exemple @import ("https://google.fonts.com/Roboto,100,100i,200,200i,300,300i,400,400i,700,800")
+@use '@/styles/abstracts/variables' as *;
 
-set your balise with fonts
+@import url('https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
 
-example h2 {
-	font-family: "Roboto", sans-serif;
+html, body {
+  font-family: $font-family-base;
 }
-*/
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
+}
