@@ -3,6 +3,9 @@
 @use 'sass:color';
 
 .header {
+  z-index: 100;
+  position: relative;
+  width: 100vw;
   background-color: $color-background;
   padding: $spacing-4 0;
   border-bottom: 1px solid $color-border;

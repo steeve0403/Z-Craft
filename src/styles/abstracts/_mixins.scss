@@ -1,5 +1,14 @@
 @use "variables" as *;
 
+@mixin shifted($isShifted: false) {
+  @if $isShifted == true {
+    transition: transform $transition-base, scale $transition-base;
+    transform: scale(0.95) translateX(-150px);
+  } @else {
+    transform: scale(1) translateX(0);
+    transition: transform $transition-base, scale $transition-base;
+  }
+}
 
 @mixin flex($direction: row, $justify: flex-start, $align: stretch) {
   display: flex;

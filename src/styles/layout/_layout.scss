@@ -1,13 +1,28 @@
 @use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
 
 
 .layout {
-  display: flex;
-  flex-direction: column;
+  @include flex(column, center, center);
   min-height: 100vh;
+  transition: transform $transition-base, scale $transition-base;
 
   &__main {
     flex: 1;
     padding: $spacing-8 0;
   }
 }
+
+.layout__main {
+  //@include shifted(false); /* Par défaut, main n'est pas shifté */
+}
+
+.main--shifted {
+  //@include shifted(true); /* Quand la sidebar est ouverte, main est shifté */
+}
+
+/*@media (max-width: $breakpoint-md) {
+  .main--shifted {
+    transform: scale(0.95) translateX(-150px); !* Ajuste pour les petits écrans *!
+  }
+}*/

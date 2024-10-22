@@ -9,7 +9,9 @@ interface SidebarProps {
 
 const Sidebar: React.FC<SidebarProps> = ({isOpen, toggleSidebar}) => {
     return (
-        <aside className={`sidebar ${isOpen ? 'sidebar--open' : ''}`}>
+        <aside
+            className={`sidebar ${isOpen ? 'sidebar--open' : ''}`}>
+            <button onClick={toggleSidebar} className="sidebar__close-button">Close</button>
             <nav className="sidebar__nav">
                 <NavLink
                     to="/cvs"
@@ -33,7 +35,6 @@ const Sidebar: React.FC<SidebarProps> = ({isOpen, toggleSidebar}) => {
                     Settings
                 </NavLink>
             </nav>
-            <button onClick={toggleSidebar} className="sidebar__close-button">Close</button>
         </aside>
     );
 };
