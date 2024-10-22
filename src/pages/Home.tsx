@@ -4,11 +4,7 @@ import {Button} from '../components/ui/Button';
 import {FileText, List, PlusCircle} from 'lucide-react';
 
 // Sous-composant pour les cartes d'avantages
-const BenefitCard: React.FC<{ icon: React.ReactNode; title: string; description: string }> = ({
-                                                                                                  icon,
-                                                                                                  title,
-                                                                                                  description
-                                                                                              }) => {
+const BenefitCard: React.FC<{ icon: React.ReactNode; title: string; description: string }> = ({icon, title, description}) => {
     return (
         <div className="home__benefit-card">
             <div className="icon-container">{icon}</div>

@@ -19,6 +19,7 @@ export interface CV {
 export interface Experience {
     id: string;
     company: string;
+    position: string;
     startDate: string;
     endDate: string;
     description: string;
@@ -28,11 +29,17 @@ export interface Education {
     id: string;
     institution: string;
     degree: string;
-    fields: string;
+    field: string;
     graduationDate: string;
 }
 
 export interface Language {
     name: string;
     proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
+}
+
+export interface CVFormProps {
+    initialData?: CV;
+    onSubmit: (data: CV) => void;
+    onChange: (data: Partial<CV>) => void;
 }
