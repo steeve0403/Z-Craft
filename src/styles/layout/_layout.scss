@@ -8,9 +8,20 @@
   transition: transform $transition-base, scale $transition-base;
 
   &__main {
+    width: 100%;
+    @include flex(column, space-between, center);
     flex: 1;
     padding: $spacing-8 0;
     transition: transform $transition-base, scale $transition-base;
+
+  }
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $spacing-4;
+    padding-right: $spacing-4;
   }
 
   /* Dark mode */

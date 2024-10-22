@@ -1,5 +1,12 @@
+@use '@/styles/abstracts/variables' as *;
+
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Gilda+Display&display=swap');
 
 html, body {
-  font-family: 'Gothic A1', sans-serif;
+  font-family: $font-family-base;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $font-family-heading;
 }

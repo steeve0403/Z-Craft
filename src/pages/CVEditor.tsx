@@ -43,7 +43,7 @@ const CVEditor: React.FC = () => {
                     createdAt: new Date().toISOString(),
                     updatedAt: new Date().toISOString(),
                 };
-                await addCV(newCV);
+                addCV(newCV);
                 navigate(`/cv/edit/${newCV.id}`);
             }
         } catch (e) {
@@ -66,7 +66,7 @@ const CVEditor: React.FC = () => {
     // }, [id]);
 
     return (
-        <div>
+        <div className="cv-editor">
             <h1>{id ? 'Edit CV' : 'Create New CV'}</h1>
             {error &&
                 <div className="error-message">
@@ -74,7 +74,7 @@ const CVEditor: React.FC = () => {
                 </div>}
 
             <CVForm initialData={cv} onSubmit={handleSubmit} onChange={handleChange}/>
-            {isSaving && <LoadingSpinner/>}
+            {isSaving && <div className="loading-spinner"><LoadingSpinner/></div>}
         </div>
     );
 };

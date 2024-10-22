@@ -12,6 +12,7 @@
 @use 'layout/layout';
 @use 'layout/header';
 @use 'layout/footer';
+@use 'layout/sections';
 
 // Import component
 @use 'component/sidebar';
@@ -22,5 +23,6 @@
 
 // Import Pages
 @use 'page/home';
+@use 'page/cv_editor';
 
 
