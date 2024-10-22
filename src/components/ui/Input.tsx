@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {FieldError} from "react-hook-form";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -7,14 +7,23 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
     list?: string;
 }
 
-export const Input: React.FC<InputProps> = ({ label, error, list, ...props }) => {
-    const errorMessage = typeof error === 'string' ? error : error?.message;
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+    ({label, error, list, value='', ...props}, ref) => {
+        const errorMessage = typeof error === 'string' ? error : error?.message;
 
-    return (
-        <div className="input-wrapper">
-            <label className="input-label">{label}</label>
-            <input className={`input ${errorMessage ? 'input--error' : ''}`} list={list} {...props} />
-            {error && <span className="input-error">{errorMessage}</span>}
-        </div>
-    );
-};
+        return (
+            <div className="input-wrapper">
+                <label className="input-label">
+                    {label}
+                    <input
+                        ref={ref}
+                        className={`input ${errorMessage ? 'input--error' : ''}`}
+                        list={list}
+                        value={value || ''}
+                        {...props} />
+                </label>
+                {error && <span className="input-error">{errorMessage}</span>}
+            </div>
+        );
+    }
+);

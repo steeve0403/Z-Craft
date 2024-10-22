@@ -37,9 +37,3 @@ export interface Language {
     name: string;
     proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
 }
-
-export interface CVFormProps {
-    initialData?: CV;
-    onSubmit: (data: CV) => void;
-    onChange: (data: Partial<CV>) => void;
-}

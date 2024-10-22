@@ -16,6 +16,7 @@
 // Import component
 @use 'component/sidebar';
 @use 'component/button';
+@use 'component/loading_spinner';
 
 // Import Pages
 @use 'page/home';

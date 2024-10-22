@@ -1,9 +1,8 @@
-import React from 'react';
 import {Controller, FieldError, RegisterOptions, useFormContext} from 'react-hook-form';
 import {Input} from "../ui/Input.tsx";
 import {Textarea} from "../ui/Textarea.tsx";
+import React from "react";
 
-// Composant pour un champ Input générique avec validation
 export const CVInputField: React.FC<{ name: string; label: string; type?: string; rules?: RegisterOptions; list?: string }> = ({ name, label, type = 'text', rules = {}, list }) => {
     const { control, formState: { errors } } = useFormContext();
     const error = errors[name] as FieldError | undefined;
@@ -29,7 +28,6 @@ export const CVInputField: React.FC<{ name: string; label: string; type?: string
     );
 };
 
-// Composant pour un champ Textarea générique avec validation
 export const CVTextareaField: React.FC<{ name: string; label: string; rules?: RegisterOptions }> = ({ name, label, rules = {} }) => {
     const { control, formState: { errors } } = useFormContext();
     const error = errors[name] as FieldError | undefined;
@@ -53,7 +51,6 @@ export const CVTextareaField: React.FC<{ name: string; label: string; rules?: Re
     );
 };
 
-// Composant pour un champ Date avec validation
 export const CVDateField: React.FC<{ name: string; label: string; rules?: RegisterOptions }> = ({ name, label, rules = {} }) => {
     const { control, formState: { errors } } = useFormContext();
     const error = errors[name] as FieldError | undefined;
