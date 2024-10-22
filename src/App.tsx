@@ -1,12 +1,12 @@
 import React, {Suspense, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import {ThemeProvider} from './contexts/ThemeContext.tsx';
+import {ThemeProvider} from './contexts/ThemeContext.tsx'; // Import du contexte
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import {routes} from './routes.ts';
 import LoadingSpinner from './components/LoadingSpinner.tsx';
 import Header from './layouts/Header.tsx';
 import Footer from './layouts/Footer.tsx';
-import Sidebar from './components/Sidebar.tsx'; // Importer la Sidebar
+import Sidebar from './components/Sidebar.tsx';
 
 const App: React.FC = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -20,8 +20,8 @@ const App: React.FC = () => {
             <ThemeProvider>
                 <Router>
                     <div className="layout">
-                        <Header toggleSidebar={toggleSidebar} /> {/* Passe la fonction de toggle */}
-                        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} /> {/* Sidebar */}
+                        <Header toggleSidebar={toggleSidebar}/>
+                        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
                         <main className={`layout__main ${isSidebarOpen ? 'main--shifted' : ''}`}>
                             <div className="container">
                                 <Suspense fallback={<LoadingSpinner/>}>
@@ -42,3 +42,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+

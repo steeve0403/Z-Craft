@@ -1,9 +1,9 @@
 @use '@/styles/abstracts/variables' as *;
 @use '@/styles/abstracts/mixins' as *;
 
-
 .button {
   @include button-base;
+  transition: background-color $transition-base, color $transition-base, border-color $transition-base;
 
   &--primary {
     background-color: $color-primary;
@@ -25,11 +25,13 @@
 
   &--outline {
     background-color: transparent;
-    border-color: $color-border;
+    border: 1px solid $color-border;
     color: $color-text;
+    transition: background-color $transition-base, color $transition-base, border-color $transition-base;
 
     &:hover {
       background-color: rgba($color-secondary, 0.1);
+      border-color: $color-secondary-dark;
     }
   }
 
@@ -38,8 +40,26 @@
     font-size: $font-size-sm;
   }
 
+  &--md {
+    padding: $spacing-2 $spacing-4;
+    font-size: $font-size-base;
+  }
+
   &--lg {
     padding: $spacing-3 $spacing-6;
     font-size: $font-size-lg;
+  }
+}
+
+/* Dark Mode */
+.dark .button {
+  &--outline {
+    border-color: $color-border-dark;
+    color: $color-text-dark;
+
+    &:hover {
+      background-color: rgba($color-secondary-dark, 0.1);
+      border-color: $color-primary-dark;
+    }
   }
 }

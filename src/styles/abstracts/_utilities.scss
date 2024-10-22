@@ -2,11 +2,12 @@
 @use "mixins" as *;
 @use "variables" as *;
 
-
+/* Text center */
 .text-center {
   text-align: center;
 }
 
+/* Margins */
 .mb-1 { margin-bottom: $spacing-1; }
 .mb-2 { margin-bottom: $spacing-2; }
 .mb-4 { margin-bottom: $spacing-4; }
@@ -19,28 +20,55 @@
 .mt-6 { margin-top: $spacing-6; }
 .mt-8 { margin-top: $spacing-8; }
 
+/* Auto margins */
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
 }
 
-.w-full { width: 100%; }
-
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-between { justify-content: space-between; }
-
-.space-y-2 > * + * { margin-top: $spacing-2; }
-.space-y-4 > * + * { margin-top: $spacing-4; }
-
-.hidden { display: none; }
-
-@include responsive(sm) {
-  .sm\:flex { display: flex; }
-  .sm\:hidden { display: none; }
+/* Full width */
+.w-full {
+  width: 100%;
 }
 
+/* Flex utilities */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+
+/* Space between elements */
+.space-y-2 > * + * {
+  margin-top: $spacing-2;
+}
+.space-y-4 > * + * {
+  margin-top: $spacing-4;
+}
+
+/* Hidden utility */
+.hidden {
+  display: none;
+}
+
+/* Responsive utilities */
+@include responsive(sm) {
+  .sm\:flex {
+    display: flex;
+  }
+  .sm\:hidden {
+    display: none;
+  }
+}
+
+/* Dark mode styles */
 .dark {
   background-color: $color-background-dark;
   color: $color-text-dark;
@@ -59,7 +87,48 @@
     border-color: color.adjust($color-background-dark, $lightness: 10%);
 
     &:focus {
-      border-color: $color-primary;
+      border-color: $color-primary-dark; /* Utilisation de la couleur primaire du dark mode */
+      box-shadow: 0 0 0 2px rgba($color-primary-dark, 0.25);
     }
   }
+
+  /* Ajout d'effets d'ombre pour les éléments clés en dark mode */
+  .card, .button, .input {
+    box-shadow: $box-shadow-dark;
+  }
+}
+
+/* Light mode adjustments (par défaut) */
+.light {
+  background-color: $color-background;
+  color: $color-text;
+
+  .header,
+  .footer,
+  .cv-list__item,
+  .cv-preview {
+    background-color: color.adjust($color-background, $lightness: -5%);
+  }
+
+  .input,
+  .textarea {
+    background-color: $color-background;
+    color: $color-text;
+    border-color: $color-border;
+
+    &:focus {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 2px rgba($color-primary, 0.25);
+    }
+  }
+
+  /* Ombres plus légères pour le mode clair */
+  .card, .button, .input {
+    box-shadow: $box-shadow-light;
+  }
+}
+
+/* Button hover effect */
+.button {
+  @include hover-effect;
 }

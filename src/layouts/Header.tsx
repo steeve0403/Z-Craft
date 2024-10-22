@@ -1,8 +1,8 @@
 import React, {memo} from 'react';
 import {Link, NavLink} from 'react-router-dom';
-import {useTheme} from '../contexts/ThemeContext.tsx';
 import {Button} from '../components/ui/Button.tsx';
 import {Sun, Moon, FileText} from 'lucide-react';
+import {useTheme} from "../contexts/UseTheme.tsx";
 
 interface HeaderProps {
     toggleSidebar: () => void;
@@ -45,7 +45,6 @@ const Header: React.FC<HeaderProps> = ({toggleSidebar}) => {
                     >
                         {themeIcon}
                     </Button>
-                    {/* Bouton pour ouvrir/fermer la sidebar */}
                     <Button
                         onClick={toggleSidebar}
                         className="button button--outline button--sm sidebar-toggle"
@@ -60,4 +59,5 @@ const Header: React.FC<HeaderProps> = ({toggleSidebar}) => {
 };
 
 export default Header;
+
 

@@ -5,11 +5,11 @@
 .header {
   z-index: 100;
   position: relative;
-  width: 100vw;
+  top: 0;
+  width: 100%;
   background-color: $color-background;
   padding: $spacing-4 0;
-  border-bottom: 1px solid $color-border;
-  transition: background-color $transition-base;
+  transition: background-color $transition-base, color $transition-base; /* Transition pour le dark mode */
 
   &__container {
     @include flex(row, space-between, center);
@@ -58,17 +58,18 @@
       }
     }
 
-
     &:last-child {
       margin-right: 0;
     }
   }
 
+  /* Boutons dans le header */
   .button--outline {
     @include button-base;
     border-color: $color-primary;
     color: $color-primary;
     background-color: transparent;
+    transition: background-color $transition-base, color $transition-base; /* Transition fluide */
 
     &:hover {
       background-color: $color-primary;
@@ -82,7 +83,41 @@
   }
 }
 
+/* Gestion du dark mode */
 .dark .header {
   background-color: $color-background-dark;
   color: $color-text-dark;
+
+  &__logo {
+    color: $color-primary-dark;
+
+    &:hover {
+      color: lighten($color-primary-dark, 10%);
+    }
+  }
+
+  &__nav {
+    &-item {
+      color: $color-text-dark;
+
+      &:hover {
+        color: $color-primary-dark;
+      }
+
+      &.active {
+        color: $color-primary-dark;
+        border-bottom: 2px solid lighten($color-primary-dark, 10%);
+      }
+    }
+  }
+
+  .button--outline {
+    border-color: $color-primary-dark;
+    color: $color-primary-dark;
+
+    &:hover {
+      background-color: $color-primary-dark;
+      color: $color-background-dark;
+    }
+  }
 }

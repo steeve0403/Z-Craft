@@ -8,10 +8,10 @@
 @use 'base/base';
 @use 'base/font';
 
-
 // Import layout
-@use 'layout/header';
 @use 'layout/layout';
+@use 'layout/header';
+@use 'layout/footer';
 
 // Import component
 @use 'component/sidebar';

@@ -1,15 +1,17 @@
 @use "variables" as *;
 
+/* Mixin pour gérer le dézoom et le déplacement du contenu quand la sidebar est ouverte */
 @mixin shifted($isShifted: false) {
   @if $isShifted == true {
     transition: transform $transition-base, scale $transition-base;
-    transform: scale(0.95) translateX(-150px);
+    transform: scale(0.95) translateX(-150px); /* Légère réduction et décalage */
   } @else {
-    transform: scale(1) translateX(0);
+    transform: scale(1) translateX(0); /* État normal */
     transition: transform $transition-base, scale $transition-base;
   }
 }
 
+/* Mixin pour flexbox avec des options personnalisables */
 @mixin flex($direction: row, $justify: flex-start, $align: stretch) {
   display: flex;
   flex-direction: $direction;
@@ -17,6 +19,7 @@
   align-items: $align;
 }
 
+/* Mixin pour les boutons avec un style moderne */
 @mixin button-base {
   display: inline-flex;
   align-items: center;
@@ -31,10 +34,24 @@
   cursor: pointer;
   user-select: none;
   border: 1px solid transparent;
-  border-radius: $border-radius;
-  transition: all $transition-base;
+  border-radius: $border-radius-md; /* Utilisation d'un border-radius moderne */
+  transition: background-color $transition-base, color $transition-base, box-shadow $transition-base;
+
+  &:hover {
+    box-shadow: $box-shadow-light; /* Ajout d'ombre légère lors du survol */
+  }
+
+  &--dark {
+    background-color: $color-primary-dark;
+    color: $color-text-dark;
+
+    &:hover {
+      background-color: lighten($color-primary-dark, 10%);
+    }
+  }
 }
 
+/* Mixin pour les champs de formulaire avec des styles adaptés aux deux modes */
 @mixin input-base {
   display: block;
   width: 100%;
@@ -45,7 +62,7 @@
   background-color: $color-background;
   background-clip: padding-box;
   border: 1px solid $color-border;
-  border-radius: $border-radius;
+  border-radius: $border-radius-md; /* Arrondi modéré */
   transition: border-color $transition-base, box-shadow $transition-base;
 
   &:focus {
@@ -53,7 +70,54 @@
     border-color: $color-primary;
     box-shadow: 0 0 0 2px rgba($color-primary, 0.25);
   }
+
+  /* Pour le dark mode */
+  &--dark {
+    background-color: $color-background-dark;
+    color: $color-text-dark;
+    border-color: $color-border-dark;
+
+    &:focus {
+      border-color: $color-primary-dark;
+      box-shadow: 0 0 0 2px rgba($color-primary-dark, 0.25);
+    }
+  }
 }
+
+/* Mixin pour gérer les media queries de manière flexible */
+@mixin responsive($breakpoint) {
+  @if $breakpoint == sm {
+    @media (min-width: $breakpoint-sm) {
+      @content;
+    }
+  } @else if $breakpoint == md {
+    @media (min-width: $breakpoint-md) {
+      @content;
+    }
+  } @else if $breakpoint == lg {
+    @media (min-width: $breakpoint-lg) {
+      @content;
+    }
+  } @else if $breakpoint == xl {
+    @media (min-width: $breakpoint-xl) {
+      @content;
+    }
+  } @else if $breakpoint == 2xl {
+    @media (min-width: $breakpoint-2xl) {
+      @content;
+    }
+  }
+}
+
+/* Mixin pour ajouter une transition fluide sur un hover */
+@mixin hover-effect {
+  transition: all $transition-base;
+
+  &:hover {
+    filter: brightness(1.1); /* Légère augmentation de la luminosité */
+  }
+}
+
 
 @mixin responsive($breakpoint) {
   @if $breakpoint == sm {

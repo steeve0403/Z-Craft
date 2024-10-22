@@ -1,10 +1,13 @@
 @use '@/styles/abstracts/variables' as *;
+@use "@/styles/abstracts/mixins" as *;
 
 html, body {
   font-size: $font-size-base;
   line-height: 1.5;
   color: $color-text;
   background-color: $color-background;
+  font-family: $font-family-base;
+  transition: background-color $transition-base, color $transition-base;
 }
 
 body {
@@ -17,6 +20,8 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: $spacing-4;
   font-weight: $font-weight-bold;
   line-height: 1.2;
+  color: $color-text;
+  transition: color $transition-base;
 }
 
 a {
@@ -26,5 +31,44 @@ a {
 
   &:hover {
     color: $color-primary-dark;
+    @include hover-effect;
+  }
+}
+
+/* Dark Mode */
+body.dark {
+  background-color: $color-background-dark;
+  color: $color-text-dark;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: $color-text-dark;
+  }
+
+  a {
+    color: $color-primary-dark;
+
+    &:hover {
+      color: lighten($color-primary-dark, 10%);
+    }
+  }
+}
+
+@include responsive(md) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+}
+
+@include responsive(lg) {
+  h1 {
+    font-size: 3rem;
+  }
+
+  h2 {
+    font-size: 2.5rem;
   }
 }
