@@ -8,9 +8,9 @@ const CVEditor = lazy(() => import('./pages/CVEditor'));
 
 export const routes = [
     { path: '/', component: Home },
-    // { path: '/cvs', component: CVList },
+    // { path: '/cvs', components: CVList },
     { path: '/cv/new', component: CVEditor },
     { path: '/cv/edit/:id', component: CVEditor },
-    // { path: '/cv/preview/:id', component: CVPreview },
-    // { path: '*', component: NotFound },
+    // { path: '/cv/preview/:id', components: CVPreview },
+    // { path: '*', components: NotFound },
 ];

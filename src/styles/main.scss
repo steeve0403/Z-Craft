@@ -8,21 +8,95 @@
 @use 'base/base';
 @use 'base/font';
 
-// Import layout
-@use 'layout/layout';
-@use 'layout/header';
-@use 'layout/footer';
-@use 'layout/sections';
+// Import layouts
+@use 'layouts/layout';
+@use 'layouts/header';
+@use 'layouts/footer';
+@use 'layouts/sections';
 
-// Import component
-@use 'component/sidebar';
-@use 'component/button';
-@use 'component/loading_spinner';
-@use 'component/input';
-@use 'component/textarea';
+// Import components
+@use 'components/sidebar';
+@use 'components/button';
+@use 'components/loading_spinner';
+@use 'components/input';
+@use 'components/textarea';
 
 // Import Pages
-@use 'page/home';
-@use 'page/cv_editor';
+@use 'pages/home';
+@use 'pages/cv_editor';
 
 
+/*
+z-craft
+├── node_modules
+├── public
+├── src
+│   ├── assets
+│   ├── components
+│   │   ├── CVForm
+│   │   │   ├── CVForm.tsx
+│   │   │   ├── CVFormFields.tsx
+│   │   │   ├── EducationSection.tsx
+│   │   │   ├── ExperienceSection.tsx
+│   │   │   ├── LanguageSection.tsx
+│   │   │   ├── SkillsSection.tsx
+│   │   ├── ui
+│   │   │   ├── Button.tsx
+│   │   │   ├── Input.tsx
+│   │   │   ├── Textarea.tsx
+│   ├── contexts
+│   │   │   ├── ThemeContext.tsx
+│   │   │   ├──UseTheme.tsx
+│   ├── hooks
+│   │   ├── useAutoSave.ts
+│   ├── i18n
+│   ├── layouts
+│   │   ├── Footer.tsx
+│   │   ├── Header.tsx
+│   ├── pages
+│   │   ├── CVEditor.tsx
+│   │   ├── Home.tsx
+│   ├── stores
+│   │   ├── cvStore.ts
+│   ├── styles
+│   │   ├── abstracts
+│   │   │   ├── _variables.scss
+│   │   │   ├── _mixins.scss
+│   │   │   └── _utilities.scss
+│   │   ├── base
+│   │   │   ├── _reset.scss
+│   │   │   ├── _base.scss
+│   │   │   └── _font.scss
+│   │   ├── components
+│   │   │   ├── _sidebar.scss
+│   │   │   ├── _button.scss
+│   │   │   ├── _loading_spinner.scss
+│   │   │   ├── _input.scss
+│   │   │   └── _textarea.scss
+│   │   ├── layouts
+│   │   │   ├── _layout.scss
+│   │   │   ├── _header.scss
+│   │   │   ├── _footer.scss
+│   │   ├── pages
+│   │   │   ├── _home.scss
+│   │   │   ├── _cv_editor.scss
+│   ├── main.scss
+│   ├── types
+│   │   ├── cv.ts
+│   ├── utils
+│   │   ├── cn.ts
+│   ├── App.tsx
+│   ├── main.tsx
+│   ├── vite-env.d.ts
+├──.eslintrc.json
+├──.gitignore
+eslint.config.js
+index.html
+package.json
+package-lock.json
+README.md
+tsconfig.app.json
+tsconfig.json
+tsconfig.node.json
+vit.config.js
+*/

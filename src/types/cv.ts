@@ -9,7 +9,7 @@ export interface CV {
 
     experience: Experience[];
     education: Education[];
-    skills: string[];
+    skills: Skill[];
     languages: Language[];
 
     createdAt: string;
@@ -31,9 +31,15 @@ export interface Education {
     degree: string;
     field: string;
     graduationDate: string;
+    description?: string;
 }
 
 export interface Language {
+    name: string;
+    proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
+}
+
+export interface Skill {
     name: string;
     proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
 }
