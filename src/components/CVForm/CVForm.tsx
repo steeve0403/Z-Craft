@@ -1,12 +1,12 @@
 import React, {useEffect, useRef} from 'react';
 import {useForm, FormProvider} from 'react-hook-form';
-import {CVInputField} from "./CVFormFields.tsx";
-import ExperienceSection from "./ExperienceSection.tsx";
-import EducationSection from "./EducationSection.tsx";
-import SkillsSection from "./SkillsSection.tsx";
-import LanguagesSection from "./LanguagesSection.tsx";
-import { CV } from "../../types/cv.ts";
-import {Button} from '../ui/Button.tsx';
+import {CVInputField} from './CVFormFields';
+import ExperienceSection from './ExperienceSection';
+import EducationSection from './EducationSection';
+import SkillsSection from './SkillsSection';
+import LanguagesSection from './LanguagesSection';
+import {CV} from '../../types/cv';
+import {Button} from '../ui/Button';
 
 export interface CVFormProps {
     initialData?: CV;
@@ -39,23 +39,22 @@ export const CVForm: React.FC<CVFormProps> = ({initialData, onSubmit, onChange})
                         name="title"
                         label="CV Title"
                         rules={{required: 'CV Title is required'}}
-
                     />
                     <CVInputField
                         name="fullName"
                         label="Full Name"
                         rules={{
                             required: 'Full name is required',
-                            minLength: {value: 2, message: 'Minimum 2 characters required'}
+                            minLength: {value: 2, message: 'Minimum 2 characters required'},
                         }}
-
                     />
                 </div>
 
-                <ExperienceSection/>
-                <EducationSection/>
-                <SkillsSection/>
-                <LanguagesSection/>
+                {/* Passer cvId à la section Experience */}
+                <ExperienceSection cvId={initialData?.id || ''}/>
+                <EducationSection cvId={initialData?.id || ''}/>
+                <SkillsSection cvId={initialData?.id || ''}/>
+                <LanguagesSection cvId={initialData?.id || ''}/>
 
                 <div className="cv-form__actions">
                     <Button type="submit">Save CV</Button>
@@ -64,6 +63,5 @@ export const CVForm: React.FC<CVFormProps> = ({initialData, onSubmit, onChange})
         </FormProvider>
     );
 };
-
 
 

@@ -19,14 +19,23 @@ const CVEditor: React.FC = () => {
     const [error, setError] = useState<string | null>(null); // Nouvel état pour gérer les erreurs
 
     useEffect(() => {
-        if (id && !cv) {
+        if (id) {
             const savedCV = localStorage.getItem(`cv_${id}`);
             if (savedCV) {
-                setCv(JSON.parse(savedCV));
+                setCv(JSON.parse(savedCV)); // Charger les données du localStorage
+            } else {
+                const cvFromStore = getCVById(id); // Charger depuis le store si dispo
+                setCv(cvFromStore);
             }
         }
-        setIsLoading(false); // Arrêter le chargement une fois les données récupérées
-    }, [id, cv]);
+        setIsLoading(false);
+    }, [getCVById, id]);
+
+    useEffect(() => {
+        if (cv && id) {
+            localStorage.setItem(`cv_${id}`, JSON.stringify(cv)); // Sauvegarde auto dans localStorage
+        }
+    }, [cv, id]);
 
     useAutoSave(cv, id, 2000);
 
