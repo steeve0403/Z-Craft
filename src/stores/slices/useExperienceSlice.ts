@@ -1,4 +1,3 @@
-// stores/slices/useExperienceSlice.ts
 import {CV, Experience} from '../../types/cv';
 import { StateCreator } from 'zustand';
 
@@ -9,11 +8,10 @@ export interface ExperienceStore {
     removeExperience: (cvId: string, experienceId: string) => void;
 }
 
-export const createExperienceSlice: StateCreator<ExperienceStore> = (set, get, store) => ({
+export const createExperienceSlice: StateCreator<ExperienceStore> = (set, get) => ({
     cvs: [],
-    // Ajouter une expérience dans un CV spécifique
     addExperience: (cvId, experience) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId ? { ...cv, experience: [...cv.experience, experience] } : cv
@@ -21,9 +19,8 @@ export const createExperienceSlice: StateCreator<ExperienceStore> = (set, get, s
         });
     },
 
-    // Mettre à jour une expérience existante dans un CV
     updateExperience: (cvId, experience) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId
@@ -38,9 +35,8 @@ export const createExperienceSlice: StateCreator<ExperienceStore> = (set, get, s
         });
     },
 
-    // Supprimer une expérience d'un CV
     removeExperience: (cvId, experienceId) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId

@@ -1,8 +1,6 @@
-// stores/slices/useSkillSlice.ts
-import {CV, Skill} from '../../types/cv'; // Import du type Skill
-import { StateCreator } from 'zustand'; // Import de StateCreator de Zustand
+import {CV, Skill} from '../../types/cv';
+import { StateCreator } from 'zustand';
 
-// Interface pour la gestion des compétences dans le store
 export interface SkillStore {
     cvs: CV[]; // Tableau de CVs
     addSkill: (cvId: string, skill: Skill) => void;
@@ -10,13 +8,10 @@ export interface SkillStore {
     removeSkill: (cvId: string, skillName: string) => void;
 }
 
-// Slice pour gérer les compétences dans un CV
-export const createSkillSlice: StateCreator<SkillStore> = (set, get, store) => ({
+export const createSkillSlice: StateCreator<SkillStore> = (set, get) => ({
     cvs: [],
-    // Ajouter une compétence dans un CV spécifique
     addSkill: (cvId, skill) => {
-        // Accès à l'état global via get(), puis modification de cvs
-        const cvs = get().cvs; // Récupère l'état global
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId ? { ...cv, skills: [...cv.skills, skill] } : cv
@@ -24,9 +19,8 @@ export const createSkillSlice: StateCreator<SkillStore> = (set, get, store) => (
         });
     },
 
-    // Mettre à jour une compétence existante dans un CV
     updateSkill: (cvId, skill) => {
-        const cvs = get().cvs; // Récupère l'état global
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId
@@ -41,9 +35,8 @@ export const createSkillSlice: StateCreator<SkillStore> = (set, get, store) => (
         });
     },
 
-    // Supprimer une compétence d'un CV
     removeSkill: (cvId, skillName) => {
-        const cvs = get().cvs; // Récupère l'état global
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId

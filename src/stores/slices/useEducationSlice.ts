@@ -1,4 +1,3 @@
-// stores/slices/useEducationSlice.ts
 import {CV, Education} from '../../types/cv';
 import { StateCreator } from 'zustand';
 
@@ -9,11 +8,10 @@ export interface EducationStore {
     removeEducation: (cvId: string, educationId: string) => void;
 }
 
-export const createEducationSlice: StateCreator<EducationStore> = (set, get, store) => ({
+export const createEducationSlice: StateCreator<EducationStore> = (set, get) => ({
     cvs: [],
-    // Ajouter une éducation dans un CV spécifique
     addEducation: (cvId, education) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId ? { ...cv, education: [...cv.education, education] } : cv
@@ -21,9 +19,8 @@ export const createEducationSlice: StateCreator<EducationStore> = (set, get, sto
         });
     },
 
-    // Mettre à jour une éducation existante dans un CV
     updateEducation: (cvId, education) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId
@@ -38,9 +35,8 @@ export const createEducationSlice: StateCreator<EducationStore> = (set, get, sto
         });
     },
 
-    // Supprimer une éducation d'un CV
     removeEducation: (cvId, educationId) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId

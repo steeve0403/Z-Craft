@@ -8,11 +8,10 @@ export interface LanguageStore {
     removeLanguage: (cvId: string, languageName: string) => void;
 }
 
-export const createLanguageSlice: StateCreator<LanguageStore> = (set, get, store) => ({
+export const createLanguageSlice: StateCreator<LanguageStore> = (set, get) => ({
     cvs: [],
-    // Ajouter une langue dans un CV spécifique
     addLanguage: (cvId, language) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId ? { ...cv, languages: [...cv.languages, language] } : cv
@@ -20,9 +19,8 @@ export const createLanguageSlice: StateCreator<LanguageStore> = (set, get, store
         });
     },
 
-    // Mettre à jour une langue existante dans un CV
     updateLanguage: (cvId, language) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId
@@ -37,9 +35,8 @@ export const createLanguageSlice: StateCreator<LanguageStore> = (set, get, store
         });
     },
 
-    // Supprimer une langue d'un CV
     removeLanguage: (cvId, languageName) => {
-        const cvs = get().cvs; // Récupérer l'état global des CVs
+        const cvs = get().cvs;
         set({
             cvs: cvs.map((cv) =>
                 cv.id === cvId

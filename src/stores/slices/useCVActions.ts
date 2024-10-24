@@ -1,7 +1,6 @@
-import { CV } from '../../types/cv'; // Import des types
+import { CV } from '../../types/cv';
 import { StateCreator } from 'zustand';
 
-// Interface pour les actions sur les CV
 export interface CVStore {
     cvs: CV[];
     addCV: (cv: CV) => void;
@@ -10,8 +9,7 @@ export interface CVStore {
     getCVById: (id: string) => CV | undefined;
 }
 
-// Création des actions liées aux CVs
-export const createCVActionsSlice: StateCreator<CVStore> = (set, get, store) => ({
+export const createCVActionsSlice: StateCreator<CVStore> = (set, get) => ({
     cvs: [],
 
     addCV: (cv) => set((state) => ({
