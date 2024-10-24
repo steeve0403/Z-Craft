@@ -1,23 +1,58 @@
-// reset for all element
+@use '@/styles/abstracts/variables' as *;
+
+// Reset for all elements
 *, *::before, *::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-// disable a underline
+// Disable underline on links by default
 a {
   text-decoration: none;
 }
 
-// reset style of input button and textarea
+// Reset style for input, button, and textarea
 input, button, textarea {
   border: none;
   background: none;
   outline: none;
+  font: inherit;
 }
 
-// reset italic
+// Reset italic style for i and em tags
 i, em {
   font-style: normal;
+}
+
+// Remove default list styling
+ul, ol {
+  list-style: none;
+  padding: 0;
+}
+
+// Remove all borders from tables
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+// Add basic focus styles for accessibility
+button, input, textarea, a {
+  &:focus {
+    outline: 2px solid $color-primary;
+    outline-offset: 2px;
+  }
+}
+
+// Reset images to ensure they don't overflow
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Remove default form element styles in mobile browsers
+button, input, select, textarea {
+  -webkit-appearance: none;
+  appearance: none;
 }

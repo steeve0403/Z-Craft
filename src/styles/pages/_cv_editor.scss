@@ -1,5 +1,7 @@
 @use '@/styles/abstracts/variables' as *;
 @use '@/styles/abstracts/mixins' as *;
+@use "sass:color";
+
 
 .cv-editor {
   margin: $spacing-8 0;
@@ -31,7 +33,7 @@
   }
 
   .error-message {
-    background-color: darken($color-error, 10%);
+    background-color: color.adjust($color-error, $lightness: 10%);
     color: $color-text-dark;
   }
 }

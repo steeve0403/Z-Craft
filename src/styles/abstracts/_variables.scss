@@ -1,39 +1,37 @@
-// Primary and secondary colors with modern, accessible contrasts
-$color-primary: #4f46e5; // Modern purple for primary action (light mode)
-$color-primary-dark: #3730a3; // Darker version for dark mode
-$color-secondary: #14b8a6; // A modern teal for accents
+// abstracts/_variables.scss
+
+// Colors
+$color-primary: #4f46e5;
+$color-primary-dark: #3730a3;
+$color-secondary: #14b8a6;
 $color-secondary-dark: #0d9488;
-
-// Background and text colors for light and dark modes
-$color-background: #f9fafb; // Light mode background
-$color-background-dark: #111827; // Dark mode background, deep navy for elegance
-$color-text: #111827; // Dark grayish-blue text for light mode (modern, accessible)
-$color-text-dark: #d1d5db; // Light gray for dark mode text (high contrast for readability)
-
-// Border and other utility colors
-$color-border: #e5e7eb; // Light gray borders for inputs, etc.
-$color-border-dark: #374151; // Dark gray for dark mode borders
-$color-error: #ef4444; // Standard red for error messages
+$color-background: #f9fafb;
+$color-background-dark: #111827;
+$color-text: #111827;
+$color-text-dark: #d1d5db;
+$color-border: #e5e7eb;
+$color-border-dark: #374151;
+$color-error: #ef4444;
 
 // Typography
-$font-family-base: 'Gothic A1', sans-serif; // Modern, clean sans-serif font
-$font-family-heading: 'Gilda Display', serif; // Elegant heading font for contrast
+$font-family-base: 'Gothic A1', sans-serif;
+$font-family-heading: 'Gilda Display', serif;
 
 // Font sizes
-$font-size-base: 1rem; // Default body font size
-$font-size-sm: 0.875rem; // Small text
-$font-size-md: 1.125rem; // Medium text
-$font-size-lg: 1.375rem; // Larger text for headings
+$font-size-base: 1rem;
+$font-size-sm: 0.875rem;
+$font-size-md: 1.125rem;
+$font-size-lg: 1.375rem;
 
-// Font weights for flexibility in typography
-$font-weight-light: 300; // Lighter than the normal weight for sleek headings
-$font-weight-normal: 400; // Regular weight for most body text
-$font-weight-medium: 500; // Slightly bolder than normal for emphasis
-$font-weight-bold: 700; // Bold for strong emphasis, particularly headings
+// Font weights
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-bold: 700;
 $font-weight-extra-bold: 800;
-$font-weight-black: 900; // Use sparingly for impactful headings
+$font-weight-black: 900;
 
-// Spacing for margins/paddings - maintaining balance in design
+// Spacing
 $spacing-1: 0.25rem;
 $spacing-2: 0.5rem;
 $spacing-3: 0.75rem;
@@ -42,38 +40,34 @@ $spacing-5: 1.25rem;
 $spacing-6: 1.5rem;
 $spacing-8: 2rem;
 $spacing-10: 2.5rem;
-$spacing-12: 3rem; // For larger spacing in slices
+$spacing-12: 3rem;
 
-// Breakpoints for responsiveness
+// Breakpoints
 $breakpoint-sm: 640px;
 $breakpoint-md: 768px;
 $breakpoint-lg: 1024px;
 $breakpoint-xl: 1280px;
-$breakpoint-2xl: 1536px; // For larger screens
+$breakpoint-2xl: 1536px;
 
-// Border radius for modern, smooth edges
-$border-radius-sm: 0.25rem; // Small, rounded corners
-$border-radius-md: 0.5rem; // Default border radius for buttons, inputs
-$border-radius-lg: 1rem; // For larger elements like cards or modals
-$border-radius-full: 9999px; // For fully rounded elements (e.g., avatars, buttons)
+// Border radius
+$border-radius-sm: 0.25rem;
+$border-radius-md: 0.5rem;
+$border-radius-lg: 1rem;
+$border-radius-full: 9999px;
 
-// Box shadows for modern depth
-$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); // Subtle shadow for light mode
-$box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.5); // Stronger shadow for dark mode
+// Box shadows
+$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+$box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.5);
 
-// Transitions for smooth UI effects
-$transition-fast: 0.15s ease-in-out; // For quick hover effects
-$transition-base: 0.3s ease-in-out; // Standard transition for most interactive elements
-$transition-slow: 0.5s ease-in-out; // For more deliberate animations (e.g., modal open/close)
+// Transitions
+$transition-fast: 0.15s ease-in-out;
+$transition-base: 0.3s ease-in-out;
+$transition-slow: 0.5s ease-in-out;
 
-// Opacity settings for different modes (useful for backgrounds, modals)
+// Opacity settings
 $opacity-light: 0.05;
 $opacity-dark: 0.85;
 
-// Z-index values for layering (e.g., modals, navbars, etc.)
+// Z-index
 $z-index-modal: 999;
 $z-index-navbar: 100;
-
-// Optional extras for hover effects or backgrounds
-$hover-brightness: brightness(1.1);
-$hover-opacity: opacity(0.8);

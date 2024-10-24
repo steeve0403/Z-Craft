@@ -1,5 +1,6 @@
-@use '@/styles/abstracts/variables' as *;
-@use "@/styles/abstracts/mixins" as *;
+@use '@/styles/abstracts/variables.scss' as *;
+@use "@/styles/abstracts/mixins.scss" as *;
+@use "sass:color";
 
 html, body {
   font-size: $font-size-base;
@@ -27,11 +28,10 @@ h1, h2, h3, h4, h5, h6 {
 a {
   color: $color-primary;
   text-decoration: none;
-  transition: color $transition-base;
+  @include hover-effect($brightness: 1.1);
 
   &:hover {
     color: $color-primary-dark;
-    @include hover-effect;
   }
 }
 
@@ -48,7 +48,7 @@ body.dark {
     color: $color-primary-dark;
 
     &:hover {
-      color: lighten($color-primary-dark, 10%);
+      color: color.adjust($color-primary-dark, $lightness: 10%);
     }
   }
 }

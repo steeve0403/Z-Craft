@@ -1,27 +1,33 @@
 @use '@/styles/abstracts/variables' as *;
 @use '@/styles/abstracts/mixins' as *;
+@use "sass:color";
+
 
 .cv-form__section {
   margin-bottom: $spacing-8;
 
   h3 {
-    font-size: $font-size-lg;
+    font-size: $font-size-lg; // Légèrement plus grand pour plus de lisibilité
     font-weight: $font-weight-bold;
     margin-bottom: $spacing-4;
     color: $color-text;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); // Légère ombre sur le texte pour donner du relief
   }
 
   .cv-form__item {
     margin-bottom: $spacing-6;
-    padding: $spacing-4;
-    background-color: $color-background;
-    border: 1px solid $color-border;
-    border-radius: $border-radius-md;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    transition: background-color $transition-base, box-shadow $transition-base;
+    padding: $spacing-6;
+    background: rgba(255, 255, 255, 0.15); // Transparence pour l'effet glassmorphism
+    backdrop-filter: blur(10px); // Effet de flou pour le fond
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: $border-radius-lg; // Plus de border-radius pour arrondir les coins
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); // Ombre plus douce et subtile
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; // Transition fluide
 
     &:hover {
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      background-color: rgba(255, 255, 255, 0.2); // Légère variation du fond
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25); // Augmentation de l'ombre au hover
+      transform: translateY(-3px); // Légère translation vers le haut pour un effet "lift"
     }
 
     .cv-form__dates {
@@ -35,40 +41,88 @@
     }
   }
 
-  .button--add {
+  .button--add, .button--remove {
     margin-top: $spacing-4;
+    padding: $spacing-3 $spacing-6; // Un padding plus généreux pour améliorer l'UX
+    font-size: $font-size-md;
+    border-radius: $border-radius-full; // Boutons avec des bords plus arrondis
+    transition: background-color 0.3s ease, transform 0.2s ease; // Transition plus fluide
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1); // Ombre subtile
+
+    &:hover {
+      transform: translateY(-2px); // Légère élévation au hover
+    }
+
+    &:active {
+      transform: translateY(1px); // Un petit effet d'appui lorsque le bouton est cliqué
+    }
+  }
+
+  .button--add {
     background-color: $color-primary;
     color: $color-background;
 
     &:hover {
-      background-color: $color-primary-dark;
+      background-color: color.adjust($color-primary-dark, $lightness: 10%);
     }
   }
 
   .button--remove {
     background-color: $color-error;
     color: $color-background;
-    margin-top: $spacing-4;
 
     &:hover {
-      background-color: darken($color-error, 10%);
+      background-color: color.adjust($color-error, $lightness: 10%);
     }
   }
 }
 
-// Dark mode styles
+// Mode sombre : Couleurs plus profondes avec plus de contraste
 .dark .cv-form__section {
   h3 {
     color: $color-text-dark;
   }
 
   .cv-form__item {
-    background-color: $color-background-dark;
-    border-color: $color-border;
-    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+    background: rgba(32, 32, 32, 0.5); // Plus sombre et avec transparence
+    border-color: rgba(255, 255, 255, 0.1); // Réduction de la transparence du bord
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
 
     &:hover {
-      box-shadow: 0 4px 10px rgba(255, 255, 255, 0.2);
+      background-color: rgba(48, 48, 48, 0.7); // Fond plus contrasté au hover
+      box-shadow: 0 6px 15px rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .button--add, .button--remove {
+    box-shadow: 0 3px 6px rgba(255, 255, 255, 0.1); // Ombres adaptées au mode sombre
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  .button--add {
+    background-color: color.adjust($color-primary-dark, $lightness: 10%);
+    color: $color-background;
+
+    &:hover {
+      background-color: color.adjust($color-primary-dark, $lightness: 15%);
+    }
+  }
+
+  .button--remove {
+    background-color: $color-background-dark;
+    //background-color: $color-error-dark;
+    color: $color-background;
+
+    &:hover {
+      background-color: color.adjust($color-background-dark, $lightness: 10%);
     }
   }
 }
+

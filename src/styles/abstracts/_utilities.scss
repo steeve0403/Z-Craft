@@ -2,58 +2,115 @@
 @use "mixins" as *;
 @use "variables" as *;
 
-/* Text center */
+/* Text alignment */
 .text-center {
   text-align: center;
 }
 
-/* Margins */
-.mb-1 { margin-bottom: $spacing-1; }
-.mb-2 { margin-bottom: $spacing-2; }
-.mb-4 { margin-bottom: $spacing-4; }
-.mb-6 { margin-bottom: $spacing-6; }
-.mb-8 { margin-bottom: $spacing-8; }
-
-.mt-1 { margin-top: $spacing-1; }
-.mt-2 { margin-top: $spacing-2; }
-.mt-4 { margin-top: $spacing-4; }
-.mt-6 { margin-top: $spacing-6; }
-.mt-8 { margin-top: $spacing-8; }
-
-/* Auto margins */
-.mx-auto {
-  margin-left: auto;
-  margin-right: auto;
+.text-left {
+  text-align: left;
 }
 
-/* Full width */
+.text-right {
+  text-align: right;
+}
+
+/* Margins utilities */
+@each $key, $value in (1: $spacing-1, 2: $spacing-2, 4: $spacing-4, 6: $spacing-6, 8: $spacing-8) {
+  .mb-#{$key} {
+    margin-bottom: $value;
+  }
+  .mt-#{$key} {
+    margin-top: $value;
+  }
+  .ml-#{$key} {
+    margin-left: $value;
+  }
+  .mr-#{$key} {
+    margin-right: $value;
+  }
+  .mx-#{$key} {
+    margin-left: $value;
+    margin-right: $value;
+  }
+  .my-#{$key} {
+    margin-top: $value;
+    margin-bottom: $value;
+  }
+}
+
+/* Padding utilities */
+@each $key, $value in (1: $spacing-1, 2: $spacing-2, 4: $spacing-4, 6: $spacing-6, 8: $spacing-8) {
+  .pb-#{$key} {
+    padding-bottom: $value;
+  }
+  .pt-#{$key} {
+    padding-top: $value;
+  }
+  .pl-#{$key} {
+    padding-left: $value;
+  }
+  .pr-#{$key} {
+    padding-right: $value;
+  }
+  .px-#{$key} {
+    padding-left: $value;
+    padding-right: $value;
+  }
+  .py-#{$key} {
+    padding-top: $value;
+    padding-bottom: $value;
+  }
+}
+
+/* Width utilities */
 .w-full {
   width: 100%;
+}
+
+.w-auto {
+  width: auto;
 }
 
 /* Flex utilities */
 .flex {
   display: flex;
 }
+
 .flex-col {
   flex-direction: column;
 }
+
 .items-center {
   align-items: center;
 }
+
+.items-start {
+  align-items: flex-start;
+}
+
+.items-end {
+  align-items: flex-end;
+}
+
 .justify-between {
   justify-content: space-between;
 }
 
-/* Space between elements */
+.justify-center {
+  justify-content: center;
+}
+
+/* Utility for spacing between elements (e.g., grid or flex children) */
 .space-y-2 > * + * {
   margin-top: $spacing-2;
 }
+
 .space-y-4 > * + * {
   margin-top: $spacing-4;
 }
 
-/* Hidden utility */
+/* Visibility utilities */
 .hidden {
   display: none;
 }
@@ -66,52 +123,64 @@
   .sm\:hidden {
     display: none;
   }
+  .sm\:block {
+    display: block;
+  }
 }
 
-/* Dark mode styles */
+@include responsive(md) {
+  .md\:flex {
+    display: flex;
+  }
+  .md\:hidden {
+    display: none;
+  }
+}
+
+@include responsive(lg) {
+  .lg\:flex {
+    display: flex;
+  }
+  .lg\:hidden {
+    display: none;
+  }
+}
+
+/* Dark mode utilities */
 .dark {
   background-color: $color-background-dark;
   color: $color-text-dark;
 
-  .header,
-  .footer,
-  .cv-list__item,
-  .cv-preview {
+  .header, .footer, .cv-list__item, .cv-preview {
     background-color: color.adjust($color-background-dark, $lightness: 5%);
   }
 
-  .input,
-  .textarea {
+  .input, .textarea {
     background-color: $color-background-dark;
     color: $color-text-dark;
     border-color: color.adjust($color-background-dark, $lightness: 10%);
 
     &:focus {
-      border-color: $color-primary-dark; /* Utilisation de la couleur primaire du dark mode */
+      border-color: $color-primary-dark;
       box-shadow: 0 0 0 2px rgba($color-primary-dark, 0.25);
     }
   }
 
-  /* Ajout d'effets d'ombre pour les éléments clés en dark mode */
   .card, .button, .input {
     box-shadow: $box-shadow-dark;
   }
 }
 
-/* Light mode adjustments (par défaut) */
+/* Light mode (par défaut) */
 .light {
   background-color: $color-background;
   color: $color-text;
 
-  .header,
-  .footer,
-  .cv-list__item,
-  .cv-preview {
+  .header, .footer, .cv-list__item, .cv-preview {
     background-color: color.adjust($color-background, $lightness: -5%);
   }
 
-  .input,
-  .textarea {
+  .input, .textarea {
     background-color: $color-background;
     color: $color-text;
     border-color: $color-border;
@@ -122,7 +191,6 @@
     }
   }
 
-  /* Ombres plus légères pour le mode clair */
   .card, .button, .input {
     box-shadow: $box-shadow-light;
   }
@@ -132,3 +200,4 @@
 .button {
   @include hover-effect;
 }
+

@@ -1,5 +1,6 @@
 @use '@/styles/abstracts/variables' as *;
 @use '@/styles/abstracts/mixins' as *;
+@use "sass:color";
 
 .sidebar {
   width: 250px;
@@ -90,7 +91,7 @@
     color: $color-text-dark;
 
     &:hover {
-      color: lighten($color-primary-dark, 10%);
+      color: color.adjust($color-primary-dark, $lightness: 10%);
     }
   }
 }
