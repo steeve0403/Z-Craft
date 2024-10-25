@@ -1,12 +1,7 @@
 export interface CV {
     id: string;
-    title: string;
-    fullName: string;
-    email: string;
-    phone: string;
-    address: string;
-    summary: string;
 
+    generalInfo: GeneralInfo[];
     experience: Experience[];
     education: Education[];
     skills: Skill[];
@@ -14,6 +9,17 @@ export interface CV {
 
     createdAt: string;
     updatedAt: string;
+}
+
+export interface GeneralInfo {
+    id: string;
+    title: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    address: string;
+    summary: string;
 }
 
 export interface Experience {
@@ -35,11 +41,13 @@ export interface Education {
 }
 
 export interface Language {
+    id: string;
     name: string;
     proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
 }
 
 export interface Skill {
+    id: string;
     name: string;
     proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
 }

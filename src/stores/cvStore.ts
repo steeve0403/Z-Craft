@@ -5,8 +5,9 @@ import { createExperienceSlice, ExperienceStore } from './slices/useExperienceSl
 import { createEducationSlice, EducationStore } from './slices/useEducationSlice';
 import { createLanguageSlice, LanguageStore } from './slices/useLanguageSlice';
 import { createSkillSlice, SkillStore } from './slices/useSkillsSlice';
+import {createGeneralInfoSlice, GeneralInfoStore} from "./slices/useGeneralInfoSlice.ts";
 
-type CombinedStore = CVStore & ExperienceStore & EducationStore & LanguageStore & SkillStore;
+type CombinedStore = CVStore & GeneralInfoStore & ExperienceStore & EducationStore & LanguageStore & SkillStore;
 
 export const useCVStore = create<CombinedStore>()(
     persist(
@@ -16,6 +17,7 @@ export const useCVStore = create<CombinedStore>()(
             ...createEducationSlice(set, get, store),
             ...createLanguageSlice(set, get, store),
             ...createSkillSlice(set, get, store),
+            ...createGeneralInfoSlice(set, get, store),
         }),
         {
             name: 'cv-storage',

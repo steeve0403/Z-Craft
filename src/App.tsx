@@ -22,6 +22,7 @@ const App: React.FC = () => {
                     <div className="layout">
                         <Header toggleSidebar={toggleSidebar}/>
                         <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar}/>
+
                         <main className={`layout__main ${isSidebarOpen ? 'main--shifted' : ''}`}>
                             <div className="container">
                                 <Suspense fallback={<LoadingSpinner/>}>

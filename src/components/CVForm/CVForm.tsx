@@ -7,6 +7,7 @@ import SkillsSection from './SkillsSection';
 import LanguagesSection from './LanguagesSection';
 import {CV} from '../../types/cv';
 import {Button} from '../ui/Button';
+import GeneralInfoSection from "./GeneralInfoSection.tsx";
 
 export interface CVFormProps {
     initialData?: CV;
@@ -15,46 +16,40 @@ export interface CVFormProps {
 }
 
 export const CVForm: React.FC<CVFormProps> = ({initialData, onSubmit, onChange}) => {
-    const methods = useForm<CV>({
-        defaultValues: initialData,
-    });
-
+    const methods = useForm<CV>({defaultValues: initialData});
     const watchedFields = methods.watch();
-    const prevWatchedFields = useRef<Partial<CV> | undefined>(watchedFields); // Mémorise les champs observés précédents
+    const prevWatchedFields = useRef<Partial<CV> | undefined>(watchedFields);
+    const cvId = initialData?.id || ''; // Définir cvId de manière dynamique
 
+    // Synchroniser les changements dans le formulaire avec onChange
     useEffect(() => {
-        // Ne déclenche onChange que si les champs ont réellement changé
         if (JSON.stringify(prevWatchedFields.current) !== JSON.stringify(watchedFields)) {
             onChange(watchedFields);
-            prevWatchedFields.current = watchedFields; // Met à jour les champs précédents après appel
+            prevWatchedFields.current = watchedFields;
         }
     }, [watchedFields, onChange]);
 
     return (
         <FormProvider {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)} className="cv-form">
-                {/* Informations générales */}
                 <div className="cv-form__section">
-                    <CVInputField
-                        name="title"
-                        label="CV Title"
-                        rules={{required: 'CV Title is required'}}
-                    />
-                    <CVInputField
-                        name="fullName"
-                        label="Full Name"
-                        rules={{
-                            required: 'Full name is required',
-                            minLength: {value: 2, message: 'Minimum 2 characters required'},
-                        }}
-                    />
+                    <CVInputField name="generalInfo.title" label="CV Title" rules={{required: 'CV Title is required'}}/>
+                    <CVInputField name="generalInfo.fullName" label="Full Name" rules={{
+                        required: 'Full name is required',
+                        minLength: {value: 2, message: 'Minimum 2 characters required'}
+                    }}/>
                 </div>
 
-                {/* Passer cvId à la section Experience */}
-                <ExperienceSection cvId={initialData?.id || ''}/>
-                <EducationSection cvId={initialData?.id || ''}/>
-                <SkillsSection cvId={initialData?.id || ''}/>
-                <LanguagesSection cvId={initialData?.id || ''}/>
+                {/* Charger chaque section seulement si cvId est valide */}
+                {cvId && (
+                    <>
+                        <GeneralInfoSection cvId={cvId}/>
+                        <ExperienceSection cvId={cvId}/>
+                        <EducationSection cvId={cvId}/>
+                        <SkillsSection cvId={cvId}/>
+                        <LanguagesSection cvId={cvId}/>
+                    </>
+                )}
 
                 <div className="cv-form__actions">
                     <Button type="submit">Save CV</Button>
