@@ -1,18 +1,21 @@
 @use '@/styles/abstracts/variables' as *;
 @use '@/styles/abstracts/mixins' as *;
-@use 'sass:color';
+@use "sass:color";
+
 
 .header {
-  z-index: 100;
+  z-index: $z-index-modal;
   position: relative;
   top: 0;
   width: 100%;
   background-color: $color-background;
   padding: $spacing-4 0;
-  transition: background-color $transition-base, color $transition-base; /* Transition pour le dark mode */
+  transition: background-color $transition-base, color $transition-base;
 
   &__container {
     @include flex(row, space-between, center);
+    padding: 0 $spacing-4;
+
     @include responsive(md) {
       padding: 0 $spacing-8;
     }
@@ -25,13 +28,13 @@
     font-size: $font-size-lg;
     font-weight: $font-weight-bold;
 
-    &-icon {
-      margin-right: $spacing-2;
-      font-size: $font-size-lg;
-    }
-
     &:hover {
       color: $color-primary-dark;
+    }
+
+    .header__logoIcon {
+      margin-right: $spacing-2;
+      font-size: $font-size-lg;
     }
   }
 
@@ -48,6 +51,7 @@
 
       &:hover {
         color: $color-primary;
+        @include hover-effect;
       }
 
       &.active {
@@ -63,13 +67,12 @@
     }
   }
 
-  /* Boutons dans le header */
   .button--outline {
     @include button-base;
     border-color: $color-primary;
     color: $color-primary;
     background-color: transparent;
-    transition: background-color $transition-base, color $transition-base; /* Transition fluide */
+    transition: background-color $transition-base, color $transition-base;
 
     &:hover {
       background-color: $color-primary;
@@ -83,7 +86,6 @@
   }
 }
 
-/* Gestion du dark mode */
 .dark .header {
   background-color: $color-background-dark;
   color: $color-text-dark;
@@ -121,3 +123,4 @@
     }
   }
 }
+

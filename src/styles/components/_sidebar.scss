@@ -11,9 +11,9 @@
   position: fixed; /* Fixed pour qu'elle reste visible au scroll */
   top: 0;
   right: 0;
+  z-index: $z-index-navbar;
   transform: translateX(100%); /* Fermée par défaut */
   transition: transform $transition-base;
-  z-index: 50;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
 
   /* Quand la sidebar est ouverte */
