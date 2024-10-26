@@ -1,51 +1,80 @@
-import {CV, Education} from '../../types/cv';
-import { StateCreator } from 'zustand';
+import {StateCreator} from 'zustand';
+import {Education} from '../../types/cv';
+import educationService from '../../services/dexie/educationService';
+import {useLiveQuery} from "dexie-react-hooks";
 
-export interface EducationStore {
-    cvs: CV[];
-    addEducation: (cvId: string, education: Education) => void;
-    updateEducation: (cvId: string, education: Education) => void;
-    removeEducation: (cvId: string, educationId: string) => void;
+export interface EducationSlice {
+    educations: Education[];
+    loading: boolean;
+    error: string | null;
+    useFetchEducationsByCVId: (cvId: string) => Education[] | undefined;
+    addEducation: (education: Education) => Promise<void>;
+    updateEducation: (educationId: string, changes: Partial<Education>) => Promise<void>;
+    deleteEducation: (educationId: string) => Promise<void>;
 }
 
-export const createEducationSlice: StateCreator<EducationStore> = (set, get) => ({
-    cvs: [],
-    addEducation: (cvId, education) => {
-        const cvs = get().cvs;
-        set({
-            cvs: cvs.map((cv) =>
-                cv.id === cvId ? { ...cv, education: [...cv.education, education] } : cv
-            ),
-        });
+export const createEducationSlice: StateCreator<EducationSlice, []> = (set) => ({
+    educations: [],
+    loading: false,
+    error: null,
+
+    useFetchEducationsByCVId: (cvId) => {
+        const educations = useLiveQuery(async () => {
+            set({loading: true, error: null});
+            try {
+                const educations = await educationService.getEducationsByCVId(cvId);
+                set({educations});
+            } catch (error) {
+                set({error: 'Error while loading educations'});
+            } finally {
+                set({loading: false});
+            }
+
+        }, [cvId]);
+        return educations || [];
     },
 
-    updateEducation: (cvId, education) => {
-        const cvs = get().cvs;
-        set({
-            cvs: cvs.map((cv) =>
-                cv.id === cvId
-                    ? {
-                        ...cv,
-                        education: cv.education.map((edu) =>
-                            edu.id === education.id ? education : edu
-                        ),
-                    }
-                    : cv
-            ),
-        });
+    addEducation: async (education) => {
+        set({loading: true, error: null});
+        try {
+            await educationService.addEducation(education);
+            set((state) => ({
+                educations: [...state.educations, education],
+            }));
+        } catch (error) {
+            set({error: 'Error while adding the education'});
+        } finally {
+            set({loading: false});
+        }
     },
 
-    removeEducation: (cvId, educationId) => {
-        const cvs = get().cvs;
-        set({
-            cvs: cvs.map((cv) =>
-                cv.id === cvId
-                    ? {
-                        ...cv,
-                        education: cv.education.filter((edu) => edu.id !== educationId),
-                    }
-                    : cv
-            ),
-        });
+    updateEducation: async (educationId, changes) => {
+        set({loading: true, error: null});
+        try {
+            await educationService.updateEducation(educationId, changes);
+            set((state) => ({
+                educations: state.educations.map((edu) =>
+                    edu.id === educationId ? {...edu, ...changes} : edu
+                ),
+            }));
+        } catch (error) {
+            set({error: 'Error while updating the education'});
+        } finally {
+            set({loading: false});
+        }
+    },
+
+    deleteEducation: async (educationId) => {
+        set({loading: true, error: null});
+        try {
+            await educationService.deleteEducation(educationId);
+            set((state) => ({
+                educations: state.educations.filter((exp) => exp.id !== educationId),
+            }));
+        } catch (error) {
+            set({error: 'Error while deleting the education'});
+        } finally {
+            set({loading: false});
+        }
     },
 });

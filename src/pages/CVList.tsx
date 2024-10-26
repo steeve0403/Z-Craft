@@ -1,15 +1,35 @@
-// src/components/CVList.tsx
-import React from 'react';
-import {Link} from 'react-router-dom';
-import {useCVStore} from '../stores/cvStore.ts';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { CV } from '../types/cv';
+import cvService from "../services/dexie/cvService.ts";
 
 const CVList: React.FC = () => {
-    const cvs = useCVStore((state) => state.cvs); // Récupère la liste des CVs depuis le store
+    const [cvs, setCvs] = useState<CV[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    // Fonction pour récupérer les CVs depuis la base de données
+    const fetchCVs = async () => {
+        setLoading(true);
+        try {
+            const cvData = await cvService.getAllCVs();
+            setCvs(cvData);
+        } catch (error) {
+            console.error("Erreur lors du chargement des CVs :", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchCVs();
+    }, []);
 
     return (
         <div className="cv-list">
             <h2>Mes CVs</h2>
-            {cvs.length > 0 ? (
+            {loading ? (
+                <p>Chargement des CVs...</p>
+            ) : cvs.length > 0 ? (
                 <ul className="cv-list__items">
                     {cvs.map((cv) => (
                         <li key={cv.id} className="cv-list__item">

@@ -1,12 +1,6 @@
 export interface CV {
     id: string;
-
-    generalInfo: GeneralInfo[];
-    experience: Experience[];
-    education: Education[];
-    skills: Skill[];
-    languages: Language[];
-
+    title: string;
     createdAt: string;
     updatedAt: string;
 }
@@ -24,6 +18,7 @@ export interface GeneralInfo {
 
 export interface Experience {
     id: string;
+    cvId: string;
     company: string;
     position: string;
     startDate: string;
@@ -33,6 +28,7 @@ export interface Experience {
 
 export interface Education {
     id: string;
+    cvId: string;
     institution: string;
     degree: string;
     field: string;
@@ -40,14 +36,21 @@ export interface Education {
     description?: string;
 }
 
-export interface Language {
+export interface Skill {
     id: string;
+    cvId: string;
     name: string;
     proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
 }
 
-export interface Skill {
+export interface Language {
     id: string;
+    cvId: string;
     name: string;
     proficiency: 'Beginner' | 'Intermediate' | 'Advanced' | 'Fluent' | 'Native';
+}
+
+export interface Template {
+    id: string;
+    title: string;
 }

@@ -1,51 +1,79 @@
-import {CV, Language} from '../../types/cv';
-import { StateCreator } from 'zustand';
+import {StateCreator} from 'zustand';
+import {Language} from '../../types/cv';
+import languageService from "../../services/dexie/languageService";
+import {useLiveQuery} from "dexie-react-hooks";
 
-export interface LanguageStore {
-    cvs: CV[];
-    addLanguage: (cvId: string, language: Language) => void;
-    updateLanguage: (cvId: string, language: Language) => void;
-    removeLanguage: (cvId: string, languageName: string) => void;
+export interface LanguageSlice {
+    languages: Language[];
+    loading: boolean;
+    error: string | null;
+    useFetchLanguagesByCVId: (cvId: string) => Language[] | undefined;
+    addLanguage: (language: Language) => Promise<void>;
+    updateLanguage: (languageId: string, changes: Partial<Language>) => Promise<void>;
+    deleteLanguage: (languageId: string) => Promise<void>;
 }
 
-export const createLanguageSlice: StateCreator<LanguageStore> = (set, get) => ({
-    cvs: [],
-    addLanguage: (cvId, language) => {
-        const cvs = get().cvs;
-        set({
-            cvs: cvs.map((cv) =>
-                cv.id === cvId ? { ...cv, languages: [...cv.languages, language] } : cv
-            ),
-        });
+export const createLanguageSlice: StateCreator<LanguageSlice> = (set) => ({
+    languages: [],
+    loading: false,
+    error: null,
+
+    useFetchLanguagesByCVId: (cvId) => {
+        const languages = useLiveQuery(async () => {
+            set({loading: true, error: null});
+            try {
+                const languages = await languageService.getLanguagesByCVId(cvId);
+                set({languages});
+            } catch (error) {
+                set({error: 'Error while loading languages'});
+            } finally {
+                set({loading: false});
+            }
+        }, [cvId]);
+        return languages || [];
     },
 
-    updateLanguage: (cvId, language) => {
-        const cvs = get().cvs;
-        set({
-            cvs: cvs.map((cv) =>
-                cv.id === cvId
-                    ? {
-                        ...cv,
-                        languages: cv.languages.map((lang) =>
-                            lang.name === language.name ? language : lang
-                        ),
-                    }
-                    : cv
-            ),
-        });
+    addLanguage: async (language) => {
+        set({loading: true, error: null});
+        try {
+            await languageService.addLanguage(language);
+            set((state) => ({
+                languages: [...state.languages, language],
+            }));
+        } catch (error) {
+            set({error: 'Error while adding the language'});
+        } finally {
+            set({loading: false});
+        }
     },
 
-    removeLanguage: (cvId, languageName) => {
-        const cvs = get().cvs;
-        set({
-            cvs: cvs.map((cv) =>
-                cv.id === cvId
-                    ? {
-                        ...cv,
-                        languages: cv.languages.filter((lang) => lang.name !== languageName),
-                    }
-                    : cv
-            ),
-        });
+    updateLanguage: async (languageId, changes) => {
+        set({loading: true, error: null});
+        try {
+            await languageService.updateLanguage(languageId, changes);
+            set((state) => ({
+                languages: state.languages.map((exp) =>
+                    exp.id === languageId ? {...exp, ...changes} : exp
+                ),
+            }));
+        } catch (error) {
+            set({error: 'Error while updating the language'});
+        } finally {
+            set({loading: false});
+        }
+    },
+
+    deleteLanguage: async (languageId) => {
+        set({loading: true, error: null});
+        try {
+            await languageService.deleteLanguage(languageId);
+            set((state) => ({
+                languages: state.languages.filter((exp) => exp.id !== languageId),
+            }));
+        } catch (error) {
+            set({error: 'Error while deleting the language'});
+        } finally {
+            set({loading: false});
+        }
     },
 });

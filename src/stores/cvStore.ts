@@ -1,23 +1,23 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { createCVActionsSlice, CVStore } from './slices/useCVActions';
-import { createExperienceSlice, ExperienceStore } from './slices/useExperienceSlice';
-import { createEducationSlice, EducationStore } from './slices/useEducationSlice';
-import { createLanguageSlice, LanguageStore } from './slices/useLanguageSlice';
-import { createSkillSlice, SkillStore } from './slices/useSkillsSlice';
-import {createGeneralInfoSlice, GeneralInfoStore} from "./slices/useGeneralInfoSlice.ts";
+import {create} from 'zustand';
+import {persist} from 'zustand/middleware';
+import {createCVSlice, CVSlice} from './slices/useCVSlice';
+import {createExperienceSlice, ExperienceSlice} from './slices/useExperienceSlice';
+import {createEducationSlice, EducationSlice} from "./slices/useEducationSlice.ts";
+import {createGeneralInfoSlice, GeneralInfoSlice} from "./slices/useGeneralInfoSlice.ts";
+import {createLanguageSlice, LanguageSlice} from "./slices/useLanguageSlice.ts";
+import {createSkillSlice, SkillSlice} from "./slices/useSkillsSlice.ts";
 
-type CombinedStore = CVStore & GeneralInfoStore & ExperienceStore & EducationStore & LanguageStore & SkillStore;
+type CombinedStore = CVSlice & ExperienceSlice & EducationSlice & GeneralInfoSlice & LanguageSlice & SkillSlice;
 
 export const useCVStore = create<CombinedStore>()(
     persist(
-        (set, get, store) => ({
-            ...createCVActionsSlice(set, get, store),
-            ...createExperienceSlice(set, get, store),
-            ...createEducationSlice(set, get, store),
-            ...createLanguageSlice(set, get, store),
-            ...createSkillSlice(set, get, store),
-            ...createGeneralInfoSlice(set, get, store),
+        (...args) => ({
+            ...createCVSlice(...args),
+            ...createGeneralInfoSlice(...args),
+            ...createExperienceSlice(...args),
+            ...createEducationSlice(...args),
+            ...createLanguageSlice(...args),
+            ...createSkillSlice(...args),
         }),
         {
             name: 'cv-storage',
@@ -25,3 +25,4 @@ export const useCVStore = create<CombinedStore>()(
         }
     )
 );
+
