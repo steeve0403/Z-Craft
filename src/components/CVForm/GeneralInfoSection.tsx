@@ -1,44 +1,47 @@
-// components/GeneralInfoSection.tsx
 import React from 'react';
-import {CVInputField, CVTextareaField} from './CVFormFields';
-import {useCVStore} from '../../stores/cvStore';
+import {CVField} from './CVFormFields';
 import {GeneralInfo} from '../../types/cv';
 import {SectionForm} from './SectionForm';
+import {useGeneralInfos} from "../../hooks/sections/useGeneralInfos.ts";
 
 const GeneralInfoSection: React.FC<{ cvId: string }> = ({cvId}) => {
-    const {addGeneralInfo, updateGeneralInfo, removeGeneralInfo} = useCVStore();
+    const {
+        generalInfos,
+        addGeneralInfo,
+        updateGeneralInfo,
+        deleteGeneralInfo
+    } = useGeneralInfos(cvId);
 
-    // Définition de la structure d'un nouvel élément d'informations générales
     const newGeneralInfo: GeneralInfo = {
         id: Date.now().toString(),
+        cvId,
         title: '',
         firstname: '',
         lastname: '',
         email: '',
         phone: '',
         address: '',
-        summary: '',
-    };
+        summary: ''
+    }
 
     return (
         <SectionForm<GeneralInfo>
             name="generalInfo"
-            cvId={cvId}
-            fieldsData={[]}  // Données initiales pour cette section
+            fieldsData={generalInfos}
             addAction={addGeneralInfo}
             updateAction={updateGeneralInfo}
-            removeAction={removeGeneralInfo}
+            removeAction={deleteGeneralInfo}
             newItem={newGeneralInfo}
         >
             {(index) => (
                 <>
-                    <CVInputField name={`generalInfo.${index}.title`} label="Titre du CV"/>
-                    <CVInputField name={`generalInfo.${index}.firstname`} label="Prénom"/>
-                    <CVInputField name={`generalInfo.${index}.lastname`} label="Nom"/>
-                    <CVInputField name={`generalInfo.${index}.email`} label="Email"/>
-                    <CVInputField name={`generalInfo.${index}.phone`} label="Téléphone"/>
-                    <CVInputField name={`generalInfo.${index}.address`} label="Adresse"/>
-                    <CVTextareaField name={`generalInfo.${index}.summary`} label="Résumé"/>
+                    <CVField name={`generalInfo.${index}.title`} label="Titre"/>
+                    <CVField name={`generalInfo.${index}.firstname`} label="Prénom"/>
+                    <CVField name={`generalInfo.${index}.lastname`} label="Nom"/>
+                    <CVField name={`generalInfo.${index}.email`} label="Email"/>
+                    <CVField name={`generalInfo.${index}.phone`} label="Téléphone"/>
+                    <CVField name={`generalInfo.${index}.address`} label="Adresse"/>
+                    <CVField name={`generalInfo.${index}.summary`} label="Résumé" component="textarea"/>
                 </>
             )}
         </SectionForm>
@@ -46,3 +49,4 @@ const GeneralInfoSection: React.FC<{ cvId: string }> = ({cvId}) => {
 };
 
 export default GeneralInfoSection;
+

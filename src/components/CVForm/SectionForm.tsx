@@ -1,66 +1,77 @@
-// components/SectionForm.tsx
-import React, {useEffect, ReactNode, useCallback} from 'react';
+// src/components/CVForm/SectionForm.tsx
+
+import React, {useEffect} from 'react';
 import {useFieldArray, useFormContext} from 'react-hook-form';
 import {Button} from '../ui/Button';
 import {PlusCircle, MinusCircle} from 'lucide-react';
 
 interface SectionFormProps<T> {
     name: string;
-    cvId: string;
     fieldsData: T[];
-    addAction: (cvId: string, item: T) => void;
-    updateAction: (cvId: string, item: T) => void;
-    removeAction: (cvId: string, itemId: string) => void;
-    children: (item: T, index: number) => ReactNode;
+    addAction: (item: T) => Promise<void>;
+    updateAction: (id: string, changes: Partial<T>) => Promise<void>;
+    removeAction: (id: string) => Promise<void>;
     newItem: T;
+    children: (index: number) => React.ReactNode;
 }
 
-export function SectionForm<T extends { id: string }>({
-                                                          name,
-                                                          cvId,
-                                                          addAction,
-                                                          updateAction,
-                                                          removeAction,
-                                                          children,
-                                                          newItem,
-                                                      }: SectionFormProps<T>) {
+function SectionFormComponent<T extends { id: string }>({
+                                                            name,
+                                                            fieldsData,
+                                                            addAction,
+                                                            updateAction,
+                                                            removeAction,
+                                                            newItem,
+                                                            children,
+                                                        }: SectionFormProps<T>) {
     const {control, watch} = useFormContext();
-    const {fields, append, remove} = useFieldArray({control, name});
+    const {fields, append, remove, replace} = useFieldArray({control, name});
+    const watchedFields = watch(name) as T[];
 
-    const watchedItems = watch(name) as T[];
-
+    // Remplace les champs dans `useFieldArray` quand `fieldsData` change
     useEffect(() => {
-        if (watchedItems) {
-            watchedItems.forEach((item) => {
-                if (item.id) updateAction(cvId, item);
-            });
-        }
-    }, [watchedItems, cvId, updateAction]);
+        replace(fieldsData);
+    }, [fieldsData, replace]);
 
-    const handleAdd = useCallback(() => {
+    // Mise à jour des champs
+    useEffect(() => {
+        watchedFields?.forEach((field, index) => {
+            if (field.id && JSON.stringify(field) !== JSON.stringify(fields[index])) {
+                updateAction(field.id, field);
+            }
+        });
+    }, [watchedFields, updateAction, fields]);
+
+    const handleAddItem = () => {
         append(newItem);
-        addAction(cvId, newItem);
-    }, [append, addAction, cvId, newItem]);
+        addAction(newItem);
+    };
 
-    const handleRemove = useCallback((index: number) => {
-        const removedItem = fields[index];
+    const handleRemoveItem = (index: number) => {
+        const itemId = fields[index].id;
         remove(index);
-        removeAction(cvId, removedItem.id);
-    }, [fields, remove, removeAction, cvId]);
+        removeAction(itemId);
+    };
 
     return (
-        <div className="cv-form__section">
+        <div className={`cv-form__section ${name}`}>
+            <h3>{name.charAt(0).toUpperCase() + name.slice(1)}</h3>
             {fields.map((item, index) => (
                 <div key={item.id} className="cv-form__item">
-                    {children(item, index)}
-                    <Button onClick={() => handleRemove(index)} type="button" variant="outline">
+                    {children(index)}
+                    <Button onClick={() => handleRemoveItem(index)} type="button" variant="outline">
                         <MinusCircle/> Supprimer
                     </Button>
                 </div>
             ))}
-            <Button onClick={handleAdd} type="button">
-                <PlusCircle/> Ajouter
+            <Button onClick={handleAddItem} type="button">
+                <PlusCircle/> Ajouter un(e) {name}
             </Button>
         </div>
     );
 }
+
+export const SectionForm = React.memo(SectionFormComponent) as typeof SectionFormComponent;
+
+
+

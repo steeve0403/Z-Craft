@@ -1,28 +1,42 @@
-// components/SkillsSection.tsx
 import React from 'react';
-import {CVInputField} from './CVFormFields';
-import {useCVStore} from '../../stores/cvStore';
+import {CVField} from './CVFormFields';
 import {Skill} from '../../types/cv';
 import {SectionForm} from './SectionForm';
+import {useSkills} from "../../hooks/sections/useSkills.ts";
 
 const SkillsSection: React.FC<{ cvId: string }> = ({cvId}) => {
-    const {addSkill, updateSkill, removeSkill} = useCVStore();
-    const newSkill: Skill = {id: Date.now().toString(), name: '', proficiency: 'Beginner'};
+    const {
+        skills,
+        addSkill,
+        updateSkill,
+        deleteSkill
+    } = useSkills(cvId);
+
+    const newSkill: Skill = {
+        id: Date.now().toString(),
+        cvId,
+        name: '',
+        proficiency: 'Beginner',
+    }
 
     return (
         <SectionForm<Skill>
             name="skills"
-            cvId={cvId}
-            fieldsData={[]}
+            fieldsData={skills}
             addAction={addSkill}
             updateAction={updateSkill}
-            removeAction={removeSkill}
+            removeAction={deleteSkill}
             newItem={newSkill}
         >
             {(index) => (
                 <>
-                    <CVInputField name={`skills.${index}.name`} label="Compétence"/>
-                    <CVInputField name={`skills.${index}.proficiency`} label="Niveau"/>
+                    <CVField name={`skills.${index}.name`} label="Skill Name"/>
+                    <CVField
+                        name={`skills.${index}.proficiency`}
+                        label="Proficiency"
+                        component="input"
+                        type="text"
+                    />
                 </>
             )}
         </SectionForm>
@@ -30,4 +44,6 @@ const SkillsSection: React.FC<{ cvId: string }> = ({cvId}) => {
 };
 
 export default SkillsSection;
+
+
 

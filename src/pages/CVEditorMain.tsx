@@ -1,7 +1,7 @@
 // CVEditorMain.tsx
 import React, {useEffect} from 'react';
 import {useNavigate, useParams} from 'react-router-dom';
-import CVPreview from '../components/Preview/CVPreview';
+import CVPreview from '../components/CVPreview.tsx';
 import {Button} from '../components/ui/Button';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -39,6 +39,7 @@ const CVEditorMain: React.FC = () => {
             <div className="cv-sections-overview">
                 <h2>{cvId ? 'Modifier le CV' : 'Créer un Nouveau CV'}</h2>
                 <div className="sections-grid">
+                    <Button onClick={() => handleSelectSection('personal')}>Informations Personnelles</Button>
                     <Button onClick={() => handleSelectSection('experience')}>Expérience</Button>
                     <Button onClick={() => handleSelectSection('education')}>Éducation</Button>
                     <Button onClick={() => handleSelectSection('skills')}>Compétences</Button>

@@ -1,40 +1,43 @@
-// components/ExperienceSection.tsx
 import React from 'react';
-import {CVInputField, CVDateField, CVTextareaField} from './CVFormFields';
-import {useCVStore} from '../../stores/cvStore';
+import {CVField} from './CVFormFields';
 import {Experience} from '../../types/cv';
 import {SectionForm} from './SectionForm';
+import {useExperiences} from "../../hooks/sections/useExperiences.ts";
 
 const ExperienceSection: React.FC<{ cvId: string }> = ({cvId}) => {
-    const {addExperience, updateExperience, removeExperience} = useCVStore();
+    const {
+        experiences,
+        addExperience,
+        updateExperience,
+        deleteExperience
+    } = useExperiences(cvId);
+
     const newExperience: Experience = {
         id: Date.now().toString(),
+        cvId,
         company: '',
         position: '',
         startDate: '',
         endDate: '',
-        description: ''
+        description: '',
     };
 
     return (
         <SectionForm<Experience>
             name="experience"
-            cvId={cvId}
-            fieldsData={[]}
+            fieldsData={experiences}
             addAction={addExperience}
             updateAction={updateExperience}
-            removeAction={removeExperience}
+            removeAction={deleteExperience}
             newItem={newExperience}
         >
             {(index) => (
                 <>
-                    <CVInputField name={`experience.${index}.company`} label="Entreprise"/>
-                    <CVInputField name={`experience.${index}.position`} label="Poste"/>
-                    <div className="cv-form__dates">
-                        <CVDateField name={`experience.${index}.startDate`} label="Date de début"/>
-                        <CVDateField name={`experience.${index}.endDate`} label="Date de fin"/>
-                    </div>
-                    <CVTextareaField name={`experience.${index}.description`} label="Description"/>
+                    <CVField name={`experience.${index}.company`} label="Company"/>
+                    <CVField name={`experience.${index}.position`} label="Position"/>
+                    <CVField name={`experience.${index}.startDate`} label="Start Date" type="date"/>
+                    <CVField name={`experience.${index}.endDate`} label="End Date" type="date"/>
+                    <CVField name={`experience.${index}.description`} label="Description" component="textarea"/>
                 </>
             )}
         </SectionForm>
@@ -42,6 +45,8 @@ const ExperienceSection: React.FC<{ cvId: string }> = ({cvId}) => {
 };
 
 export default ExperienceSection;
+
+
 
 
 
