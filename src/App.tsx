@@ -1,4 +1,4 @@
-import React, {Suspense, useState} from 'react';
+import React, {Suspense, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {ThemeProvider} from './contexts/ThemeContext.tsx'; // Import du contexte
 import ErrorBoundary from './components/ErrorBoundary.tsx';
@@ -7,8 +7,14 @@ import LoadingSpinner from './components/LoadingSpinner.tsx';
 import Header from './layouts/Header.tsx';
 import Footer from './layouts/Footer.tsx';
 import Sidebar from './components/Sidebar.tsx';
+import {seedDatabase} from "./db/dbSeed.ts";
 
 const App: React.FC = () => {
+
+    useEffect(() => {
+        seedDatabase();
+    }, []);
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
     const toggleSidebar = () => {
