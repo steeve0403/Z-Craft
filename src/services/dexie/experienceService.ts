@@ -1,23 +1,21 @@
-import db from '../../db/dexieConfig.ts';
+import db from '../../db/dexieConfig';
 import {Experience} from '../../types/cv';
+import {handleServiceError} from "../utils/utilsService.ts";
 
 const experienceService = {
-    getExperiencesByCVId: async (cvId: string): Promise<Experience[]> => {
-        return db.experience.where('cvId').equals(cvId).toArray();
-    },
+    getExperiencesByCVId: (cvId: string): Promise<Experience[]> =>
+        handleServiceError(() => db.experience.where('cvId').equals(cvId).toArray(), "Unable to fetch Experience records."),
 
-    addExperience: async (experience: Experience): Promise<void> => {
-        await db.experience.add(experience);
-    },
+    addExperience: (experience: Experience): Promise<void> =>
+        handleServiceError(() => db.experience.add(experience), "Unable to add Experience record."),
 
-    updateExperience: async (id: string, changes: Partial<Experience>): Promise<void> => {
-        await db.experience.update(id, changes);
-    },
+    updateExperience: (id: string, changes: Partial<Experience>): Promise<number> =>
+        handleServiceError(() => db.experience.update(id, changes), "Unable to update Experience record."),
 
-    deleteExperience: async (id: string): Promise<void> => {
-        await db.experience.delete(id);
-    },
+    deleteExperience: (id: string): Promise<void> =>
+        handleServiceError(() => db.experience.delete(id), "Unable to delete Experience record.")
 };
 
 export default experienceService;
+
 

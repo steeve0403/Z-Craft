@@ -1,23 +1,19 @@
-import db from '../../db/dexieConfig.ts';
+import db from '../../db/dexieConfig';
 import { GeneralInfo } from '../../types/cv';
+import {handleServiceError} from "../utils/utilsService.ts";
 
-const experienceService = {
-    getGeneralInfosByCVId: async (cvId: string): Promise<GeneralInfo[]> => {
-        return db.generalInfo.where('cvId').equals(cvId).toArray();
-    },
+const generalInfoService = {
+    getGeneralInfosByCVId: (cvId: string): Promise<GeneralInfo[]> =>
+        handleServiceError(() => db.generalInfo.where('cvId').equals(cvId).toArray(), "Unable to fetch General Info."),
 
-    addGeneralInfo: async (generalInfo: GeneralInfo): Promise<void> => {
-        await db.generalInfo.add(generalInfo);
-    },
+    addGeneralInfo: (generalInfo: GeneralInfo): Promise<void> =>
+        handleServiceError(() => db.generalInfo.add(generalInfo), "Unable to add General Info."),
 
-    updateGeneralInfo: async (id: string, changes: Partial<GeneralInfo>): Promise<void> => {
-        await db.generalInfo.update(id, changes);
-    },
+    updateGeneralInfo: (id: string, changes: Partial<GeneralInfo>): Promise<number> =>
+        handleServiceError(() => db.generalInfo.update(id, changes), "Unable to update General Info."),
 
-    deleteGeneralInfo: async (id: string): Promise<void> => {
-        await db.generalInfo.delete(id);
-    },
+    deleteGeneralInfo: (id: string): Promise<void> =>
+        handleServiceError(() => db.generalInfo.delete(id), "Unable to delete General Info.")
 };
 
-export default experienceService;
-
+export default generalInfoService;

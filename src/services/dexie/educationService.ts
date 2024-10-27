@@ -1,23 +1,21 @@
 import db from '../../db/dexieConfig';
-import {Education} from '../../types/cv';
+import { Education } from '../../types/cv';
+import {handleServiceError} from "../utils/utilsService.ts";
 
 const educationService = {
-    getEducationsByCVId: async (cvId: string): Promise<Education[]> => {
-        return db.education.where('cvId').equals(cvId).toArray();
-    },
+    getEducationsByCVId: (cvId: string): Promise<Education[]> =>
+        handleServiceError(() => db.education.where('cvId').equals(cvId).toArray(), "Unable to fetch Education records."),
 
-    addEducation: async (education: Education): Promise<void> => {
-        await db.education.add(education);
-    },
+    addEducation: (education: Education): Promise<void> =>
+        handleServiceError(() => db.education.add(education), "Unable to add Education record."),
 
-    updateEducation: async (id: string, changes: Partial<Education>): Promise<void> => {
-        await db.education.update(id, changes);
-    },
+    updateEducation: (id: string, changes: Partial<Education>): Promise<number> =>
+        handleServiceError(() => db.education.update(id, changes), "Unable to update Education record."),
 
-    deleteEducation: async (id: string): Promise<void> => {
-        await db.education.delete(id);
-    },
+    deleteEducation: (id: string): Promise<void> =>
+        handleServiceError(() => db.education.delete(id), "Unable to delete Education record.")
 };
 
 export default educationService;
+
 
