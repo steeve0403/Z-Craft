@@ -1,13 +1,12 @@
 import {StateCreator} from 'zustand';
 import {Language} from '../../types/cv';
 import languageService from "../../services/dexie/languageService";
-import {useLiveQuery} from "dexie-react-hooks";
 
 export interface LanguageSlice {
     languages: Language[];
     loading: boolean;
     error: string | null;
-    useFetchLanguagesByCVId: (cvId: string) => Language[] | undefined;
+    fetchLanguagesByCVId: (cvId: string) => Promise<void>;
     addLanguage: (language: Language) => Promise<void>;
     updateLanguage: (languageId: string, changes: Partial<Language>) => Promise<void>;
     deleteLanguage: (languageId: string) => Promise<void>;
@@ -18,19 +17,16 @@ export const createLanguageSlice: StateCreator<LanguageSlice> = (set) => ({
     loading: false,
     error: null,
 
-    useFetchLanguagesByCVId: (cvId) => {
-        const languages = useLiveQuery(async () => {
-            set({loading: true, error: null});
-            try {
-                const languages = await languageService.getLanguagesByCVId(cvId);
-                set({languages});
-            } catch (error) {
-                set({error: 'Error while loading languages'});
-            } finally {
-                set({loading: false});
-            }
-        }, [cvId]);
-        return languages || [];
+    fetchLanguagesByCVId: async (cvId) => {
+        set({loading: true, error: null});
+        try {
+            const languages = await languageService.getLanguagesByCVId(cvId);
+            set({languages});
+        } catch (error) {
+            set({error: 'Error while loading languages'});
+        } finally {
+            set({loading: false});
+        }
     },
 
     addLanguage: async (language) => {

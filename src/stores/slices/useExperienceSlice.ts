@@ -1,13 +1,12 @@
 import {StateCreator} from 'zustand';
 import {Experience} from '../../types/cv';
 import experienceService from '../../services/dexie/experienceService';
-import {useLiveQuery} from "dexie-react-hooks";
 
 export interface ExperienceSlice {
     experiences: Experience[];
     loading: boolean;
     error: string | null;
-    useFetchExperiencesByCVId: (cvId: string) => Experience[] | undefined;
+    fetchExperiencesByCVId: (cvId: string) => Promise<void>;
     addExperience: (experience: Experience) => Promise<void>;
     updateExperience: (experienceId: string, changes: Partial<Experience>) => Promise<void>;
     deleteExperience: (experienceId: string) => Promise<void>;
@@ -19,17 +18,14 @@ export const createExperienceSlice: StateCreator<ExperienceSlice> = (set) => ({
     loading: false,
     error: null,
 
-    useFetchExperiencesByCVId: (cvId) => {
-        const experiences = useLiveQuery(async () => {
-            set({ loading: true, error: null });
-            try {
-                const experienceList = await experienceService.getExperiencesByCVId(cvId);
-                set({ experiences: experienceList, loading: false });
-            } catch (error) {
-                set({ error: "Erreur lors du chargement des expériences.", loading: false });
-            }
-        }, [cvId]);
-        return experiences || [];
+    fetchExperiencesByCVId: async (cvId) => {
+        set({loading: true, error: null});
+        try {
+            const experienceList = await experienceService.getExperiencesByCVId(cvId);
+            set({experiences: experienceList, loading: false});
+        } catch (error) {
+            set({error: "Erreur lors du chargement des expériences.", loading: false});
+        }
     },
 
     addExperience: async (experience) => {

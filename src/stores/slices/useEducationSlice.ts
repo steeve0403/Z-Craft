@@ -1,13 +1,12 @@
 import {StateCreator} from 'zustand';
 import {Education} from '../../types/cv';
 import educationService from '../../services/dexie/educationService';
-import {useLiveQuery} from "dexie-react-hooks";
 
 export interface EducationSlice {
     educations: Education[];
     loading: boolean;
     error: string | null;
-    useFetchEducationsByCVId: (cvId: string) => Education[] | undefined;
+    fetchEducationsByCVId: (cvId: string) => Promise<void>;
     addEducation: (education: Education) => Promise<void>;
     updateEducation: (educationId: string, changes: Partial<Education>) => Promise<void>;
     deleteEducation: (educationId: string) => Promise<void>;
@@ -18,8 +17,7 @@ export const createEducationSlice: StateCreator<EducationSlice, []> = (set) => (
     loading: false,
     error: null,
 
-    useFetchEducationsByCVId: (cvId) => {
-        const educations = useLiveQuery(async () => {
+    fetchEducationsByCVId: async (cvId) => {
             set({loading: true, error: null});
             try {
                 const educations = await educationService.getEducationsByCVId(cvId);
@@ -30,9 +28,7 @@ export const createEducationSlice: StateCreator<EducationSlice, []> = (set) => (
                 set({loading: false});
             }
 
-        }, [cvId]);
-        return educations || [];
-    },
+        },
 
     addEducation: async (education) => {
         set({loading: true, error: null});

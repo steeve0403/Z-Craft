@@ -7,6 +7,7 @@ export interface CV {
 
 export interface GeneralInfo {
     id: string;
+    cvId: string;
     title: string;
     firstname: string;
     lastname: string;

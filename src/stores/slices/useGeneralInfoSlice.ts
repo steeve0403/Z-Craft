@@ -1,13 +1,12 @@
 import {StateCreator} from 'zustand';
 import {GeneralInfo} from '../../types/cv';
 import generalInfoService from '../../services/dexie/generalInfoService.ts';
-import {useLiveQuery} from "dexie-react-hooks";
 
 export interface GeneralInfoSlice {
     generalInfos: GeneralInfo[];
     loading: boolean;
     error: string | null;
-    useFetchGeneralInfosByCVId: (cvId: string) => GeneralInfo[] | undefined;
+    fetchGeneralInfosByCVId: (cvId: string) => Promise<void>;
     addGeneralInfo: (generalInfo: GeneralInfo) => Promise<void>;
     updateGeneralInfo: (generalInfoId: string, changes: Partial<GeneralInfo>) => Promise<void>;
     deleteGeneralInfo: (generalInfoId: string) => Promise<void>;
@@ -18,8 +17,7 @@ export const createGeneralInfoSlice: StateCreator<GeneralInfoSlice> = (set) => (
     loading: false,
     error: null,
 
-    useFetchGeneralInfosByCVId: (cvId) => {
-        const generalInfos = useLiveQuery(async () => {
+    fetchGeneralInfosByCVId: async (cvId) => {
             set({loading: true, error: null});
             try {
                 const generalInfos = await generalInfoService.getGeneralInfosByCVId(cvId);
@@ -29,10 +27,7 @@ export const createGeneralInfoSlice: StateCreator<GeneralInfoSlice> = (set) => (
             } finally {
                 set({loading: false});
             }
-        }, [cvId]);
-        return generalInfos || [];
-    },
-
+        },
     addGeneralInfo: async (generalInfo) => {
         set({loading: true, error: null});
         try {

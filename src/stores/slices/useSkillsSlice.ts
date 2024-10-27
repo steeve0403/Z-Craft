@@ -1,13 +1,12 @@
 import {StateCreator} from 'zustand';
 import {Skill} from '../../types/cv';
 import skillService from "../../services/dexie/skillService";
-import {useLiveQuery} from "dexie-react-hooks";
 
 export interface SkillSlice {
     skills: Skill[];
     loading: boolean;
     error: string | null;
-    useFetchSkillsByCVId: (cvId: string) => Skill[] | undefined;
+    fetchSkillsByCVId: (cvId: string) => Promise<void>;
     addSkill: (skill: Skill) => Promise<void>;
     updateSkill: (skillId: string, changes: Partial<Skill>) => Promise<void>;
     deleteSkill: (skillId: string) => Promise<void>;
@@ -18,19 +17,16 @@ export const createSkillSlice: StateCreator<SkillSlice> = (set) => ({
     loading: false,
     error: null,
 
-    useFetchSkillsByCVId: (cvId) => {
-        const skills = useLiveQuery(async () => {
-            set({loading: true, error: null});
-            try {
-                const skills = await skillService.getSkillsByCVId(cvId);
-                set({skills});
-            } catch (error) {
-                set({error: 'Error while loading skills'});
-            } finally {
-                set({loading: false});
-            }
-        }, [cvId]);
-        return skills || [];
+    fetchSkillsByCVId: async (cvId) => {
+        set({loading: true, error: null});
+        try {
+            const skills = await skillService.getSkillsByCVId(cvId);
+            set({skills});
+        } catch (error) {
+            set({error: 'Error while loading skills'});
+        } finally {
+            set({loading: false});
+        }
     },
 
     addSkill: async (skill) => {
