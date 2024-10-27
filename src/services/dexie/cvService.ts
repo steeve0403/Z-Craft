@@ -1,24 +1,23 @@
-import { CV } from '../../types/cv';
-import db from "../../db/dexieConfig.ts";
+import {CV} from '../../types/cv';
+import db from '../../db/dexieConfig';
+import {handleServiceError} from "../utils/utilsService.ts";
 
 const cvService = {
-    getAllCVs: async (): Promise<CV[]> => {
-        return db.cvs.toArray();
-    },
+    getAllCVs: (): Promise<CV[]> =>
+        handleServiceError(() => db.cvs.toArray(), "Unable to fetch CVs."),
 
-    addCV: async (cv: CV): Promise<void> => {
-        await db.cvs.add(cv);
-    },
+    addCV: (cv: CV): Promise<void> =>
+        handleServiceError(() => db.cvs.add(cv), "Unable to add CV."),
 
-    updateCV: async (cvId: string, changes: Partial<CV>): Promise<void> => {
-        await db.cvs.update(cvId, changes);
-    },
+    updateCV: (cvId: string, changes: Partial<CV>): Promise<number> =>
+        handleServiceError(() => db.cvs.update(cvId, changes), "Unable to update CV."),
 
-    deleteCV: async (cvId: string): Promise<void> => {
-        await db.cvs.delete(cvId);
-    }
+    deleteCV: (cvId: string): Promise<void> =>
+        handleServiceError(() => db.cvs.delete(cvId), "Unable to delete CV.")
 };
 
 export default cvService;
+
+
 
 

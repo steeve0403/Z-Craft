@@ -1,22 +1,28 @@
-import { useCVStore } from '../stores/cvStore';
+import {useEffect} from 'react';
+import {useCVStore} from '../stores/cvStore';
 
 export const useCVs = () => {
-    const cvs = useCVStore((state) => state.cvs);
-    const loading = useCVStore((state) => state.loading);
-    const error = useCVStore((state) => state.error);
+    const {cvs, loading, error, fetchCVs, addCV, updateCV, deleteCV} = useCVStore((state) => ({
+        cvs: state.cvs,
+        loading: state.loading,
+        error: state.error,
+        fetchCVs: state.fetchCVs,
+        addCV: state.addCV,
+        updateCV: state.updateCV,
+        deleteCV: state.deleteCV,
+    }));
 
-    const fetchCVs = useCVStore((state) => state.useFetchCVs);
-    const addCV = useCVStore((state) => state.addCV);
-    const updateCV = useCVStore((state) => state.updateCV);
-    const deleteCV = useCVStore((state) => state.deleteCV);
+    useEffect(() => {
+        fetchCVs();
+    }, [fetchCVs]);
 
     return {
         cvs,
         loading,
         error,
-        fetchCVs,
         addCV,
         updateCV,
         deleteCV,
     };
 };
+

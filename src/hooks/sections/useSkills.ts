@@ -1,13 +1,22 @@
-import {useCVStore} from "../../stores/cvStore.ts";
+import {useEffect} from 'react';
+import {useCVStore} from '../../stores/cvStore';
 
 export const useSkills = (cvId: string) => {
-    const skills = useCVStore((state) => state.useFetchSkillsByCVId(cvId));
-    const loading = useCVStore((state) => state.loading);
-    const error = useCVStore((state) => state.error);
+    const {skills, loading, error, fetchSkillsByCVId, addSkill, updateSkill, deleteSkill} =
+        useCVStore((state) => ({
+            skills: state.skills,
+            loading: state.loading,
+            error: state.error,
+            fetchSkillsByCVId: state.fetchSkillsByCVId,
+            addSkill: state.addSkill,
+            updateSkill: state.updateSkill,
+            deleteSkill: state.deleteSkill,
+        }));
 
-    const addSkill = useCVStore((state) => state.addSkill);
-    const updateSkill = useCVStore((state) => state.updateSkill);
-    const deleteSkill = useCVStore((state) => state.deleteSkill);
+    // Charger les compétences lors du premier rendu ou lors d'un changement de cvId
+    useEffect(() => {
+        fetchSkillsByCVId(cvId);
+    }, [fetchSkillsByCVId, cvId]);
 
     return {
         skills,

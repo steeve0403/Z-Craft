@@ -1,13 +1,22 @@
-import {useCVStore} from "../../stores/cvStore.ts";
+import {useEffect} from 'react';
+import {useCVStore} from '../../stores/cvStore';
 
 export const useExperiences = (cvId: string) => {
-    const experiences = useCVStore((state) => state.useFetchExperiencesByCVId(cvId));
-    const loading = useCVStore((state) => state.loading);
-    const error = useCVStore((state) => state.error);
+    const {experiences, loading, error, fetchExperiencesByCVId, addExperience, updateExperience, deleteExperience} =
+        useCVStore((state) => ({
+            experiences: state.experiences,
+            loading: state.loading,
+            error: state.error,
+            fetchExperiencesByCVId: state.fetchExperiencesByCVId,
+            addExperience: state.addExperience,
+            updateExperience: state.updateExperience,
+            deleteExperience: state.deleteExperience,
+        }));
 
-    const addExperience = useCVStore((state) => state.addExperience);
-    const updateExperience = useCVStore((state) => state.updateExperience);
-    const deleteExperience = useCVStore((state) => state.deleteExperience);
+    // Charger les expériences lors du premier rendu ou lors d'un changement de cvId
+    useEffect(() => {
+        fetchExperiencesByCVId(cvId);
+    }, [fetchExperiencesByCVId, cvId]);
 
     return {
         experiences,

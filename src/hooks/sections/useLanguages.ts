@@ -1,13 +1,22 @@
-import {useCVStore} from "../../stores/cvStore.ts";
+import {useEffect} from 'react';
+import {useCVStore} from '../../stores/cvStore';
 
 export const useLanguages = (cvId: string) => {
-    const languages = useCVStore((state) => state.useFetchLanguagesByCVId(cvId));
-    const loading = useCVStore((state) => state.loading);
-    const error = useCVStore((state) => state.error);
+    const {languages, loading, error, fetchLanguagesByCVId, addLanguage, updateLanguage, deleteLanguage} =
+        useCVStore((state) => ({
+            languages: state.languages,
+            loading: state.loading,
+            error: state.error,
+            fetchLanguagesByCVId: state.fetchLanguagesByCVId,
+            addLanguage: state.addLanguage,
+            updateLanguage: state.updateLanguage,
+            deleteLanguage: state.deleteLanguage,
+        }));
 
-    const addLanguage = useCVStore((state) => state.addLanguage);
-    const updateLanguage = useCVStore((state) => state.updateLanguage);
-    const deleteLanguage = useCVStore((state) => state.deleteLanguage);
+    // Charger les langues lors du premier rendu ou lors d'un changement de cvId
+    useEffect(() => {
+        fetchLanguagesByCVId(cvId);
+    }, [fetchLanguagesByCVId, cvId]);
 
     return {
         languages,
@@ -18,3 +27,4 @@ export const useLanguages = (cvId: string) => {
         deleteLanguage,
     };
 };
+

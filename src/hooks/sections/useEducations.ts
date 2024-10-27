@@ -1,13 +1,21 @@
-import {useCVStore} from "../../stores/cvStore.ts";
+import {useEffect} from 'react';
+import {useCVStore} from '../../stores/cvStore';
 
 export const useEducations = (cvId: string) => {
-    const educations = useCVStore((state) => state.useFetchEducationsByCVId(cvId));
-    const loading = useCVStore((state) => state.loading);
-    const error = useCVStore((state) => state.error);
+    const {educations, loading, error, fetchEducationsByCVId, addEducation, updateEducation, deleteEducation} =
+        useCVStore((state) => ({
+            educations: state.educations,
+            loading: state.loading,
+            error: state.error,
+            fetchEducationsByCVId: state.fetchEducationsByCVId,
+            addEducation: state.addEducation,
+            updateEducation: state.updateEducation,
+            deleteEducation: state.deleteEducation,
+        }));
 
-    const addEducation = useCVStore((state) => state.addEducation);
-    const updateEducation = useCVStore((state) => state.updateEducation);
-    const deleteEducation = useCVStore((state) => state.deleteEducation);
+    useEffect(() => {
+        fetchEducationsByCVId(cvId);
+    }, [fetchEducationsByCVId, cvId]);
 
     return {
         educations,
