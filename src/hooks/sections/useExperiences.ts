@@ -7,7 +7,7 @@ export const useExperiences = (cvId: string) => {
             experiences: state.experiences,
             loading: state.loading,
             error: state.error,
-            fetchExperiencesByCVId: state.fetchExperiencesByCVId,
+            fetchExperiencesByCVId: state.fetchExperiences,
             addExperience: state.addExperience,
             updateExperience: state.updateExperience,
             deleteExperience: state.deleteExperience,

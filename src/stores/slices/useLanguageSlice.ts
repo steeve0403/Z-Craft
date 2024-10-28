@@ -1,15 +1,16 @@
-import {StateCreator} from 'zustand';
-import {Language} from '../../types/cv';
-import languageService from "../../services/dexie/languageService";
+// src/stores/slices/useLanguageSlice.ts
+import { StateCreator } from 'zustand';
+import { Language } from '../../types/cv';
+import languageService from '../../services/dexie/languageService';
 
 export interface LanguageSlice {
     languages: Language[];
-    loading: boolean;
-    error: string | null;
-    fetchLanguagesByCVId: (cvId: string) => Promise<void>;
+    fetchLanguages: (cvId: string) => Promise<void>;
     addLanguage: (language: Language) => Promise<void>;
     updateLanguage: (languageId: string, changes: Partial<Language>) => Promise<void>;
     deleteLanguage: (languageId: string) => Promise<void>;
+    loading: boolean;
+    error: string | null;
 }
 
 export const createLanguageSlice: StateCreator<LanguageSlice> = (set) => ({
@@ -17,59 +18,51 @@ export const createLanguageSlice: StateCreator<LanguageSlice> = (set) => ({
     loading: false,
     error: null,
 
-    fetchLanguagesByCVId: async (cvId) => {
-        set({loading: true, error: null});
+    fetchLanguages: async (cvId) => {
+        set({ loading: true, error: null });
         try {
             const languages = await languageService.getLanguagesByCVId(cvId);
-            set({languages});
+            set({ languages, loading: false });
         } catch (error) {
-            set({error: 'Error while loading languages'});
-        } finally {
-            set({loading: false});
+            set({ error: 'Error fetching languages', loading: false });
         }
     },
 
     addLanguage: async (language) => {
-        set({loading: true, error: null});
+        set({ loading: true, error: null });
         try {
             await languageService.addLanguage(language);
-            set((state) => ({
-                languages: [...state.languages, language],
-            }));
+            set((state) => ({ languages: [...state.languages, language], loading: false }));
         } catch (error) {
-            set({error: 'Error while adding the language'});
-        } finally {
-            set({loading: false});
+            set({ error: 'Error adding language', loading: false });
         }
     },
 
     updateLanguage: async (languageId, changes) => {
-        set({loading: true, error: null});
+        set({ loading: true, error: null });
         try {
             await languageService.updateLanguage(languageId, changes);
             set((state) => ({
-                languages: state.languages.map((exp) =>
-                    exp.id === languageId ? {...exp, ...changes} : exp
+                languages: state.languages.map((lang) =>
+                    lang.id === languageId ? { ...lang, ...changes } : lang
                 ),
+                loading: false,
             }));
         } catch (error) {
-            set({error: 'Error while updating the language'});
-        } finally {
-            set({loading: false});
+            set({ error: 'Error updating language', loading: false });
         }
     },
 
     deleteLanguage: async (languageId) => {
-        set({loading: true, error: null});
+        set({ loading: true, error: null });
         try {
             await languageService.deleteLanguage(languageId);
             set((state) => ({
-                languages: state.languages.filter((exp) => exp.id !== languageId),
+                languages: state.languages.filter((lang) => lang.id !== languageId),
+                loading: false,
             }));
         } catch (error) {
-            set({error: 'Error while deleting the language'});
-        } finally {
-            set({loading: false});
+            set({ error: 'Error deleting language', loading: false });
         }
     },
 });

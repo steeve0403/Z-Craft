@@ -1,5 +1,5 @@
 import db from './dexieConfig';
-import { CV, GeneralInfo, Experience, Education, Skill, Language, Template } from '../types/cv';
+import {CV, GeneralInfo, Experience, Education, Skill, Language, Template} from '../types/cv';
 
 /**
  * Database population function with dummy data.

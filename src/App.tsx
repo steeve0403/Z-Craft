@@ -1,6 +1,6 @@
 import React, {Suspense, useEffect, useState} from 'react';
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import {ThemeProvider} from './contexts/ThemeContext.tsx'; // Import du contexte
+import {ThemeProvider} from './contexts/ThemeContext.tsx';
 import ErrorBoundary from './components/ErrorBoundary.tsx';
 import {routes} from './routes.ts';
 import LoadingSpinner from './components/LoadingSpinner.tsx';

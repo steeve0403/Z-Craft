@@ -7,7 +7,7 @@ export const useEducations = (cvId: string) => {
             educations: state.educations,
             loading: state.loading,
             error: state.error,
-            fetchEducationsByCVId: state.fetchEducationsByCVId,
+            fetchEducationsByCVId: state.fetchEducations,
             addEducation: state.addEducation,
             updateEducation: state.updateEducation,
             deleteEducation: state.deleteEducation,

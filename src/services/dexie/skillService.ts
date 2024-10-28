@@ -1,22 +1,31 @@
 import db from '../../db/dexieConfig';
 import {Skill} from '../../types/cv';
-import {handleServiceError} from "../utils/utilsService.ts";
+import {handleServiceError} from '../utils/utilsService';
 
 const skillService = {
-    getSkillsByCVId: (cvId: string): Promise<Skill[]> =>
-        handleServiceError(() => db.skill.where('cvId').equals(cvId).toArray(), "Unable to fetch Skill records."),
+    getSkillsByCVId: async (cvId: string): Promise<Skill[]> =>
+        handleServiceError(
+            () => db.skill.where('cvId').equals(cvId).toArray(),
+            `Failed to fetch skills for CV with ID: ${cvId}`
+        ),
 
-    addSkill: (skill: Skill): Promise<void> =>
-        handleServiceError(() => db.skill.add(skill), "Unable to add Skill record."),
+    addSkill: async (skill: Skill): Promise<void> =>
+        handleServiceError(async () => {
+            await db.skill.add(skill);
+        }, "Failed to add skill to the database."),
 
-    updateSkill: (id: string, changes: Partial<Skill>): Promise<number> =>
-        handleServiceError(() => db.skill.update(id, changes), "Unable to update Skill record."),
+    updateSkill: async (skillId: string, changes: Partial<Skill>): Promise<number> =>
+        handleServiceError(
+            () => db.skill.update(skillId, changes),
+            "Failed to update skill in the database."
+        ),
 
-    deleteSkill: (id: string): Promise<void> =>
-        handleServiceError(() => db.skill.delete(id), "Unable to delete Skill record.")
+    deleteSkill: async (skillId: string): Promise<void> =>
+        handleServiceError(
+            () => db.skill.delete(skillId),
+            "Failed to delete skill from the database."
+        ),
 };
 
 export default skillService;
-
-
 

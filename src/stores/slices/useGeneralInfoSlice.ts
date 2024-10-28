@@ -1,15 +1,15 @@
 import {StateCreator} from 'zustand';
 import {GeneralInfo} from '../../types/cv';
-import generalInfoService from '../../services/dexie/generalInfoService.ts';
+import generalInfoService from '../../services/dexie/generalInfoService';
 
 export interface GeneralInfoSlice {
-    generalInfos: GeneralInfo[];
-    loading: boolean;
-    error: string | null;
-    fetchGeneralInfosByCVId: (cvId: string) => Promise<void>;
+    generalInfos: GeneralInfo[]
+    fetchGeneralInfo: (cvId: string) => Promise<void>;
     addGeneralInfo: (generalInfo: GeneralInfo) => Promise<void>;
     updateGeneralInfo: (generalInfoId: string, changes: Partial<GeneralInfo>) => Promise<void>;
     deleteGeneralInfo: (generalInfoId: string) => Promise<void>;
+    loading: boolean;
+    error: string | null;
 }
 
 export const createGeneralInfoSlice: StateCreator<GeneralInfoSlice> = (set) => ({
@@ -17,28 +17,24 @@ export const createGeneralInfoSlice: StateCreator<GeneralInfoSlice> = (set) => (
     loading: false,
     error: null,
 
-    fetchGeneralInfosByCVId: async (cvId) => {
-            set({loading: true, error: null});
-            try {
-                const generalInfos = await generalInfoService.getGeneralInfosByCVId(cvId);
-                set({generalInfos});
-            } catch (error) {
-                set({error: 'Error while loading general infos'});
-            } finally {
-                set({loading: false});
-            }
-        },
+
+    fetchGeneralInfo: async (cvId) => {
+        set({loading: true, error: null});
+        try {
+            const generalInfos = await generalInfoService.getGeneralInfoByCVId(cvId);
+            set({generalInfos, loading: false});
+        } catch (error) {
+            set({error: 'Error fetching general info', loading: false});
+        }
+    },
+
     addGeneralInfo: async (generalInfo) => {
         set({loading: true, error: null});
         try {
             await generalInfoService.addGeneralInfo(generalInfo);
-            set((state) => ({
-                generalInfos: [...state.generalInfos, generalInfo],
-            }));
+            set((state) => ({generalInfos: [...state.generalInfos, generalInfo], loading: false}));
         } catch (error) {
-            set({error: 'Error while adding the general info'});
-        } finally {
-            set({loading: false});
+            set({error: 'Error adding general info', loading: false});
         }
     },
 
@@ -47,14 +43,13 @@ export const createGeneralInfoSlice: StateCreator<GeneralInfoSlice> = (set) => (
         try {
             await generalInfoService.updateGeneralInfo(generalInfoId, changes);
             set((state) => ({
-                generalInfos: state.generalInfos.map((exp) =>
-                    exp.id === generalInfoId ? {...exp, ...changes} : exp
+                generalInfos: state.generalInfos.map((infos) =>
+                    infos.id === generalInfoId ? {...infos, ...changes} : infos
                 ),
-            }));
+                loading: false,
+            }))
         } catch (error) {
-            set({error: 'Error while updating the general info'});
-        } finally {
-            set({loading: false});
+            set({error: 'Error updating general info', loading: false});
         }
     },
 
@@ -63,12 +58,10 @@ export const createGeneralInfoSlice: StateCreator<GeneralInfoSlice> = (set) => (
         try {
             await generalInfoService.deleteGeneralInfo(generalInfoId);
             set((state) => ({
-                generalInfos: state.generalInfos.filter((exp) => exp.id !== generalInfoId),
+                generalInfos: state.generalInfos.filter((infos) => infos.id !== generalInfoId)
             }));
         } catch (error) {
-            set({error: 'Error while deleting the general info'});
-        } finally {
-            set({loading: false});
+            set({error: 'Error deleting general info', loading: false});
         }
     },
 });

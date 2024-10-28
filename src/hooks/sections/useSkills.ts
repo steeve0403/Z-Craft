@@ -7,7 +7,7 @@ export const useSkills = (cvId: string) => {
             skills: state.skills,
             loading: state.loading,
             error: state.error,
-            fetchSkillsByCVId: state.fetchSkillsByCVId,
+            fetchSkillsByCVId: state.fetchSkills,
             addSkill: state.addSkill,
             updateSkill: state.updateSkill,
             deleteSkill: state.deleteSkill,

@@ -1,21 +1,31 @@
 import db from '../../db/dexieConfig';
-import {Language} from '../../types/cv';
-import {handleServiceError} from "../utils/utilsService.ts";
+import { Language } from '../../types/cv';
+import { handleServiceError } from '../utils/utilsService';
 
 const languageService = {
-    getLanguagesByCVId: (cvId: string): Promise<Language[]> =>
-        handleServiceError(() => db.language.where('cvId').equals(cvId).toArray(), "Unable to fetch Language records."),
+    getLanguagesByCVId: async (cvId: string): Promise<Language[]> =>
+        handleServiceError(
+            () => db.language.where('cvId').equals(cvId).toArray(),
+            `Failed to fetch languages for CV with ID: ${cvId}`
+        ),
 
-    addLanguage: (language: Language): Promise<void> =>
-        handleServiceError(() => db.language.add(language), "Unable to add Language record."),
+    addLanguage: async (language: Language): Promise<void> =>
+        handleServiceError(async () => {
+            await db.language.add(language);
+        }, "Failed to add language to the database."),
 
-    updateLanguage: (id: string, changes: Partial<Language>): Promise<number> =>
-        handleServiceError(() => db.language.update(id, changes), "Unable to update Language record."),
+    updateLanguage: async (languageId: string, changes: Partial<Language>): Promise<number> =>
+        handleServiceError(
+            () => db.language.update(languageId, changes),
+            "Failed to update language in the database."
+        ),
 
-    deleteLanguage: (id: string): Promise<void> =>
-        handleServiceError(() => db.language.delete(id), "Unable to delete Language record.")
+    deleteLanguage: async (languageId: string): Promise<void> =>
+        handleServiceError(
+            () => db.language.delete(languageId),
+            "Failed to delete language from the database."
+        ),
 };
 
 export default languageService;
-
 

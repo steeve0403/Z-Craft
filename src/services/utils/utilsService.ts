@@ -6,7 +6,10 @@
  * @param operation - The async operation to perform.
  * @param errorMessage - The custom error message to throw if the operation fails.
  */
-export async function handleServiceError<T>(operation: () => Promise<T>, errorMessage: string): Promise<T> {
+export async function handleServiceError<T>(
+    operation: () => Promise<T>,
+    errorMessage: string
+): Promise<T> {
     try {
         return await operation();
     } catch (error) {

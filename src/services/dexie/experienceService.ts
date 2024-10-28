@@ -3,19 +3,28 @@ import {Experience} from '../../types/cv';
 import {handleServiceError} from "../utils/utilsService.ts";
 
 const experienceService = {
-    getExperiencesByCVId: (cvId: string): Promise<Experience[]> =>
-        handleServiceError(() => db.experience.where('cvId').equals(cvId).toArray(), "Unable to fetch Experience records."),
+    getExperiencesByCVId: async (cvId: string): Promise<Experience[]> =>
+        handleServiceError(
+            () => db.experience.where('cvId').equals(cvId).toArray(),
+            `Failed to fetch experiences for CV with ID: ${cvId}`
+        ),
 
-    addExperience: (experience: Experience): Promise<void> =>
-        handleServiceError(() => db.experience.add(experience), "Unable to add Experience record."),
+    addExperience: async (experience: Experience): Promise<void> =>
+        handleServiceError(async () => {
+            await db.experience.add(experience);
+        }, "Failed to add experience to the database."),
 
-    updateExperience: (id: string, changes: Partial<Experience>): Promise<number> =>
-        handleServiceError(() => db.experience.update(id, changes), "Unable to update Experience record."),
+    updateExperience: async (experienceId: string, changes: Partial<Experience>): Promise<number> =>
+        handleServiceError(
+            () => db.experience.update(experienceId, changes),
+            "Failed to update experience in the database."
+        ),
 
-    deleteExperience: (id: string): Promise<void> =>
-        handleServiceError(() => db.experience.delete(id), "Unable to delete Experience record.")
+    deleteExperience: async (experienceId: string): Promise<void> =>
+        handleServiceError(
+            () => db.experience.delete(experienceId),
+            "Failed to delete experience from the database."
+        ),
 };
 
 export default experienceService;
-
-

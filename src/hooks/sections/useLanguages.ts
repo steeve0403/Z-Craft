@@ -7,7 +7,7 @@ export const useLanguages = (cvId: string) => {
             languages: state.languages,
             loading: state.loading,
             error: state.error,
-            fetchLanguagesByCVId: state.fetchLanguagesByCVId,
+            fetchLanguagesByCVId: state.fetchLanguages,
             addLanguage: state.addLanguage,
             updateLanguage: state.updateLanguage,
             deleteLanguage: state.deleteLanguage,

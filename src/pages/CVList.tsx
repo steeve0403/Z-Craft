@@ -1,49 +1,68 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { CV } from '../types/cv';
-import cvService from "../services/dexie/cvService.ts";
+import React, {useEffect} from 'react';
+import {Link} from 'react-router-dom';
+import {useCVs} from '../hooks/useCVs';
+import {Button} from '../components/ui/Button';
 
 const CVList: React.FC = () => {
-    const [cvs, setCvs] = useState<CV[]>([]);
-    const [loading, setLoading] = useState(true);
+    const {cvs, loading, error, deleteCV, addCV} = useCVs();
 
-    // Fonction pour récupérer les CVs depuis la base de données
-    const fetchCVs = async () => {
-        setLoading(true);
+    useEffect(() => {
+        const fetchOrCreateCV = async () => {
+            if (cvs.length === 0 && !loading && !error) {
+                const newCV = {
+                    id: Date.now().toString(),
+                    title: "Example CV",
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString(),
+                };
+                try {
+                    await addCV(newCV);
+                } catch (err) {
+                    console.error("Error adding example CV:", err);
+                }
+            }
+        };
+        fetchOrCreateCV();
+    }, [cvs, loading, error, addCV]);
+
+    const handleDelete = async (id: string) => {
         try {
-            const cvData = await cvService.getAllCVs();
-            setCvs(cvData);
-        } catch (error) {
-            console.error("Erreur lors du chargement des CVs :", error);
-        } finally {
-            setLoading(false);
+            await deleteCV(id);
+        } catch (e) {
+            console.error("Error deleting CV:", e);
+            alert("An error occurred while deleting the CV.");
         }
     };
 
-    useEffect(() => {
-        fetchCVs();
-    }, []);
+    if (loading) return <p>Loading CVs...</p>;
+    if (error) return <p>Error loading CVs: {error}</p>;
 
     return (
         <div className="cv-list">
-            <h2>Mes CVs</h2>
-            {loading ? (
-                <p>Chargement des CVs...</p>
-            ) : cvs.length > 0 ? (
+            <h2>My CVs</h2>
+            {cvs.length > 0 ? (
                 <ul className="cv-list__items">
                     {cvs.map((cv) => (
                         <li key={cv.id} className="cv-list__item">
                             <Link to={`/cv/preview/${cv.id}`} className="cv-list__link">
-                                {cv.title || 'CV sans titre'}
+                                {cv.title || 'Untitled CV'}
                             </Link>
+                            <Button
+                                variant="outline"
+                                onClick={() => handleDelete(cv.id)}
+                                disabled={loading}
+                            >
+                                Delete
+                            </Button>
                         </li>
                     ))}
                 </ul>
             ) : (
-                <p>Aucun CV n’a été créé pour le moment.</p>
+                <p>No CVs created yet.</p>
             )}
         </div>
     );
 };
 
 export default CVList;
+

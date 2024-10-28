@@ -55,3 +55,8 @@ export interface Template {
     id: string;
     title: string;
 }
+
+export interface Section {
+    cvId: string;
+    isEditable?: boolean;
+}

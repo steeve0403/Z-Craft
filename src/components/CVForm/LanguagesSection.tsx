@@ -1,10 +1,10 @@
 import React from 'react';
 import {CVField} from './CVFormFields';
-import {Language} from '../../types/cv';
+import {Language, Section} from '../../types/cv';
 import {SectionForm} from './SectionForm';
 import {useLanguages} from "../../hooks/sections/useLanguages.ts";
 
-const LanguagesSection: React.FC<{ cvId: string }> = ({cvId}) => {
+const LanguagesSection: React.FC<Section> = ({cvId, isEditable = true}) => {
     const {
         languages,
         addLanguage,
@@ -27,16 +27,26 @@ const LanguagesSection: React.FC<{ cvId: string }> = ({cvId}) => {
             updateAction={updateLanguage}
             removeAction={deleteLanguage}
             newItem={newLanguage}
+            isEditable={isEditable}
         >
             {(index) => (
                 <>
-                    <CVField name={`languages.${index}.name`} label="Language"/>
-                    <CVField
-                        name={`languages.${index}.proficiency`}
-                        label="Proficiency"
-                        component="input"
-                        type="text"
-                    />
+                    {isEditable ? (
+                        <>
+                            <CVField name={`languages.${index}.name`} label="Language"/>
+                            <CVField
+                                name={`languages.${index}.proficiency`}
+                                label="Proficiency"
+                                component="input"
+                                type="text"
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <p><strong>Language:</strong> {languages[index]?.name}</p>
+                            <p><strong>Proficiency:</strong> {languages[index]?.proficiency}</p>
+                        </>
+                    )}
                 </>
             )}
         </SectionForm>

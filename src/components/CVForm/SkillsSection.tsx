@@ -1,10 +1,10 @@
 import React from 'react';
 import {CVField} from './CVFormFields';
-import {Skill} from '../../types/cv';
+import {Section, Skill} from '../../types/cv';
 import {SectionForm} from './SectionForm';
 import {useSkills} from "../../hooks/sections/useSkills.ts";
 
-const SkillsSection: React.FC<{ cvId: string }> = ({cvId}) => {
+const SkillsSection: React.FC<Section> = ({cvId, isEditable = true}) => {
     const {
         skills,
         addSkill,
@@ -27,16 +27,26 @@ const SkillsSection: React.FC<{ cvId: string }> = ({cvId}) => {
             updateAction={updateSkill}
             removeAction={deleteSkill}
             newItem={newSkill}
+            isEditable={isEditable}
         >
             {(index) => (
                 <>
-                    <CVField name={`skills.${index}.name`} label="Skill Name"/>
-                    <CVField
-                        name={`skills.${index}.proficiency`}
-                        label="Proficiency"
-                        component="input"
-                        type="text"
-                    />
+                    {isEditable ? (
+                        <>
+                            <CVField name={`skills.${index}.name`} label="Skill Name"/>
+                            <CVField
+                                name={`skills.${index}.proficiency`}
+                                label="Proficiency"
+                                component="input"
+                                type="text"
+                            />
+                        </>
+                    ) : (
+                        <>
+                            <p><strong>Skill Name:</strong> {skills[index]?.name}</p>
+                            <p><strong>Proficiency:</strong> {skills[index]?.proficiency}</p>
+                        </>
+                    )}
                 </>
             )}
         </SectionForm>

@@ -1,52 +1,47 @@
-// CVEditorMain.tsx
+// src/pages/CVEditorMain.tsx
 import React, {useEffect} from 'react';
-import {useNavigate, useParams} from 'react-router-dom';
-import CVPreview from '../components/CVPreview.tsx';
+import {useParams, useNavigate} from 'react-router-dom';
+import {useForm, FormProvider} from 'react-hook-form';
+import {useCVs} from '../hooks/useCVs';
+import {CV} from '../types/cv';
+import {CVField} from '../components/CVForm/CVFormFields';
 import {Button} from '../components/ui/Button';
-import { v4 as uuidv4 } from 'uuid';
-
 
 const CVEditorMain: React.FC = () => {
+    const {id} = useParams<{ id: string }>();
     const navigate = useNavigate();
-    const {id: cvId} = useParams(); // Récupère cvId depuis l'URL
+    const {addCV, updateCV, cvs, loading, error} = useCVs();
+    const methods = useForm<CV>({defaultValues: cvs.find((cv) => cv.id === id) || {title: ''}});
+    const cv = cvs.find((cv) => cv.id === id);
 
     useEffect(() => {
-        if (!cvId) {
-            console.warn("Aucun cvId n'a été trouvé dans l'URL.");
-        }
-    }, [cvId]);
+        if (cv) methods.reset(cv); // Reset form values if CV is found
+    }, [cv, methods]);
 
-    const handleSelectSection = (section: string) => {
-        if (cvId) {
-            navigate(`/cv/edit/${cvId}/${section}`);
-        } else {
-            console.error("Erreur: cvId est undefined.");
+    const onSubmit = async (data: CV) => {
+        try {
+            if (cv) {
+                await updateCV(cv.id, data);
+            } else {
+                await addCV(data);
+            }
+            navigate('/cvs');
+        } catch (e) {
+            console.error("Error saving CV:", e);
         }
     };
 
-    useEffect(() => {
-        if (!cvId) {
-            const newCvId = uuidv4(); // Génération d'un nouvel id unique pour le CV
-            navigate(`/cv/edit/${newCvId}`);
-        }
-    }, [cvId, navigate]);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error}</p>;
 
     return (
-        <div className="cv-editor-main">
-            <aside className="cv-preview">
-                <CVPreview cvId={cvId}/>
-            </aside>
-            <div className="cv-sections-overview">
-                <h2>{cvId ? 'Modifier le CV' : 'Créer un Nouveau CV'}</h2>
-                <div className="sections-grid">
-                    <Button onClick={() => handleSelectSection('personal')}>Informations Personnelles</Button>
-                    <Button onClick={() => handleSelectSection('experience')}>Expérience</Button>
-                    <Button onClick={() => handleSelectSection('education')}>Éducation</Button>
-                    <Button onClick={() => handleSelectSection('skills')}>Compétences</Button>
-                    <Button onClick={() => handleSelectSection('languages')}>Langues</Button>
-                </div>
-            </div>
-        </div>
+        <FormProvider {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit)} className="cv-form">
+                <h2>{cv ? 'Edit CV' : 'Create a New CV'}</h2>
+                <CVField name="title" label="CV Title"/>
+                <Button type="submit">{cv ? 'Update' : 'Save'}</Button>
+            </form>
+        </FormProvider>
     );
 };
 
