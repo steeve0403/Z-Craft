@@ -6,7 +6,7 @@ interface ErrorInfo {
     details?: string;
 }
 
-interface GenericStoreState<T> {
+export interface GenericStoreState<T> {
     items: T[];
     isLoading: boolean;
     isError: boolean;
@@ -18,7 +18,7 @@ interface GenericStoreState<T> {
     deleteItem: (id: string) => Promise<OperationResult>;
 }
 
-interface OperationResult {
+export interface OperationResult {
     success: boolean;
     errorInfo?: ErrorInfo;
 }
