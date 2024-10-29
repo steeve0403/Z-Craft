@@ -1,24 +1,26 @@
 import React, {forwardRef} from 'react';
-import {FieldError} from "react-hook-form";
+import {FieldError} from 'react-hook-form';
+import {cn} from '../../utils/cn';
 
 interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     label: string;
     error?: string | FieldError;
 }
 
-export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-    ({label, error, value='', ...props}, ref) => {
+const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+    ({label, error, value = '', className, ...props}, ref) => {
         const errorMessage = typeof error === 'string' ? error : error?.message;
 
         return (
-            <div className="textarea-wrapper">
+            <div className={cn("textarea-wrapper", className)}>
                 <label className="textarea-label">
                     {label}
                     <textarea
                         ref={ref}
-                        className="textarea-field"
+                        className={cn("textarea-field", {'textarea-field--error': error})}
                         value={value || ''}
-                        {...props} />
+                        {...props}
+                    />
                 </label>
                 {error && <span className="textarea-error">{errorMessage}</span>}
             </div>
@@ -27,3 +29,5 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 );
 
 Textarea.displayName = 'Textarea';
+
+export {Textarea};
