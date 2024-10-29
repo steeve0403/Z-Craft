@@ -1,1 +1,41 @@
+@use '@/styles/abstracts/variables' as *;
 
+@function rem-calc($px-value) {
+  // Converts a pixel value to rem based on base font-size (default 16px)
+  @return $px-value / 16 * 1rem;
+}
+
+@function color-variant($color, $percentage) {
+  // Lightens or darkens a color by a given percentage
+  @return mix(white, $color, $percentage);
+}
+
+@function spacing($multiplier) {
+  // Utility function for spacing values
+  @if $multiplier == 1 {
+    @return $spacing-1;
+  } @else if $multiplier == 2 {
+    @return $spacing-2;
+  } @else if $multiplier == 3 {
+    @return $spacing-3;
+  } @else if $multiplier == 4 {
+    @return $spacing-4;
+  } @else if $multiplier == 5 {
+    @return $spacing-5;
+  } @else if $multiplier == 6 {
+    @return $spacing-6;
+  } @else if $multiplier == 8 {
+    @return $spacing-8;
+  } @else if $multiplier == 10 {
+    @return $spacing-10;
+  } @else if $multiplier == 12 {
+    @return $spacing-12;
+  } @else {
+    @return null;
+  }
+}
+
+@function responsive-value($values, $breakpoint) {
+  // Utility function for returning responsive values based on breakpoint map
+  @return map-get($values, $breakpoint);
+}

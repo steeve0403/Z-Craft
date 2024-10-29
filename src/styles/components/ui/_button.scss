@@ -1,0 +1,111 @@
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+@use 'sass:color';
+
+.button {
+  @include button-base();
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: $spacing-2 $spacing-4;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  border-radius: $border-radius-md;
+  transition: background-color $transition-fast, color $transition-fast, box-shadow $transition-base;
+
+  &--primary {
+    background-color: $color-primary;
+    color: $color-background;
+    &:hover {
+      background-color: $color-primary-dark;
+    }
+    &:disabled {
+      background-color: color.scale($color-primary, $lightness: -20%);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  &--secondary {
+    background-color: $color-secondary;
+    color: $color-background;
+    &:hover {
+      background-color: $color-secondary-dark;
+    }
+    &:disabled {
+      background-color: color.scale($color-secondary, $lightness: -20%);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  &--outline {
+    background-color: transparent;
+    color: $color-primary;
+    border: 1px solid $color-primary;
+    &:hover {
+      background-color: $color-primary;
+      color: $color-background;
+    }
+    &:disabled {
+      border: 1px solid color.scale($color-primary, $lightness: -20%);
+      color: color.scale($color-primary, $lightness: -20%);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  &--danger {
+    background-color: $color-error;
+    color: $color-background;
+    &:hover {
+      background-color: color.scale($color-error, $lightness: -10%);
+    }
+    &:disabled {
+      background-color: color.scale($color-error, $lightness: -20%);
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
+  }
+
+  &--sm {
+    padding: $spacing-1 $spacing-2;
+    font-size: $font-size-sm;
+  }
+
+  &--md {
+    padding: $spacing-2 $spacing-4;
+    font-size: $font-size-base;
+  }
+
+  &--lg {
+    padding: $spacing-3 $spacing-5;
+    font-size: $font-size-lg;
+  }
+
+  &--loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8;
+  }
+
+  .button-spinner {
+    @include flex-center(center, center);
+    border: 2px solid $color-background;
+    border-top-color: $color-primary;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    animation: button-spinner-animation $transition-slow infinite linear;
+  }
+}
+
+@keyframes button-spinner-animation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

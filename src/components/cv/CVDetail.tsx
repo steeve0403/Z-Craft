@@ -1,6 +1,6 @@
 import React from 'react';
-import { CV, GeneralInfo, Experience, Education, Skill, Language } from '../types/cv';
-import SectionList from "./section/SectionList.tsx";
+import { CV, GeneralInfo, Experience, Education, Skill, Language } from '../../types/cv.ts';
+import SectionList from "../section/SectionList.tsx";
 
 interface CVDetailProps {
     cv: CV;

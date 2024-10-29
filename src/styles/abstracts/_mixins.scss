@@ -1,53 +1,64 @@
-@use "sass:color";
-@use "variables" as *;
+@use '@/styles/abstracts/variables' as *;
+@use 'sass:color';
 
-/* Mixin pour gérer le dézoom et le déplacement du contenu quand la sidebar est ouverte */
-@mixin shifted($isShifted: false) {
-  transition: transform $transition-base, scale $transition-base;
-  @if $isShifted {
-    transform: scale(0.95) translateX(-150px); /* Légère réduction et décalage */
-  } @else {
-    transform: scale(1) translateX(0); /* État normal */
-  }
-}
-
-/* Mixin pour flexbox avec des options personnalisables */
-@mixin flex($direction: row, $justify: flex-start, $align: stretch) {
+// Mixin for handling flexbox layouts
+@mixin flex-center($direction: row, $justify: center, $align: center) {
   display: flex;
   flex-direction: $direction;
   justify-content: $justify;
   align-items: $align;
 }
 
-/* Mixin pour les boutons avec un style moderne */
-@mixin button-base($background-color: $color-primary, $color: $color-background) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: $spacing-2 $spacing-4;
-  font-size: $font-size-base;
-  font-weight: $font-weight-medium;
-  border: 1px solid transparent;
-  border-radius: $border-radius-md;
-  transition: background-color $transition-base, color $transition-base, box-shadow $transition-base;
-  cursor: pointer;
+// Mixin for setting a responsive container
+@mixin container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: $spacing-4;
+  padding-left: $spacing-4;
 
-  background-color: $background-color;
-  color: $color;
-
-  &:hover {
-    box-shadow: $box-shadow-light;
-    filter: brightness(1.05); /* Légère augmentation de la luminosité au hover */
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
+  @media (min-width: $breakpoint-lg) {
+    max-width: $breakpoint-lg;
   }
 }
 
-/* Mixin pour les champs de formulaire avec des styles adaptés aux deux modes */
-@mixin input-base {
+// Mixin for reusable button styles
+@mixin button-base($background-color: $color-primary, $text-color: $color-background, $padding-x: $spacing-4, $padding-y: $spacing-2) {
+  background-color: $background-color;
+  color: $text-color;
+  padding: $padding-y $padding-x;
+  border: none;
+  border-radius: $border-radius-md;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  transition: background-color $transition-fast, color $transition-fast, box-shadow $transition-base;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  &:hover {
+    background-color: color.scale($background-color, $lightness: -10%);
+  }
+
+  &:disabled {
+    background-color: color.scale($background-color, $lightness: -20%);
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+}
+
+// Mixin for box shadows based on theme mode
+@mixin box-shadow-mode($mode: light) {
+  @if $mode == light {
+    box-shadow: $box-shadow-light;
+  } @else if $mode == dark {
+    box-shadow: $box-shadow-dark;
+  }
+}
+
+@mixin input-base($background-color: $color-background, $border-color: $color-border) {
   display: block;
   width: 100%;
   padding: $spacing-2 $spacing-3;
@@ -57,37 +68,44 @@
   background-color: $color-background;
   border: 1px solid $color-border;
   border-radius: $border-radius-md;
-  transition: border-color $transition-base, box-shadow $transition-base;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
 
   &:focus {
     outline: none;
     border-color: $color-primary;
-    box-shadow: 0 0 0 2px rgba($color-primary, 0.25);
+    box-shadow: 0 0 0 2px color.scale($color-primary, $alpha: 25%);
   }
 
-  &--dark {
-    background-color: $color-background-dark;
-    color: $color-text-dark;
-    border-color: $color-border-dark;
-
-    &:focus {
-      border-color: $color-primary-dark;
-      box-shadow: 0 0 0 2px rgba($color-primary-dark, 0.25);
-    }
+  &:disabled {
+    background-color: color.scale($color-background, $lightness: -10%);
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 }
 
-/* Mixin pour ajouter des transitions fluides au hover */
-@mixin hover-effect($brightness: 1.1, $opacity: 1) {
-  transition: all $transition-base;
-  &:hover {
-    filter: brightness($brightness);
-    opacity: $opacity;
+
+// Mixin for input fields
+@mixin input-field {
+  width: 100%;
+  padding: $spacing-2;
+  border-radius: $border-radius-sm;
+  border: 1px solid $color-border;
+  transition: border-color $transition-base;
+
+  &:focus {
+    border-color: $color-primary;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
   }
 }
 
-/* Mixin pour gérer les media queries */
-@mixin responsive($breakpoint) {
+// Mixin for gradient backgrounds
+@mixin gradient-background($color1, $color2) {
+  background: linear-gradient(135deg, $color1, $color2);
+}
+
+// Mixin for responsive media queries
+@mixin respond-to($breakpoint) {
   @if $breakpoint == sm {
     @media (min-width: $breakpoint-sm) {
       @content;
@@ -111,45 +129,7 @@
   }
 }
 
-/* Mixin pour un dégradé linéaire avec deux couleurs */
-@mixin gradient($color1, $color2) {
-  background: linear-gradient(135deg, $color1, $color2);
-}
-
-/* Mixin pour les ombres en fonction du mode (clair/sombre) */
-@mixin box-shadow-mode($mode: light) {
-  @if $mode == light {
-    box-shadow: $box-shadow-light;
-  } @else if $mode == dark {
-    box-shadow: $box-shadow-dark;
-  }
-}
-
-/* Mixin pour les transitions douces */
+// Mixin for smooth transitions
 @mixin smooth-transition {
   transition: all $transition-base ease;
-}
-
-/* Mixin pour centrer un élément horizontalement et verticalement */
-@mixin center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* Mixin pour ajouter un effet de clignotement (utilisé pour des indicateurs visuels) */
-@mixin blink($duration: 1s) {
-  animation: blink-animation $duration infinite;
-
-  @keyframes blink-animation {
-    50% {
-      opacity: 0;
-    }
-  }
-}
-
-/* Mixin pour définir une largeur et hauteur max flexibles */
-@mixin size($width: 100%, $height: auto) {
-  width: $width;
-  height: $height;
 }

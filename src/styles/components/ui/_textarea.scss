@@ -1,0 +1,33 @@
+@use "@/styles/abstracts/variables" as *;
+@use "@/styles/abstracts/mixins" as *;
+
+.textarea {
+  @include input-base;
+
+  &--dark {
+    @include input-base($background-color: $color-background-dark, $border-color: $color-border-dark);
+  }
+
+  &--error {
+    border-color: $color-error;
+
+    &:focus {
+      box-shadow: 0 0 0 2px rgba($color-error, 0.25);
+    }
+  }
+
+  &--sm {
+    padding: $spacing-1;
+    font-size: $font-size-sm;
+  }
+
+  &--md {
+    padding: $spacing-2;
+    font-size: $font-size-base;
+  }
+
+  &--lg {
+    padding: $spacing-3;
+    font-size: $font-size-lg;
+  }
+}

@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {useParams} from 'react-router-dom';
 import {useCV, useExperience, useEducation, useGeneralInfo, useSkill, useLanguage} from '../hooks/useEntityHooks';
-import CVDetail from '../components/CVDetail';
+import CVDetail from '../components/cv/CVDetail.tsx';
 
 const CVDetailPage: React.FC = () => {
     const {id} = useParams<{ id: string }>();

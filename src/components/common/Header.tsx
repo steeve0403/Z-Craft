@@ -1,31 +1,21 @@
-import React, {memo} from 'react';
-import {Link, NavLink} from 'react-router-dom';
-import {Button} from '../components/ui/Button.tsx';
-import {Sun, Moon, FileText} from 'lucide-react';
-import {useTheme} from "../contexts/UseTheme.tsx";
+import React from 'react';
+import {Button} from '../ui/Button';
+import {Sun, Moon, Bell} from 'lucide-react';
+import {useTheme} from '../../contexts/UseTheme';
+import Logo from './Logo';
+import Navigation from './Navigation';
+import SearchBar from '../ui/SearchBar';
+import ProfileMenu from '../ui/ProfileMenu';
 
 interface HeaderProps {
     toggleSidebar: () => void;
 }
 
-const Logo = memo(() => (
-    <Link to="/" className="header__logo">
-        <FileText className="header__logoIcon"/>
-        <span>CV Manager</span>
-    </Link>
-));
-
-const Navigation = () => (
-    <nav className="header__nav">
-        <NavLink to="/cvs" className={({isActive}) => (isActive ? "header__nav-item active" : "header__nav-item")}>
-            My CVs
-        </NavLink>
-        <NavLink to="/cv/new" className={({isActive}) => (isActive ? "header__nav-item active" : "header__nav-item")}>
-            Create CV
-        </NavLink>
-    </nav>
-);
-
+/**
+ * Header component representing the top navigation bar of the application.
+ * Contains the logo, navigation links, theme toggle, notification, profile menu, and sidebar toggle button.
+ * @param toggleSidebar - Function to toggle the sidebar visibility.
+ */
 const Header: React.FC<HeaderProps> = ({toggleSidebar}) => {
     const {theme, toggleTheme} = useTheme();
 
@@ -37,6 +27,7 @@ const Header: React.FC<HeaderProps> = ({toggleSidebar}) => {
             <div className="header__container">
                 <Logo/>
                 <Navigation/>
+                <SearchBar/>
                 <div className="header__actions">
                     <Button
                         onClick={toggleTheme}
@@ -45,6 +36,13 @@ const Header: React.FC<HeaderProps> = ({toggleSidebar}) => {
                     >
                         {themeIcon}
                     </Button>
+                    <Button
+                        className="button button--outline button--sm header__notification"
+                        aria-label="Notifications"
+                    >
+                        <Bell className="w-5 h-5"/>
+                    </Button>
+                    <ProfileMenu/>
                     <Button
                         onClick={toggleSidebar}
                         className="button button--outline button--sm sidebar-toggle"
@@ -59,5 +57,3 @@ const Header: React.FC<HeaderProps> = ({toggleSidebar}) => {
 };
 
 export default Header;
-
-

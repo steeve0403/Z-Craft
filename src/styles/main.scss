@@ -1,29 +1,16 @@
-// Import variables, mixins, utilities
-@use './abstracts/variables' as *;
-@use './abstracts/mixins' as *;
-@use './abstracts/utilities' as *;
+@import './abstracts/variables';
+@import './abstracts/mixins';
+@import './base/reset';
+@import './base/typography';
 
-// Import utilities
-@use 'utilities/transition_effect';
+@import "./components/ui/button";
+@import "./components/ui/card";
+@import "./components/ui/form-elements";
+@import "./components/ui/input";
+@import "./components/ui/modal";
+@import "./components/ui/notification";
+@import "./components/ui/searchBar";
+@import "./components/ui/select";
+@import "./components/ui/textarea";
 
-// Import base styles
-@use 'base/reset';
-@use 'base/base';
-@use 'base/font';
 
-// Import layouts
-@use 'layouts/layout';
-@use 'layouts/header';
-@use 'layouts/footer';
-@use 'layouts/sections';
-
-// Import components
-@use 'components/sidebar';
-@use 'components/button';
-@use 'components/loading_spinner';
-@use 'components/input';
-@use 'components/textarea';
-
-// Import Pages
-@use 'pages/home';
-@use 'pages/cv_editor';

@@ -1,0 +1,16 @@
+@use "@/styles/abstracts/variables" as *;
+
+.form-element {
+  width: 100%;
+  border-radius: $border-radius-md;
+  transition: border-color $transition-base, box-shadow $transition-base;
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 2px rgba($color-primary, 0.25);
+  }
+}
+
+.select {
+  @extend .form-element;
+}

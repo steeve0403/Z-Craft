@@ -1,0 +1,36 @@
+@use '@/styles/abstracts/variables' as *;
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  line-height: 1.5;
+  background-color: $color-background;
+  color: $color-text;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-family: $font-family-heading;
+  font-weight: $font-weight-bold;
+  line-height: 1.2;
+}
+
+a {
+  color: $color-primary;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-primary-dark;
+  }
+}
+
+blockquote {
+  margin: 0;
+  padding-left: $spacing-4;
+  border-left: 4px solid $color-secondary;
+  color: $color-text-secondary;
+}
+
+legend {
+  font-weight: $font-weight-bold;
+}
