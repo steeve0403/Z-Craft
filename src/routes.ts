@@ -1,12 +1,12 @@
 // src/routes.ts
-import { lazy } from 'react';
+import {lazy} from 'react';
 
 const Home = lazy(() => import('./pages/Home'));
 const CVListPage = lazy(() => import('./pages/CVListPage'));
-// const CVDetail = lazy(() => import('./pages/CVDetail'));
+const CVDetail = lazy(() => import('./pages/CVDetailPage'));
 
 export const routes = [
-    { path: '/', component: Home },
-    { path: '/cvs', component: CVListPage },
-    // { path: '/cv/:id', component: CVDetail },
+    {path: '/', component: Home},
+    {path: '/cvs', component: CVListPage},
+    {path: '/cv/:id', component: CVDetail},
 ];
