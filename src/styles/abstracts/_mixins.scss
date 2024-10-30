@@ -1,7 +1,10 @@
 @use '@/styles/abstracts/variables' as *;
 @use 'sass:color';
 
-// Mixin for handling flexbox layouts
+// Mixins for Reusability and Consistency
+
+// Flex Centering Mixin
+// Reusable flex mixin for centering elements in any direction
 @mixin flex-center($direction: row, $justify: center, $align: center) {
   display: flex;
   flex-direction: $direction;
@@ -9,7 +12,8 @@
   align-items: $align;
 }
 
-// Mixin for setting a responsive container
+// Container Mixin
+// Provides consistent container width with responsive padding
 @mixin container {
   width: 100%;
   margin-right: auto;
@@ -22,7 +26,8 @@
   }
 }
 
-// Mixin for reusable button styles
+// Button Base Mixin
+// Styles for primary buttons with options for colors and padding
 @mixin button-base($background-color: $color-primary, $text-color: $color-background, $padding-x: $spacing-4, $padding-y: $spacing-2) {
   background-color: $background-color;
   color: $text-color;
@@ -49,7 +54,8 @@
   }
 }
 
-// Mixin for box shadows based on theme mode
+// Box Shadow Mode Mixin
+// Adds different box shadows based on the provided theme mode
 @mixin box-shadow-mode($mode: light) {
   @if $mode == light {
     box-shadow: $box-shadow-light;
@@ -58,6 +64,8 @@
   }
 }
 
+// Input Base Mixin
+// Base styles for input fields, including padding, colors, and focus effects
 @mixin input-base($background-color: $color-background, $border-color: $color-border) {
   display: block;
   width: 100%;
@@ -65,8 +73,8 @@
   font-size: $font-size-base;
   line-height: 1.5;
   color: $color-text;
-  background-color: $color-background;
-  border: 1px solid $color-border;
+  background-color: $background-color;
+  border: 1px solid $border-color;
   border-radius: $border-radius-md;
   transition: border-color $transition-fast, box-shadow $transition-fast;
 
@@ -77,59 +85,44 @@
   }
 
   &:disabled {
-    background-color: color.scale($color-background, $lightness: -10%);
+    background-color: color.scale($background-color, $lightness: -10%);
     cursor: not-allowed;
     opacity: 0.6;
   }
 }
 
-
-// Mixin for input fields
-@mixin input-field {
-  width: 100%;
-  padding: $spacing-2;
-  border-radius: $border-radius-sm;
-  border: 1px solid $color-border;
-  transition: border-color $transition-base;
-
-  &:focus {
-    border-color: $color-primary;
-    outline: none;
-    box-shadow: 0 0 0 2px rgba($color-primary, 0.2);
-  }
-}
-
-// Mixin for gradient backgrounds
+// Gradient Background Mixin
+// Generates a gradient background from two colors
 @mixin gradient-background($color1, $color2) {
   background: linear-gradient(135deg, $color1, $color2);
 }
 
-// Mixin for responsive media queries
+// Responsive Media Query Mixin
+// Generates media queries based on common breakpoints
+// Responsive Media Query Mixin
+// Generates media queries based on common breakpoints
 @mixin respond-to($breakpoint) {
-  @if $breakpoint == sm {
-    @media (min-width: $breakpoint-sm) {
+  @if map-has-key($breakpoints, $breakpoint) {
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
       @content;
     }
-  } @else if $breakpoint == md {
-    @media (min-width: $breakpoint-md) {
-      @content;
-    }
-  } @else if $breakpoint == lg {
-    @media (min-width: $breakpoint-lg) {
-      @content;
-    }
-  } @else if $breakpoint == xl {
-    @media (min-width: $breakpoint-xl) {
-      @content;
-    }
-  } @else if $breakpoint == 2xl {
-    @media (min-width: $breakpoint-2xl) {
-      @content;
-    }
+  } @else {
+    @warn "Breakpoint #{$breakpoint} not found in \$breakpoints map.";
   }
 }
 
-// Mixin for smooth transitions
+// Smooth Transition Mixin
+// Adds a smooth transition effect to elements
 @mixin smooth-transition {
   transition: all $transition-base ease;
+}
+
+// Hover Effect Mixin
+// Adds hover effect to elements with customizable background and text color
+@mixin hover-effect($hover-background: $color-primary-dark, $hover-text-color: $color-background) {
+  &:hover {
+    background-color: $hover-background;
+    color: $hover-text-color;
+    transition: background-color $transition-fast, color $transition-fast;
+  }
 }

@@ -1,0 +1,27 @@
+@use 'sass:color';
+@use '@/styles/abstracts/variables' as *;
+@use '@/styles/abstracts/mixins' as *;
+
+// Layout utilities for App
+.layout {
+  position: relative;
+  @include flex-center(column, center, center);
+  @include respond-to(md) {
+    flex-direction: row;
+  }
+}
+
+.layout__main {
+  flex: 1;
+  padding: $spacing-8;
+  transition: transform $transition-fast;
+  background-color: $color-background;
+
+  &.main--shifted {
+    transform: translateX(250px); // Adjust this value as needed for Sidebar width
+  }
+}
+
+.container {
+  @include container;
+}

@@ -1,36 +1,49 @@
+// Abstracts - SCSS Files Improvement with Useful Comments
+
 // Color Palette
-$color-primary: #00A6A6; // Teal Cyan, used for primary actions (buttons, links, etc.)
-$color-primary-dark: #008B8B; // Darker variant for dark mode
+// Primary color used for main actions like buttons, links, etc.
+$color-primary: #00A6A6; // Teal Cyan
+$color-primary-dark: #008B8B; // Darker variant used for dark mode
 
-$color-secondary: #FF6F61; // Orange Coral, used for accents or call-to-actions
-$color-secondary-dark: #E55B51; // Darker variant
+// Secondary color for accents and call-to-action elements
+$color-secondary: #FF6F61; // Orange Coral
+$color-secondary-dark: #E55B51; // Darker variant for dark mode
 
-$color-background: #F9F9F9; // Off-white, main background
-$color-background-dark: #1E3A8A; // Midnight Blue, used for dark mode
+// Background colors for different modes
+$color-background: #F9F9F9; // Off-white for light mode
+$color-background-dark: #1E3A8A; // Midnight Blue for dark mode
 
-$color-text: #1C2833; // Deep Night Blue, primary text color
-$color-text-secondary: #707070; // Light Gray, used for secondary text
-$color-text-dark: #D1D5DB; // Text color for dark mode
+// Text colors for primary and secondary texts
+$color-text: #1C2833; // Deep Night Blue for primary text
+$color-text-secondary: #707070; // Light Gray for secondary text
+$color-text-dark: #D1D5DB; // Light color for text in dark mode
 
-$color-highlight: #FFC107; // Honey Yellow, for highlighted elements
-$color-error: #E63946; // Grapefruit Red, for errors and warnings
-
-$color-border: #e5e7eb;
-$color-border-dark: #374151;
-
+// Special colors for highlights, errors, borders, and success messages
+$color-highlight: #FFC107; // Honey Yellow for highlighting elements
+$color-error: #E63946; // Grapefruit Red for error messages and warnings
+$color-success: #28a745; // Green for success messages or confirmations
+$color-border: #e5e7eb; // Light Gray for borders
+$color-border-dark: #374151; // Dark variant for borders in dark mode
 
 // Typography
-$font-family-base: 'Poppins', sans-serif; // Modern font for general text
-$font-family-heading: 'Merriweather', serif; // Elegant font for headings
+// Base font families used for general text and headings
+$font-family-base: 'Poppins', sans-serif; // Modern sans-serif font for general text
+$font-family-heading: 'Merriweather', serif; // Serif font for headings to add elegance
 
-// Font sizes
+// Font sizes for different contexts, from small text to large headings
 $font-size-base: 1rem;
+$font-size-xs: 0.75rem; // Extra small text for labels or captions
 $font-size-sm: 0.875rem;
 $font-size-md: 1.125rem;
 $font-size-lg: 1.375rem;
 $font-size-xl: 1.75rem;
+$font-size-xxl: 2.25rem; // Extra large font size for prominent headings
 
-// Font weights
+// Line heights for better text readability
+$line-height-base: 1.5;
+$line-height-heading: 1.3;
+
+// Font weights for varying levels of emphasis
 $font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-medium: 500;
@@ -38,43 +51,70 @@ $font-weight-bold: 700;
 $font-weight-black: 900;
 
 // Spacing
-$spacing-1: 0.25rem;
-$spacing-2: 0.5rem;
-$spacing-3: 0.75rem;
-$spacing-4: 1rem;
-$spacing-5: 1.25rem;
-$spacing-6: 1.5rem;
-$spacing-8: 2rem;
-$spacing-10: 2.5rem;
-$spacing-12: 3rem;
+// Spacing units for consistent padding and margin
+$spacing-1: 0.25rem; // 4px
+$spacing-2: 0.5rem; // 8px
+$spacing-3: 0.75rem; // 12px
+$spacing-4: 1rem; // 16px
+$spacing-5: 1.25rem; // 20px
+$spacing-6: 1.5rem; // 24px
+$spacing-7: 1.75rem; // 28px
+$spacing-8: 2rem; // 32px
+$spacing-10: 2.5rem; // 40px
+$spacing-12: 3rem; // 48px
+$spacing-14: 3.5rem; // 56px
+$spacing-16: 4rem; // 64px
 
-// Breakpoints
-$breakpoint-sm: 640px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 1024px;
-$breakpoint-xl: 1280px;
-$breakpoint-2xl: 1536px;
+// Breakpoints for responsive design
+// Breakpoints define the responsive behavior of components
+$breakpoint-xs: 480px; // Extra small screens (small mobile)
+$breakpoint-sm: 640px; // Small screens (mobile)
+$breakpoint-md: 768px; // Medium screens (tablets)
+$breakpoint-lg: 1024px; // Large screens (laptops)
+$breakpoint-xl: 1280px; // Extra-large screens (desktops)
+$breakpoint-2xl: 1536px; // Ultra-large screens
 
-// Border radius
-$border-radius-sm: 0.25rem;
-$border-radius-md: 0.5rem;
-$border-radius-lg: 1rem;
-$border-radius-full: 9999px;
+$breakpoints: (
+        xs: 480px,
+        sm: 640px,
+        md: 768px,
+        lg: 1024px,
+        xl: 1280px,
+        2xl: 1536px
+);
 
-// Box shadows
-$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
-$box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.5);
+// Border radius for rounded corners
+$border-radius-xs: 0.125rem; // Extra small rounding for subtle curves
+$border-radius-sm: 0.25rem; // Small rounding
+$border-radius-md: 0.5rem; // Medium rounding for buttons, inputs, etc.
+$border-radius-lg: 1rem; // Large rounding for cards or containers
+$border-radius-xl: 1.5rem; // Extra large rounding for special elements
+$border-radius-full: 9999px; // Full rounding for pill-shaped elements
 
-// Transitions
-$transition-fast: 0.15s ease-in-out;
-$transition-base: 0.3s ease-in-out;
-$transition-slow: 0.5s ease-in-out;
+// Box shadows for depth effects
+$box-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05); // Subtle shadow for minor elevation
+$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); // Light shadow for elevation
+$box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05); // Medium shadow for cards
+$box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); // Larger shadow for modals
+$box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.5); // Darker shadow for dark mode
+
+// Transition durations for smooth visual effects
+$transition-instant: 0.1s ease-in-out; // Instant transition for quick feedback
+$transition-fast: 0.15s ease-in-out; // Quick transition for subtle changes
+$transition-base: 0.3s ease-in-out; // Standard transition
+$transition-slow: 0.5s ease-in-out; // Slower transition for major changes
+$transition-slowest: 0.75s ease-in-out; // Very slow transition for dramatic effects
 
 // Opacity settings
-$opacity-light: 0.05;
-$opacity-dark: 0.85;
+$opacity-light: 0.05; // Very light opacity for overlays or highlights
+$opacity-medium: 0.5; // Medium opacity for modals and disabled elements
+$opacity-dark: 0.85; // Stronger opacity for dark mode elements
 
-// Z-index
-$z-index-modal: 999;
-$z-index-navbar: 100;
-$z-index-sidebar: 90;
+// Z-index layers for stacking elements
+$z-index-behind: -1; // Elements behind everything
+$z-index-default: 1; // Default stacking for most elements
+$z-index-dropdown: 10; // Dropdowns
+$z-index-navbar: 100; // Navbar is above most other elements
+$z-index-sidebar: 90; // Sidebar sits beneath the navbar but above main content
+$z-index-modal: 999; // Highest priority for modal windows
+$z-index-tooltip: 1000; // Tooltip highest level
