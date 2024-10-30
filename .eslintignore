@@ -1,0 +1,6 @@
+# Ignore the build files
+dist
+node_modules
+
+# Ignore potential configuration files
+*.config.js

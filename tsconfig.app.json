@@ -1,25 +1,34 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
+    "target": "ES2020", // Adjusted to match compatibility needs
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
+    "moduleResolution": "Node", // Use "Node" for better compatibility with commonjs and esm modules
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react-jsx", // Allows the use of the JSX transform for React 17+ and beyond
 
-    /* Linting */
+    /* Type Checking & Linting */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+
+    /* Path Aliases */
+    "baseUrl": ".", // Required for using path aliases
+    "paths": {
+      "@/*": ["src/*"], // Alias to simplify imports from 'src'
+      "@components/*": ["src/components/*"], // Alias for component imports
+      "@styles/*": ["src/styles/*"], // Alias for styles
+    }
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"] // Added exclusion to avoid processing unnecessary files
 }
