@@ -1,16 +1,16 @@
-@import './abstracts/variables';
-@import './abstracts/mixins';
-@import './base/reset';
-@import './base/typography';
+@use './abstracts/variables';
+@use './abstracts/mixins';
+@use './base/reset';
+@use './base/typography';
 
-@import "./components/ui/button";
-@import "./components/ui/card";
-@import "./components/ui/form-elements";
-@import "./components/ui/input";
-@import "./components/ui/modal";
-@import "./components/ui/notification";
-@import "./components/ui/searchBar";
-@import "./components/ui/select";
-@import "./components/ui/textarea";
+@use "./components/ui/button";
+@use "./components/ui/card";
+@use "./components/ui/form-elements";
+@use "./components/ui/input";
+@use "./components/ui/modal";
+@use "./components/ui/notification";
+@use "./components/ui/searchBar";
+@use "./components/ui/select";
+@use "./components/ui/textarea";
 
-@import "./layout/layout";
+@use "./layout/layout";

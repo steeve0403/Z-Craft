@@ -1,14 +1,14 @@
 @use 'sass:color';
-@use '@/styles/abstracts/variables' as *;
-@use '@/styles/abstracts/mixins' as *;
+@use 'src/styles/abstracts/variables' as *;
+@use 'src/styles/abstracts/mixins' as *;
 
 // Layout utilities for App
 .layout {
   position: relative;
-  @include flex-center(column, center, center);
-  @include respond-to(md) {
-    flex-direction: row;
-  }
+  @include flex-center(column);
+  //@include respond-to($breakpoints, md) {
+  //  flex-direction: row;
+  //}
 }
 
 .layout__main {

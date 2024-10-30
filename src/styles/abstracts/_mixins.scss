@@ -1,4 +1,4 @@
-@use '@/styles/abstracts/variables' as *;
+@use 'variables' as *;
 @use 'sass:color';
 
 // Mixins for Reusability and Consistency
@@ -101,7 +101,7 @@
 // Generates media queries based on common breakpoints
 // Responsive Media Query Mixin
 // Generates media queries based on common breakpoints
-@mixin respond-to($breakpoint) {
+@mixin respond-to($breakpoints, $breakpoint) {
   @if map-has-key($breakpoints, $breakpoint) {
     @media (min-width: map-get($breakpoints, $breakpoint)) {
       @content;
