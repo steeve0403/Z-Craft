@@ -1,10 +1,10 @@
 // Import all the styles here
-@use '@/styles/abstracts/index' as *;
-
+@use '@styles/abstracts/index' as *;
+@use '@styles/base/utilities' as *;
 // Base
 @use './base/reset';
 @use './base/typography';
-@use './base/utilities';
+
 
 // Components
   // UI

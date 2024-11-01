@@ -12,8 +12,13 @@
     "isolatedModules": true,
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
-    "noEmit": true,
+//    "noEmit": true,
     "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@styles/*": ["src/styles/*"]
+    },
     "jsx": "react-jsx",
     "sourceMap": true,
     "types": [
@@ -30,11 +35,6 @@
     "dist"
   ],
   // Exclude dependencies and output directories to prevent unnecessary processing
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-      // Reference to another TypeScript configuration file
-    }
-  ]
+
 }
 

@@ -5,6 +5,7 @@ import svgrPlugin from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
 // import viteImagemin from 'vite-plugin-imagemin';
 import eslintPlugin from 'vite-plugin-eslint';
+import { sassTrue } from 'sass';
 
 export default defineConfig({
     plugins: [
@@ -54,6 +55,18 @@ export default defineConfig({
             include: ['./src/**/*.ts', './src/**/*.tsx'], // Lint TypeScript files during the build
         }),
     ],
+    css: {
+        preprocessorOptions: {
+            scss: {
+                implementation: sassTrue, // Use Dart Sass for SCSS preprocessing
+                api: 'modern-compiler',
+                additionalData: `
+                @use '@/styles/abstracts/index' as *;
+                @use '@/styles/base/utilities' as *;
+                `, // Import global SCSS variables
+            },
+        },
+    },
     resolve: {
         alias: {
             '@': path.resolve(__dirname, './src'), // Alias for importing from 'src' directory
@@ -61,6 +74,7 @@ export default defineConfig({
             '@styles': path.resolve(__dirname, './src/styles'),
         },
     },
+
     build: {
         outDir: 'dist',
         sourcemap: true, // Generate source maps for easier debugging
@@ -86,14 +100,6 @@ export default defineConfig({
                 target: 'http://localhost:5000',
                 changeOrigin: true,
                 secure: false, // Proxy API requests to avoid CORS issues during development
-            },
-        },
-    },
-    css: {
-        preprocessorOptions: {
-            scss: {
-                api: 'modern-compiler',
-                // additionalData: `@use '@/styles/abstracts/index' as *;`, // Import global SCSS variables
             },
         },
     },
