@@ -37,5 +37,11 @@
     "react": {
       "version": "detect"
     }
-  }
+  },
+  "ignores": [
+    "node_modules/**",
+    "dist/**",
+    "build/**",
+    "*.config.js"
+  ]
 }

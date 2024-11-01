@@ -1,29 +1,23 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import * as path from 'path';
-// import viteCompression from 'vite-plugin-compression';
+import path from 'path';
 import svgrPlugin from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
-import Inspect from 'vite-plugin-inspect';
-import { ErrorOverlay } from 'vite-plugin-error-overlay';
 import viteImagemin from 'vite-plugin-imagemin';
 import eslintPlugin from 'vite-plugin-eslint';
 
-// https://vitejs.dev/config/
 export default defineConfig({
     plugins: [
-        react(), // React plugin to support JSX and fast refresh
-        svgrPlugin(), // Plugin to import SVG files as React components
-        // viteCompression({ algorithm: ['gzip', 'brotliCompress'] }), // Plugin to compress assets using Gzip and Brotli
-        Inspect(),
-        ErrorOverlay(),
+        react(), // Support for React with JSX transformation and HMR
+        svgrPlugin(), // Allow SVGs to be used as React components
         viteImagemin({
+            // Optimize image assets for faster load times
             gifsicle: { optimizationLevel: 7 },
             optipng: { optimizationLevel: 7 },
-            mozjpeg: { quality: 20 },
+            mozjpeg: { quality: 50 },
         }),
         VitePWA({
-            registerType: 'autoUpdate',
+            registerType: 'autoUpdate', // Automatically update the service worker
             manifest: {
                 name: 'CV Manager Z-Craft',
                 short_name: 'Z-Craft',
@@ -43,65 +37,42 @@ export default defineConfig({
             },
         }),
         eslintPlugin({
-            include: ['./src/**/*.ts', './src/**/*.tsx'],
+            include: ['./src/**/*.ts', './src/**/*.tsx'], // Lint TypeScript files during the build
         }),
     ],
     resolve: {
         alias: {
-            '@': path.resolve(__dirname, './src'), // Alias '@' to simplify imports from the 'src' directory
-            '@components': path.resolve(__dirname, './src/components'), // Additional alias for components for easier access
-        },
-    },
-    esbuild: {
-        jsxInject: `import React from 'react'`, // Automatically inject React into JSX files (helpful if React import is missing)
-    },
-    css: {
-        modules: {
-            scopeBehaviour: 'local', // Enable CSS modules for local scoping of styles
-            // generateScopedName: '[name]__[local]--[hash:base64:5]', // Custom naming pattern for CSS modules
-        },
-        preprocessorOptions: {
-            scss: {
-                additionalData: `
-          @use "@/styles/abstracts/index" as *;
-        `, // Globally load common SCSS variables, mixins, and functions into every SCSS file
-            },
+            '@': path.resolve(__dirname, './src'), // Alias for importing from 'src' directory
+            '@components': path.resolve(__dirname, './src/components'),
         },
     },
     build: {
-        outDir: 'dist', // Directory where the build files are generated
-        sourcemap: true, // Generates sourcemaps for debugging production code
-        minify: 'terser', // Minify the output using Terser for advanced minification options
+        outDir: 'dist',
+        sourcemap: true, // Generate source maps for easier debugging
+        minify: 'esbuild', // Use esbuild for faster builds
         rollupOptions: {
             output: {
                 manualChunks: (id) => {
                     if (id.includes('node_modules')) {
-                        return 'vendor';
+                        return 'vendor'; // Extract vendor libraries for caching purposes
                     }
                     if (id.includes('src/components')) {
-                        return 'components';
+                        return 'components'; // Separate components for better caching and performance
                     }
                 },
             },
         },
-        target: 'esnext', // Set the target for build output, supporting latest JavaScript features
     },
     server: {
-        fs: {
-            strict: true,
-        },
-        port: 3000, // Define the port on which the development server will run
-        open: true, // Automatically open the application in the default browser
+        port: 3000, // Define the port for local development
+        open: true, // Automatically open the browser when the server starts
         proxy: {
             '/api': {
-                target: 'http://localhost:5000', // Proxy API requests to the backend server
+                target: 'http://localhost:5000',
                 changeOrigin: true,
-                secure: false,
+                secure: false, // Proxy API requests to avoid CORS issues during development
             },
         },
     },
-    // Environment Variables Configuration
-    define: {
-        'import.meta.env': {}, // Define environment variables for development and production builds
-    },
+    css: {},
 });

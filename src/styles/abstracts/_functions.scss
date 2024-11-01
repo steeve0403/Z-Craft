@@ -1,4 +1,5 @@
-@use '@/styles/abstracts/variables' as *;
+@use 'variables' as *;
+@use 'sass:color';
 
 // Functions for Utility and Reusability
 
@@ -11,7 +12,7 @@
 // Function to Create Color Variants
 // Lightens or darkens a color by a given percentage
 @function color-variant($color, $percentage) {
-  @return mix(white, $color, $percentage);
+  @return color.mix(white, $color, $percentage);
 }
 
 // Spacing Utility Function

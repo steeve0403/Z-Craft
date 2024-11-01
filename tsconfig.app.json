@@ -1,34 +1,15 @@
 {
+  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2020", // Adjusted to match compatibility needs
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "Node", // Use "Node" for better compatibility with commonjs and esm modules
-    "allowImportingTsExtensions": true,
-    "isolatedModules": true,
-    "moduleDetection": "force",
-    "noEmit": true,
-    "jsx": "react-jsx", // Allows the use of the JSX transform for React 17+ and beyond
-
-    /* Type Checking & Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "allowSyntheticDefaultImports": true,
-
-    /* Path Aliases */
-    "baseUrl": ".", // Required for using path aliases
-    "paths": {
-      "@/*": ["src/*"], // Alias to simplify imports from 'src'
-      "@components/*": ["src/components/*"], // Alias for component imports
-      "@styles/*": ["src/styles/*"], // Alias for styles
-    }
+    "jsx": "react-jsx", // Utilize new JSX transform for React (no need for React import)
+    "lib": ["DOM", "DOM.Iterable", "ES2022"], // Required libraries for browser support
+    "noUnusedLocals": true, // Warn about unused variables for cleaner code
+    "noUnusedParameters": true, // Warn about unused parameters
+    "noFallthroughCasesInSwitch": true, // Prevent unintended fallthroughs in switch statements
+    "module": "ESNext", // Modern ES module format
+    "moduleDetection": "force", // Ensure that modules are detected properly for Vite environments
+    "noEmit": true // Prevent emitting compiled files, suitable for build handled by Vite
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"] // Added exclusion to avoid processing unnecessary files
+  "include": ["src"], // Include the application source code
+  "exclude": ["node_modules", "dist"] // Exclude build and dependency files
 }
