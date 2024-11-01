@@ -1,15 +1,10 @@
 {
-  "extends": "./tsconfig.json",
   "compilerOptions": {
-    "target": "ES2022", // Use the latest JavaScript features for Node
-    "module": "CommonJS", // CommonJS is still the most compatible option for many Node environments
-    "lib": ["ES2022"], // Node.js uses ES2022 features
-    "noEmit": true, // No emitted output since these scripts are not bundled with Vite
-    "noUnusedLocals": true, // Warn about unused local variables
-    "noUnusedParameters": true, // Warn about unused parameters
-    "allowImportingTsExtensions": true, // Allows importing files with .ts extensions
-    "moduleResolution": "Node" // Node-style module resolution
+    "composite": true,
+    "module": "esnext",
+    "moduleResolution": "node",
   },
-  "include": ["vite.config.ts", "scripts/**/*"], // Include the Vite configuration and any other scripts
-  "exclude": ["node_modules", "dist"] // Exclude build and dependency files
+  "include": [
+    "vite.config.ts"
+  ]
 }

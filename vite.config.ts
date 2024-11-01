@@ -1,21 +1,35 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import path from 'path';
+import * as path from 'path';
 import svgrPlugin from 'vite-plugin-svgr';
 import { VitePWA } from 'vite-plugin-pwa';
-import viteImagemin from 'vite-plugin-imagemin';
+// import viteImagemin from 'vite-plugin-imagemin';
 import eslintPlugin from 'vite-plugin-eslint';
 
 export default defineConfig({
     plugins: [
         react(), // Support for React with JSX transformation and HMR
         svgrPlugin(), // Allow SVGs to be used as React components
-        viteImagemin({
-            // Optimize image assets for faster load times
-            gifsicle: { optimizationLevel: 7 },
-            optipng: { optimizationLevel: 7 },
-            mozjpeg: { quality: 50 },
-        }),
+        // viteImagemin({
+        //     // Optimize image assets for faster load times
+        //     gifsicle: { optimizationLevel: 7 },
+        //     optipng: { optimizationLevel: 7 },
+        //     mozjpeg: { quality: 50 },
+        //     pngquant: {
+        //         quality: [0.8, 0.9],
+        //         speed: 4,
+        //     },
+        //     svgo: {
+        //         plugins: [
+        //             {
+        //                 name: 'removeViewBox',
+        //             },
+        //             {
+        //                 name: 'removeDimensions',
+        //             },
+        //         ],
+        //     },
+        // }),
         VitePWA({
             registerType: 'autoUpdate', // Automatically update the service worker
             manifest: {
@@ -44,6 +58,7 @@ export default defineConfig({
         alias: {
             '@': path.resolve(__dirname, './src'), // Alias for importing from 'src' directory
             '@components': path.resolve(__dirname, './src/components'),
+            '@styles': path.resolve(__dirname, './src/styles'),
         },
     },
     build: {
@@ -74,5 +89,12 @@ export default defineConfig({
             },
         },
     },
-    css: {},
+    css: {
+        preprocessorOptions: {
+            scss: {
+                api: 'modern-compiler',
+                // additionalData: `@use '@/styles/abstracts/index' as *;`, // Import global SCSS variables
+            },
+        },
+    },
 });

@@ -1,11 +1,5 @@
-@use '@/styles/abstracts/variables' as *;
-@use '@/styles/abstracts/mixins' as *;
 @use 'sass:color';
-
-
-@use '@/styles/abstracts/variables' as *;
-@use '@/styles/abstracts/mixins' as *;
-@use 'sass:color';
+@use '@styles/abstracts/index' as *;
 
 // Text alignment utilities
 .text-center {
@@ -140,20 +134,27 @@
 @mixin responsive-utilities($breakpoints) {
   @each $name, $breakpoint in $breakpoints {
     @media (min-width: $breakpoint) {
-      .#{$name}\:flex {
+      .bp-#{$name}\:flex {
         display: flex;
       }
-      .#{$name}\:hidden {
+      .bp-#{$name}\:hidden {
         display: none;
       }
-      .#{$name}\:block {
+      .bp-#{$name}\:block {
         display: block;
       }
     }
   }
 }
 
-@include responsive-utilities((xs: $breakpoint-xs, sm: $breakpoint-sm, md: $breakpoint-md, lg: $breakpoint-lg, xl: $breakpoint-xl, 2xl: $breakpoint-2xl));
+@include responsive-utilities((
+        xs: $breakpoint-xs,
+        sm: $breakpoint-sm,
+        md: $breakpoint-md,
+        lg: $breakpoint-lg,
+        xl: $breakpoint-xl,
+        2xl: $breakpoint-2xl
+));
 
 // Dark mode utilities
 .dark {

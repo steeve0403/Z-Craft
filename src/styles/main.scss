@@ -1,8 +1,13 @@
-@use './abstracts/variables';
-@use './abstracts/mixins';
+// Import all the styles here
+@use '@/styles/abstracts/index' as *;
+
+// Base
 @use './base/reset';
 @use './base/typography';
+@use './base/utilities';
 
+// Components
+  // UI
 @use "./components/ui/button";
 @use "./components/ui/card";
 @use "./components/ui/form-elements";
@@ -13,4 +18,5 @@
 @use "./components/ui/select";
 @use "./components/ui/textarea";
 
+// Layout
 @use "./layout/layout";

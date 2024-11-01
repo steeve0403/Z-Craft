@@ -1,24 +1,40 @@
 {
   "compilerOptions": {
-    "target": "ESNext", // Latest ECMAScript features
-    "moduleResolution": "Node", // Node-style module resolution, ideal for bundlers like Vite
-    "strict": true, // Enable all strict type-checking options for better code quality
-    "esModuleInterop": true, // Compatibility between CommonJS and ES modules
-    "skipLibCheck": true, // Skip type-checking of declaration files for faster builds
-    "forceConsistentCasingInFileNames": true, // Prevents issues due to file name case discrepancies
-    "isolatedModules": true, // Ensures each file is treated as a separate module; necessary for Vite
-    "resolveJsonModule": true, // Allows importing JSON modules
-    "allowSyntheticDefaultImports": true, // Allow default imports for modules with no default export
-    "baseUrl": ".", // Required for path aliases
-    "paths": {
-      "@/*": ["src/*"], // Alias for ease of importing from 'src' directory
-      "@components/*": ["src/components/*"], // Alias for components
-      "@utils/*": ["src/utils/*"] // Alias for utility functions
-    },
-    "jsx": "react"
+    "target": "ESNext",
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
+    "allowJs": false,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "sourceMap": true,
+    "types": [
+      "vite/client"
+    ]
   },
-
-  "include": ["src"], // Include main source directory
-  "exclude": ["node_modules", "dist"] // Exclude dependencies and output directories to prevent unnecessary processing
+  "include": [
+    "src",
+    "cypress"
+  ],
+  // Include main source directory
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  // Exclude dependencies and output directories to prevent unnecessary processing
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+      // Reference to another TypeScript configuration file
+    }
+  ]
 }
 
