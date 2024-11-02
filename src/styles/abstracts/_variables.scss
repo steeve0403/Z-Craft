@@ -1,34 +1,43 @@
-// Abstracts - SCSS Files Improvement with Useful Comments
+// Abstracts - SCSS Files Improvement with Glassmorphism Style Comments
 
-// Color Palette
+// Glassmorphism Color Palette
+// Les couleurs ci-dessous sont choisies pour avoir des tons légers et transparents, adaptés pour créer un design **glassmorphique**.
+
 // Primary color used for main actions like buttons, links, etc.
-$color-primary: #00A6A6; // Teal Cyan
-$color-primary-dark: #008B8B; // Darker variant used for dark mode
+$color-primary: rgba(0, 166, 166, 0.75); // Teal Cyan semi-transparent pour boutons principaux
+$color-primary-dark: rgba(0, 139, 139, 0.75); // Version plus foncée et plus subtile pour le mode sombre
 
 // Secondary color for accents and call-to-action elements
-$color-secondary: #FF6F61; // Orange Coral
-$color-secondary-dark: #E55B51; // Darker variant for dark mode
+$color-secondary: rgba(255, 111, 97, 0.65); // Orange Coral avec transparence pour éléments d'accentuation
+$color-secondary-dark: rgba(229, 91, 81, 0.65); // Version foncée adaptée pour le mode sombre
 
-// Background colors for different modes
-$color-background: #F9F9F9; // Off-white for light mode
-$color-background-dark: #1E3A8A; // Midnight Blue for dark mode
+// Background colors for glassmorphism
+$color-background: rgba(255, 255, 255, 0.1); // Blanc translucide pour arrière-plans clairs
+$color-background-dark: rgba(30, 58, 138, 0.2); // Bleu Nuit très transparent pour le mode sombre
+$color-background-glass: rgba(255, 255, 255, 0.2); // Blanc plus prononcé pour effets de verre en profondeur
+$color-overlay: rgba(255, 255, 255, 0.4); // Couleur d’overlay semi-transparente pour plus de profondeur
 
-// Text colors for primary and secondary texts
-$color-text: #1C2833; // Deep Night Blue for primary text
-$color-text-secondary: #707070; // Light Gray for secondary text
-$color-text-dark: #D1D5DB; // Light color for text in dark mode
+// Text colors for glassmorphic context
+$color-text: rgba(28, 40, 51, 0.9); // Presque noir avec opacité pour textes principaux (reste lisible)
+$color-text-secondary: rgba(112, 112, 112, 0.8); // Gris clair transparent pour textes secondaires
+$color-text-dark: rgba(209, 213, 219, 0.85); // Gris clair avec transparence pour le mode sombre
+$color-text-glass: rgba(255, 255, 255, 0.85); // Blanc avec opacité pour texte sur arrière-plans très clairs
 
-// Special colors for highlights, errors, borders, and success messages
-$color-highlight: #FFC107; // Honey Yellow for highlighting elements
-$color-error: #E63946; // Grapefruit Red for error messages and warnings
-$color-success: #28a745; // Green for success messages or confirmations
-$color-border: #e5e7eb; // Light Gray for borders
-$color-border-dark: #374151; // Dark variant for borders in dark mode
+// Special colors for glassmorphism highlights, errors, borders, and success messages
+$color-highlight: rgba(255, 193, 7, 0.5); // Jaune miel semi-transparent pour les éléments à surligner
+$color-error: rgba(230, 57, 70, 0.6); // Rouge Pamplemousse translucide pour les messages d'erreur
+$color-success: rgba(40, 167, 69, 0.6); // Vert semi-transparent pour les messages de succès
+$color-border: rgba(229, 231, 235, 0.4); // Gris clair avec transparence pour les bordures
+$color-border-dark: rgba(55, 65, 81, 0.4); // Gris foncé transparent pour bordures en mode sombre
+$color-border-glass: rgba(255, 255, 255, 0.3); // Bordures en verre semi-transparentes
+
+// Glassmorphism Blur Settings
+$blur-glass: 20px; // Niveau de flou pour effet glassmorphique
+$blur-glass-strong: 40px; // Flou plus prononcé pour un effet de verre plus fort
 
 // Typography
-// Base font families used for general text and headings
-$font-family-base: 'Poppins', sans-serif; // Modern sans-serif font for general text
-$font-family-heading: 'Merriweather', serif; // Serif font for headings to add elegance
+$font-family-base: 'Poppins', sans-serif; // Utilisation d'une police moderne sans-serif
+$font-family-heading: 'Merriweather', serif; // Police serif pour titres afin de créer une touche d'élégance
 
 // Font sizes for different contexts, from small text to large headings
 $font-size-base: 1rem;
@@ -51,7 +60,6 @@ $font-weight-bold: 700;
 $font-weight-black: 900;
 
 // Spacing
-// Spacing units for consistent padding and margin
 $spacing-1: 0.25rem; // 4px
 $spacing-2: 0.5rem; // 8px
 $spacing-3: 0.75rem; // 12px
@@ -66,14 +74,6 @@ $spacing-14: 3.5rem; // 56px
 $spacing-16: 4rem; // 64px
 
 // Breakpoints for responsive design
-// Breakpoints define the responsive behavior of components
-$breakpoint-xs: 480px; // Extra small screens (small mobile)
-$breakpoint-sm: 640px; // Small screens (mobile)
-$breakpoint-md: 768px; // Medium screens (tablets)
-$breakpoint-lg: 1024px; // Large screens (laptops)
-$breakpoint-xl: 1280px; // Extra-large screens (desktops)
-$breakpoint-2xl: 1536px; // Ultra-large screens
-
 $breakpoints: (
         xs: 480px,
         sm: 640px,
@@ -83,38 +83,44 @@ $breakpoints: (
         2xl: 1536px
 );
 
-// Border radius for rounded corners
+// Border Radius for Rounded Corners in Glassmorphism
 $border-radius-xs: 0.125rem; // Extra small rounding for subtle curves
 $border-radius-sm: 0.25rem; // Small rounding
-$border-radius-md: 0.5rem; // Medium rounding for buttons, inputs, etc.
-$border-radius-lg: 1rem; // Large rounding for cards or containers
-$border-radius-xl: 1.5rem; // Extra large rounding for special elements
+$border-radius-md: 0.5rem; // Medium rounding
+$border-radius-lg: 1rem; // Large rounding for containers
+$border-radius-xl: 1.5rem; // Extra large rounding for cards and modals
 $border-radius-full: 9999px; // Full rounding for pill-shaped elements
+$border-radius-glass: 0.75rem; // Custom rounding for glassmorphic cards
 
-// Box shadows for depth effects
+// Box Shadows for Depth Effects in Glassmorphism
 $box-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05); // Subtle shadow for minor elevation
-$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); // Light shadow for elevation
-$box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05); // Medium shadow for cards
-$box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); // Larger shadow for modals
-$box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.5); // Darker shadow for dark mode
+$box-shadow-light: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06); // Light shadow for glass elements
+$box-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.05); // Medium shadow for cards and popups
+$box-shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05); // Larger shadow for higher depth
+$box-shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37); // Custom shadow to give the illusion of glass floating effect
+$box-shadow-strong-glass: 0 12px 50px rgba(31, 38, 135, 0.5); // Stronger shadow for a more intense glass effect
+$box-shadow-dark: 0 1px 3px rgba(0, 0, 0, 0.7), 0 1px 2px rgba(0, 0, 0, 0.5); // Darker shadow for dark mode elements
 
-// Transition durations for smooth visual effects
-$transition-instant: 0.1s ease-in-out; // Instant transition for quick feedback
-$transition-fast: 0.15s ease-in-out; // Quick transition for subtle changes
-$transition-base: 0.3s ease-in-out; // Standard transition
-$transition-slow: 0.5s ease-in-out; // Slower transition for major changes
-$transition-slowest: 0.75s ease-in-out; // Very slow transition for dramatic effects
+// Transition Durations for Smooth Visual Effects
+$transition-instant: 0.1s ease-in-out; // Instant feedback
+$transition-fast: 0.15s ease-in-out; // Fast transitions for subtle effects
+$transition-base: 0.3s ease-in-out; // Normal transition for general elements
+$transition-slow: 0.5s ease-in-out; // Slow transitions for more pronounced effects
+$transition-slowest: 0.75s ease-in-out; // Very slow for major visual changes
+$transition-glass-hover: 0.35s cubic-bezier(0.25, 1, 0.5, 1); // Custom transition for hover effects in glassmorphism
 
-// Opacity settings
-$opacity-light: 0.05; // Very light opacity for overlays or highlights
-$opacity-medium: 0.5; // Medium opacity for modals and disabled elements
-$opacity-dark: 0.85; // Stronger opacity for dark mode elements
+// Opacity Settings for Glassmorphism
+$opacity-light: 0.05; // Light opacity for almost transparent layers
+$opacity-medium: 0.5; // Medium opacity for modal windows or overlays
+$opacity-dark: 0.85; // Dark opacity for intense glassmorphic effect
+$opacity-glass-layer: 0.25; // Opacity for extra glass layers or overlays
 
-// Z-index layers for stacking elements
+// Z-index Layers for Stacking Context
 $z-index-behind: -1; // Elements behind everything
-$z-index-default: 1; // Default stacking for most elements
-$z-index-dropdown: 10; // Dropdowns
-$z-index-navbar: 100; // Navbar is above most other elements
-$z-index-sidebar: 90; // Sidebar sits beneath the navbar but above main content
-$z-index-modal: 999; // Highest priority for modal windows
-$z-index-tooltip: 1000; // Tooltip highest level
+$z-index-default: 1; // Default stacking
+$z-index-dropdown: 10; // Dropdown level
+$z-index-navbar: 100; // Navbar above most elements
+$z-index-sidebar: 90; // Sidebar below navbar
+$z-index-modal: 999; // Modal at a higher level
+$z-index-tooltip: 1000; // Tooltip above everything
+$z-index-glass-overlay: 500; // Overlay level for glassmorphism effects

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Theme, ThemeContext } from './ThemeContext';
+import { Theme, ThemeContext } from './themeContext';
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     children,

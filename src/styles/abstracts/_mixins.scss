@@ -1,7 +1,7 @@
 @use 'variables' as *;
 @use 'sass:color';
 
-// Mixins for Reusability and Consistency
+// Mixins for Reusability and Consistency with Glassmorphism
 
 // Flex Centering Mixin
 // Reusable flex mixin for centering elements in any direction
@@ -21,27 +21,29 @@
   padding-right: $spacing-4;
   padding-left: $spacing-4;
 
-  @media (min-width: $breakpoint-lg) {
-    max-width: $breakpoint-lg;
+  @include respond-to($breakpoints, md) {
+    max-width: map-get($breakpoints, lg);
   }
 }
 
-// Button Base Mixin
+// Button Base Mixin with Glassmorphism
 // Styles for primary buttons with options for colors and padding
-@mixin button-base($background-color: $color-primary, $text-color: $color-background, $padding-x: $spacing-4, $padding-y: $spacing-2) {
+@mixin button-base($background-color: $color-primary, $text-color: $color-text-glass, $padding-x: $spacing-4, $padding-y: $spacing-2) {
   background-color: $background-color;
   color: $text-color;
   padding: $padding-y $padding-x;
-  border: none;
+  border: 1px solid $color-border-glass;
   border-radius: $border-radius-md;
   font-size: $font-size-base;
   font-weight: $font-weight-medium;
   cursor: pointer;
-  transition: background-color $transition-fast, color $transition-fast, box-shadow $transition-base;
+  transition: background-color $transition-fast, color $transition-fast, box-shadow $transition-glass-hover;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   text-align: center;
+  backdrop-filter: blur($blur-glass) brightness(1.1); // Glassmorphic effect
+  box-shadow: $box-shadow-glass;
 
   &:hover {
     background-color: color.scale($background-color, $lightness: -10%);
@@ -64,7 +66,7 @@
   }
 }
 
-// Input Base Mixin
+// Input Base Mixin with Glassmorphism
 // Base styles for input fields, including padding, colors, and focus effects
 @mixin input-base($background-color: $color-background, $border-color: $color-border) {
   display: block;
@@ -77,6 +79,7 @@
   border: 1px solid $border-color;
   border-radius: $border-radius-md;
   transition: border-color $transition-fast, box-shadow $transition-fast;
+  backdrop-filter: blur($blur-glass) saturate(1.2);
 
   &:focus {
     outline: none;
@@ -95,10 +98,9 @@
 // Generates a gradient background from two colors
 @mixin gradient-background($color1, $color2) {
   background: linear-gradient(135deg, $color1, $color2);
+  backdrop-filter: blur($blur-glass-strong); // Glassmorphic blur effect
 }
 
-// Responsive Media Query Mixin
-// Generates media queries based on common breakpoints
 // Responsive Media Query Mixin
 // Generates media queries based on common breakpoints
 @mixin respond-to($breakpoints, $breakpoint) {
@@ -117,12 +119,87 @@
   transition: all $transition-base ease;
 }
 
-// Hover Effect Mixin
+// Hover Effect Mixin with Glass Style
 // Adds hover effect to elements with customizable background and text color
-@mixin hover-effect($hover-background: $color-primary-dark, $hover-text-color: $color-background) {
+@mixin hover-effect($hover-background: $color-primary-dark, $hover-text-color: $color-text-glass) {
   &:hover {
     background-color: $hover-background;
     color: $hover-text-color;
     transition: background-color $transition-fast, color $transition-fast;
   }
 }
+
+// Glassmorphism Card Mixin
+// Adds a glass-like background to cards and containers
+@mixin glass-card {
+  background: $color-background-glass;
+  border-radius: $border-radius-glass;
+  box-shadow: $box-shadow-strong-glass;
+  backdrop-filter: blur($blur-glass-strong) saturate(1.5);
+  border: 1px solid rgba($color-border-glass, 0.2);
+}
+
+// Overlay Mixin for Glassmorphism
+// Creates a semi-transparent overlay with glass-like effects
+@mixin glass-overlay {
+  background: $color-overlay;
+  backdrop-filter: blur($blur-glass);
+  opacity: $opacity-glass-layer;
+  z-index: $z-index-glass-overlay;
+}
+
+// Responsive Container Mixin
+// Provides fluid container properties for different screen sizes
+@mixin responsive-container {
+  width: 100%;
+  margin: 0 auto;
+  padding: $spacing-4;
+
+  @include respond-to($breakpoints, sm) {
+    max-width: 540px;
+  }
+
+  @include respond-to($breakpoints, md) {
+    max-width: 720px;
+  }
+
+  @include respond-to($breakpoints, lg) {
+    max-width: 960px;
+  }
+
+  @include respond-to($breakpoints, xl) {
+    max-width: 1140px;
+  }
+}
+
+// Glass Button Mixin
+// A specialized button style for glass effect
+@mixin glass-button {
+  @include button-base($color-primary, $color-text-glass);
+  box-shadow: $box-shadow-glass;
+  backdrop-filter: blur($blur-glass) brightness(1.2);
+  border: 1px solid $color-border-glass;
+
+  &:hover {
+    @include hover-effect($color-primary-dark, $color-text-glass);
+    box-shadow: $box-shadow-strong-glass;
+  }
+}
+
+// Glass Card with Overlay Mixin
+// Adds a glass effect card with an overlay for additional depth
+@mixin glass-card-with-overlay {
+  @include glass-card;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include glass-overlay;
+  }
+}
+

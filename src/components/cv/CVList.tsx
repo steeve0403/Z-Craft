@@ -1,6 +1,6 @@
 import React from 'react';
 import CVItem from './CVItem';
-import {CV} from "../../types/cv.ts";
+import { CV } from '@/types/cv';
 
 interface CVListProps {
     cvs: CV[];
@@ -22,4 +22,3 @@ const CVList: React.FC<CVListProps> = ({ cvs, onDelete }) => {
 };
 
 export default CVList;
-

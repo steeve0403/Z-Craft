@@ -1,6 +1,20 @@
-import { useCVStore, useExperienceStore, useEducationStore, useSkillStore, useGeneralInfoStore, useLanguageStore } from '../stores';
-import { CV, Experience, Education, Skill, GeneralInfo, Language } from '../types/cv';
-import {useGenericEntityStore} from "./useGenericStore.ts";
+import {
+    useCVStore,
+    useExperienceStore,
+    useEducationStore,
+    useSkillStore,
+    useGeneralInfoStore,
+    useLanguageStore,
+} from '../stores';
+import {
+    CV,
+    Experience,
+    Education,
+    Skill,
+    GeneralInfo,
+    Language,
+} from '@/types/cv';
+import { useGenericEntityStore } from './useGenericStore';
 
 /**
  * Hook to interact with the CV store.
@@ -49,4 +63,3 @@ export const useGeneralInfo = () => {
 export const useLanguage = () => {
     return useGenericEntityStore<Language>(useLanguageStore);
 };
-

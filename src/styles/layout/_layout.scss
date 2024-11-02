@@ -1,27 +1,52 @@
-@use 'sass:color';
+// Importer les abstracts
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
+@use '../abstracts/functions' as *;
 
-// Layout utilities for App
+// Mise en page principale de l'application
 .layout {
   position: relative;
-  //@include flex-center(column);
-  //@include respond-to($breakpoints, md) {
-  //  flex-direction: row;
-  //}
-}
+  @include flex-center(column, center, center);
+  min-height: 100vh;
+  background: $color-background-glass;
+  backdrop-filter: blur($blur-glass-strong);
+  color: $color-text;
 
-.layout__main {
-  flex: 1;
-  padding: $spacing-8;
-  transition: transform $transition-fast;
-  background-color: $color-background;
+  // Smooth transition for the main content when the sidebar is toggled
+  @include smooth-transition;
 
-  &.main--shifted {
-    transform: translateX(250px); // Adjust this value as needed for Sidebar width
+
+  // Sidebar styling
+  &__sidebar {
+    &--open {
+      transform: translateX(0);
+      @include smooth-transition;
+    }
+  }
+
+  // Main content styling
+  &__main {
+    width: 100%;
+    @include flex-center(column, center, center);
+    flex: 1;
+    padding: $spacing-6;
+    background: $color-background-glass;
+    backdrop-filter: blur($blur-glass);
+    transition: margin-left $transition-fast;
+
+    &.main--shifted {
+      margin-left: 250px; // Correspond à la largeur de la sidebar
+    }
   }
 }
 
-.container {
-  @include container;
+// Footer styling
+.footer {
+
+  padding: $spacing-4;
+  text-align: center;
+  background: $color-primary;
+  color: $color-text-glass;
+  backdrop-filter: blur($blur-glass);
+  box-shadow: $box-shadow-glass;
 }

@@ -1,5 +1,6 @@
 @use 'sass:color';
-@use '@styles/abstracts/index' as *;
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
 
 // Text alignment utilities
 .text-center {
@@ -147,14 +148,24 @@
   }
 }
 
-@include responsive-utilities((
-        xs: $breakpoint-xs,
-        sm: $breakpoint-sm,
-        md: $breakpoint-md,
-        lg: $breakpoint-lg,
-        xl: $breakpoint-xl,
-        2xl: $breakpoint-2xl
-));
+@include responsive-utilities($breakpoints);
+
+// Glassmorphism Utilities
+.glass {
+  background: $color-background-glass;
+  backdrop-filter: blur($blur-glass);
+  border-radius: $border-radius-glass;
+  box-shadow: $box-shadow-glass;
+  border: 1px solid $color-border-glass;
+}
+
+.strong-glass {
+  background: $color-overlay;
+  backdrop-filter: blur($blur-glass-strong);
+  border-radius: $border-radius-xl;
+  box-shadow: $box-shadow-strong-glass;
+  border: 1px solid $color-border-glass;
+}
 
 // Dark mode utilities
 .dark {
@@ -211,3 +222,33 @@
   @include hover-effect;
 }
 
+// Text color utilities for glassmorphism
+.text-glass {
+  color: $color-text-glass;
+}
+
+// Overlay utilities for glass effects
+.glass-overlay {
+  background: $color-overlay;
+  opacity: $opacity-glass-layer;
+  backdrop-filter: blur($blur-glass);
+  z-index: $z-index-glass-overlay;
+}
+
+// Smooth Transition Utility
+.smooth-transition {
+  @include smooth-transition;
+}
+
+// Responsive Padding Utility for Cards
+@mixin responsive-padding($breakpoints) {
+  @each $name, $breakpoint in $breakpoints {
+    @media (min-width: $breakpoint) {
+      .bp-#{$name}\:p-6 {
+        padding: $spacing-6;
+      }
+    }
+  }
+}
+
+@include responsive-padding($breakpoints);

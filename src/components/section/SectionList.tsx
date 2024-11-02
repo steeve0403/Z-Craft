@@ -1,11 +1,14 @@
-import SectionItem from './SectionItem.tsx';
+import SectionItem from './SectionItem';
 
 interface SectionListProps<T> {
     title: string;
     items: T[];
 }
 
-const SectionList = <T extends { id: string }>({ title, items }: SectionListProps<T>) => {
+const SectionList = <T extends { id: string }>({
+    title,
+    items,
+}: SectionListProps<T>) => {
     if (items.length === 0) {
         return <p>No {title} available.</p>;
     }

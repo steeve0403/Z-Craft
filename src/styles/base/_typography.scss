@@ -1,5 +1,5 @@
-@use '@/styles/abstracts/variables' as *;
-@use '@/styles/abstracts/functions' as fn;
+@use '../abstracts/variables' as *;
+@use '../abstracts/functions' as fn;
 
 body {
   font-family: $font-family-base;

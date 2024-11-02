@@ -1,6 +1,6 @@
-@use '@/styles/abstracts/variables' as *;
-@use '@/styles/abstracts/mixins' as *;
-
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+@use '../base/utilities' as *;
 
 // Reset for all elements
 *, *::before, *::after {
@@ -13,16 +13,24 @@
 html {
   line-height: 1.15;
   -webkit-text-size-adjust: 100%;
+  background-color: $color-background;
+  color: $color-text;
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
+  font-family: $font-family-base;
+  background: $color-background;
+  color: $color-text;
+  @include smooth-transition;
 }
 
 // Disable underline on links by default
 a {
   text-decoration: none;
+  color: inherit;
+  @include hover-effect($hover-background: transparent, $hover-text-color: $color-primary);
 }
 
 // Reset style for input, button, textarea, and select elements
@@ -32,6 +40,7 @@ input, button, textarea, select {
   outline: none;
   font: inherit;
   color: inherit;
+  @include input-base($background-color: $color-background-glass, $border-color: $color-border-glass);
 }
 
 // Reset italic style for i and em tags
@@ -62,6 +71,7 @@ button, input, textarea, a {
   &:focus {
     outline: 2px solid $color-primary;
     outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba($color-primary, 0.2);
   }
 }
 
@@ -70,6 +80,7 @@ img {
   max-width: 100%;
   height: auto;
   display: block;
+  border-radius: $border-radius-md;
 }
 
 // Remove default form element styles in mobile browsers
@@ -77,3 +88,26 @@ button, input, select, textarea {
   -webkit-appearance: none;
   appearance: none;
 }
+
+// Add glassmorphism effect for modals or sections needing a special highlight
+.glass-reset {
+  background: $color-background-glass;
+  backdrop-filter: blur($blur-glass);
+  border: 1px solid $color-border-glass;
+  border-radius: $border-radius-lg;
+  box-shadow: $box-shadow-glass;
+}
+
+// Apply glassmorphism for card components
+.card-reset {
+  @include glass-card;
+}
+
+// Smooth transitions for interactive elements
+button, a {
+  @include smooth-transition;
+}
+
+// Responsive base styles using media queries
+@include responsive-utilities($breakpoints);
+

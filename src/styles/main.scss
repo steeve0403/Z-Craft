@@ -1,13 +1,16 @@
 // Import all the styles here
-@use '@styles/abstracts/index' as *;
-@use '@styles/base/utilities' as *;
+@use './abstracts/index' as *;
+@use './base/utilities' as *;
 // Base
 @use './base/reset';
 @use './base/typography';
 
+// Layout
+@use "./layout/layout";
+@use "./layout/header";
 
 // Components
-  // UI
+// UI
 @use "./components/ui/button";
 @use "./components/ui/card";
 @use "./components/ui/form-elements";
@@ -18,5 +21,4 @@
 @use "./components/ui/select";
 @use "./components/ui/textarea";
 
-// Layout
-@use "./layout/layout";
+

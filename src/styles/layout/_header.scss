@@ -1,0 +1,118 @@
+@use '../abstracts/variables' as *;
+@use '../abstracts/mixins' as *;
+
+.header {
+  background: $color-background-glass;
+  backdrop-filter: blur($blur-glass);
+  box-shadow: $box-shadow-glass;
+  padding: $spacing-4 $spacing-5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  z-index: $z-index-navbar;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  .header__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    // Logo Section
+    .header__logo {
+      @include flex-center();
+    }
+
+    // Navigation Section
+    nav {
+      display: flex;
+      align-items: center;
+
+      @include respond-to($breakpoints, md) {
+        display: none; // Hidden on mobile
+      }
+    }
+
+    // Search Bar
+    .header__search {
+      margin-left: $spacing-6;
+      flex: 1;
+
+      @include respond-to($breakpoints, md) {
+        margin-left: 0;
+      }
+    }
+
+    // Actions Section (Profile, Theme Toggle, Notifications, etc.)
+    .header__actions {
+      display: flex;
+      align-items: center;
+      gap: $spacing-4;
+
+      .header__notification {
+        position: relative;
+
+        &::after {
+          content: '';
+          position: absolute;
+          top: -4px;
+          right: -4px;
+          width: 8px;
+          height: 8px;
+          background-color: $color-error;
+          border-radius: 50%;
+        }
+      }
+
+      .sidebar-toggle {
+        display: none;
+
+        @include respond-to($breakpoints, md) {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          background: $color-primary-dark;
+          color: $color-background;
+          border-radius: $border-radius-md;
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+
+      // Profile Menu button style
+      .profile-menu {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: $border-radius-md;
+        background: transparent;
+        color: $color-text-glass;
+      }
+    }
+  }
+
+  // Mobile Version Adjustments
+  @include respond-to($breakpoints, md) {
+    .header__container {
+      justify-content: space-between;
+    }
+
+    .header__actions {
+      .profile-menu,
+      .header__notification,
+      .button--outline {
+        display: none;
+      }
+
+      .sidebar-toggle {
+        display: inline-flex; // Only show sidebar toggle button on mobile
+      }
+    }
+  }
+}

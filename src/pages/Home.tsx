@@ -1,7 +1,7 @@
 import React from 'react';
-import {BenefitsSection} from '../components/home/BenefitsSection';
-import {HeroSection} from "../components/home/HeroSection.tsx";
-import {ActionsSection} from "../components/home/ActionsSection.tsx";
+import { BenefitsSection } from '@components/home/BenefitsSection';
+import { HeroSection } from '@components/home/HeroSection';
+import { ActionsSection } from '@components/home/ActionsSection';
 
 /**
  * Home component displaying the main features and navigation options.
@@ -9,10 +9,10 @@ import {ActionsSection} from "../components/home/ActionsSection.tsx";
  */
 const Home: React.FC = (): React.ReactElement => {
     return (
-        <div className="home">
-            <HeroSection/>
-            <ActionsSection/>
-            <BenefitsSection/>
+        <div className='home'>
+            <HeroSection />
+            <ActionsSection />
+            <BenefitsSection />
         </div>
     );
 };

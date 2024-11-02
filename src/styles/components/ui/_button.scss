@@ -1,7 +1,9 @@
-@use '@/styles/abstracts/variables' as *;
-@use '@/styles/abstracts/mixins' as *;
+// Importer les abstracts
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
 @use 'sass:color';
 
+// Style pour les boutons avec Glassmorphism
 .button {
   @include button-base();
   display: inline-flex;
@@ -11,14 +13,20 @@
   padding: $spacing-2 $spacing-4;
   font-size: $font-size-base;
   font-weight: $font-weight-medium;
-  border-radius: $border-radius-md;
-  transition: background-color $transition-fast, color $transition-fast, box-shadow $transition-base;
+  border-radius: $border-radius-glass;
+  backdrop-filter: blur($blur-glass);
+  box-shadow: $box-shadow-glass;
+  transition: background-color $transition-glass-hover, color $transition-fast, box-shadow $transition-base;
 
+  // Style pour le bouton principal
   &--primary {
     background-color: $color-primary;
-    color: $color-background;
+    color: $color-background-glass;
+    box-shadow: $box-shadow-strong-glass;
+
     &:hover {
       background-color: $color-primary-dark;
+      box-shadow: $box-shadow-strong-glass;
     }
     &:disabled {
       background-color: color.scale($color-primary, $lightness: -20%);
@@ -27,9 +35,12 @@
     }
   }
 
+  // Style pour le bouton secondaire
   &--secondary {
     background-color: $color-secondary;
-    color: $color-background;
+    color: $color-background-glass;
+    box-shadow: $box-shadow-md;
+
     &:hover {
       background-color: $color-secondary-dark;
     }
@@ -40,13 +51,17 @@
     }
   }
 
+  // Style pour le bouton outline (contour)
   &--outline {
     background-color: transparent;
     color: $color-primary;
     border: 1px solid $color-primary;
+    box-shadow: $box-shadow-xs;
+
     &:hover {
       background-color: $color-primary;
-      color: $color-background;
+      color: $color-background-glass;
+      box-shadow: $box-shadow-md;
     }
     &:disabled {
       border: 1px solid color.scale($color-primary, $lightness: -20%);
@@ -56,9 +71,12 @@
     }
   }
 
+  // Style pour le bouton danger (erreur)
   &--danger {
     background-color: $color-error;
-    color: $color-background;
+    color: $color-background-glass;
+    box-shadow: $box-shadow-dark;
+
     &:hover {
       background-color: color.scale($color-error, $lightness: -10%);
     }
@@ -69,30 +87,39 @@
     }
   }
 
+  // Taille de bouton - petit
   &--sm {
     padding: $spacing-1 $spacing-2;
     font-size: $font-size-sm;
+    border-radius: $border-radius-sm;
   }
 
+  // Taille de bouton - moyen
   &--md {
     padding: $spacing-2 $spacing-4;
     font-size: $font-size-base;
+    border-radius: $border-radius-md;
   }
 
+  // Taille de bouton - grand
   &--lg {
     padding: $spacing-3 $spacing-5;
     font-size: $font-size-lg;
+    border-radius: $border-radius-lg;
   }
 
+  // Style pour le bouton avec un spinner de chargement
   &--loading {
     position: relative;
     pointer-events: none;
     opacity: 0.8;
+    box-shadow: $box-shadow-glass;
   }
 
+  // Spinner pour l'état de chargement du bouton
   .button-spinner {
-    @include flex-center(center, center);
-    border: 2px solid $color-background;
+    @include flex-center();
+    border: 2px solid $color-background-glass;
     border-top-color: $color-primary;
     border-radius: 50%;
     width: 1rem;
@@ -101,6 +128,7 @@
   }
 }
 
+// Animation pour le spinner du bouton
 @keyframes button-spinner-animation {
   0% {
     transform: rotate(0deg);
@@ -109,3 +137,4 @@
     transform: rotate(360deg);
   }
 }
+
