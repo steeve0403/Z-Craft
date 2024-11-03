@@ -1,6 +1,6 @@
 // z-craft/src/pages/CVListPage.tsx
 import React, { useEffect } from 'react';
-import CVList from '@components/cv/CVList';
+import CVList from '@components/CVList';
 import { useCV } from '@/hooks/useEntityHooks';
 
 const CVListPage: React.FC = () => {

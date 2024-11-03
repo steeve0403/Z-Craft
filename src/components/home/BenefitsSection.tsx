@@ -1,5 +1,5 @@
 import React from 'react';
-import { BenefitCard } from '../common/BenefitCard';
+import { BenefitCard } from '../BenefitCard';
 import { benefitsData } from '@/data/benefitsData';
 
 /**

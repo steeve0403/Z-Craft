@@ -1,0 +1,54 @@
+// components/common/Header.scss
+
+@use '../../abstracts/variables' as *;
+@use '../../abstracts/mixins' as *;
+
+.header {
+  @include glass-effect; // Utilisation de la mixin glass-effect pour un look moderne et translucide.
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $spacing-medium $spacing-large;
+  position: sticky;
+  top: 0;
+  z-index: $z-index-modal;
+  backdrop-filter: blur($glass-blur-radius-strong);
+
+  &__menu-button {
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: $text-color-primary;
+
+    &:hover {
+      color: darken($accent-color, 10%);
+    }
+  }
+
+  &__title {
+    font-family: $font-family-handwritten; // Utilisation d'une police manuscrite pour donner un côté artisanal.
+    font-size: $font-size-h1;
+    color: $primary-color;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-medium;
+
+    .header__theme-button,
+    .header__auth-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.5rem;
+      color: $text-color-primary;
+      transition: color $transition-fast;
+
+      &:hover {
+        color: $accent-color;
+      }
+    }
+  }
+}

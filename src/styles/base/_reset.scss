@@ -2,112 +2,92 @@
 @use '../abstracts/mixins' as *;
 @use '../base/utilities' as *;
 
-// Reset for all elements
-*, *::before, *::after {
+/* Resetting Default Styles */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  border: 0;
+  vertical-align: baseline;
 }
 
-// Base HTML reset
-html {
-  line-height: 1.15;
-  -webkit-text-size-adjust: 100%;
-  background-color: $color-background;
-  color: $color-text;
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+  display: block;
 }
 
+/* Body settings */
 body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  font-family: $font-family-base;
-  background: $color-background;
-  color: $color-text;
-  @include smooth-transition;
+  line-height: 1;
+  font-family: $font-family-primary;
+  color: $text-color-primary;
+  background-color: $secondary-color;
 }
 
-// Disable underline on links by default
-a {
-  text-decoration: none;
-  color: inherit;
-  @include hover-effect($hover-background: transparent, $hover-text-color: $color-primary);
-}
-
-// Reset style for input, button, textarea, and select elements
-input, button, textarea, select {
-  border: none;
-  background: none;
-  outline: none;
-  font: inherit;
-  color: inherit;
-  @include input-base($background-color: $color-background-glass, $border-color: $color-border-glass);
-}
-
-// Reset italic style for i and em tags
-i, em {
-  font-style: normal;
-}
-
-// Remove default list styling
-ul, ol {
+/* List settings */
+ol, ul {
   list-style: none;
-  padding: 0;
 }
 
-// Remove all borders from tables
+/* Blockquote and Quotes settings */
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    //content: '';
+    //content: none;
+}
+
+/* Table settings */
 table {
   border-collapse: collapse;
   border-spacing: 0;
-  width: 100%;
 }
 
-th, td {
-  padding: 0; // Padding should be handled specifically in typography or table styling
-  text-align: left;
+/* Anchor tag settings */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-// Add basic focus styles for accessibility
-button, input, textarea, a {
-  &:focus {
-    outline: 2px solid $color-primary;
-    outline-offset: 2px;
-    box-shadow: 0 0 0 4px rgba($color-primary, 0.2);
-  }
+/* Input, Button, and Form Elements */
+input, button, textarea, select {
+  font: inherit;
+  outline: none;
 }
 
-// Reset images to ensure they don't overflow
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Image settings */
 img {
   max-width: 100%;
   height: auto;
-  display: block;
-  border-radius: $border-radius-md;
 }
 
-// Remove default form element styles in mobile browsers
-button, input, select, textarea {
-  -webkit-appearance: none;
-  appearance: none;
+/* Box Sizing for all elements */
+*, *:before, *:after {
+  box-sizing: border-box;
 }
 
-// Add glassmorphism effect for modals or sections needing a special highlight
-.glass-reset {
-  background: $color-background-glass;
-  backdrop-filter: blur($blur-glass);
-  border: 1px solid $color-border-glass;
-  border-radius: $border-radius-lg;
-  box-shadow: $box-shadow-glass;
+/* Remove Default Focus Outline */
+:focus {
+  outline: 0;
 }
-
-// Apply glassmorphism for card components
-.card-reset {
-  @include glass-card;
-}
-
-// Smooth transitions for interactive elements
-button, a {
-  @include smooth-transition;
-}
-
-// Responsive base styles using media queries
-@include responsive-utilities($breakpoints);
-

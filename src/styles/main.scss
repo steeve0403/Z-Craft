@@ -5,11 +5,12 @@
 @use './base/reset';
 @use './base/typography';
 
+
 // Layout
 @use "./layout/layout";
-@use "./layout/header";
 
 // Components
+@use "./components/common/header";
 // UI
 @use "./components/ui/button";
 @use "./components/ui/card";
@@ -20,5 +21,7 @@
 @use "./components/ui/searchBar";
 @use "./components/ui/select";
 @use "./components/ui/textarea";
+@use "components/ui/loadingSpinner";
+@use "components/ui/loadingOverlay";
 
 

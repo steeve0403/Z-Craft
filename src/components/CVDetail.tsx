@@ -7,7 +7,7 @@ import {
     Skill,
     Language,
 } from '@/types/cv';
-import SectionList from '../section/SectionList';
+import SectionList from './section/SectionList';
 
 interface CVDetailProps {
     cv: CV;

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useCV, useGeneralInfo } from '@/hooks/useEntityHooks';
 import { Input } from '@components/ui/Input';
-import { Button } from '@components/ui/Button';
+import { Button } from '@components/ui/Button/Button';
 import { Textarea } from '@components/ui/Textarea';
 
 const CVEditPage: React.FC = () => {

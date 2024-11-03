@@ -1,157 +1,227 @@
-# Guide Complet d'Utilisation des Variables, Mixins, Fonctions et Utilitaires en SCSS pour un Design Glassmorphique
+# Z-Craft SCSS Guide: Usage of Variables, Mixins, Functions, and Utilities
 
-Ce guide a pour but de fournir une explication approfondie de l'utilisation des variables, mixins, fonctions et utilitaires SCSS que vous avez créés pour intégrer un design **glassmorphique** à votre application. Chaque section comporte des exemples pratiques pour illustrer les différentes possibilités de personnalisation.
+This guide provides a detailed overview of how to use the SCSS components within Z-Craft. It includes examples in React TypeScript to demonstrate practical use cases for **variables**, **mixins**, **functions**, and **utility classes**. This guide will help you get started quickly and maintain consistency throughout your project.
 
-## 1. Variables
-Les variables définies dans le fichier SCSS sont essentielles pour garder une cohérence dans tout le design et permettent une mise à jour facile de l'apparence de l'application.
+## 1. Variables Usage
 
-### 1.1 Palette de Couleurs Glassmorphique
-Les couleurs sont définies avec une certaine transparence pour créer un effet d'élégance et de profondeur.
+### Example: Button Component Using SCSS Variables
 
-#### Exemple d'utilisation :
+The SCSS variables defined in `_variables.scss` are used to provide a consistent color palette, spacing, and typographic style throughout the project.
+
+#### `Button.module.scss`
 ```scss
-.button-primary {
-  background-color: $color-primary;
-  color: $color-text-glass;
+@import '../styles/_variables.scss';
+
+.button {
+  background-color: $primary-color;
+  color: #fff;
+  padding: $button-padding;
+  border-radius: $border-radius-hard;
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-duration-fast $transition-timing-function;
+
   &:hover {
-    background-color: $color-primary-dark;
+    background-color: darken($primary-color, 10%);
+  }
+
+  &:disabled {
+    background-color: $disabled-color;
+    cursor: not-allowed;
   }
 }
 ```
-Dans cet exemple, nous utilisons `$color-primary` pour un bouton principal, et la couleur change lorsque l'utilisateur survole le bouton.
 
-### 1.2 Bordures et Ombres
-Les bordures et ombres ajoutent de la profondeur aux éléments pour renforcer l'effet glassmorphique.
+#### `Button.tsx`
+```tsx
+import React from 'react';
+import styles from './Button.module.scss';
 
-#### Exemple d'utilisation :
+type ButtonProps = {
+  label: string;
+  onClick: () => void;
+  disabled?: boolean;
+};
+
+const Button: React.FC<ButtonProps> = ({ label, onClick, disabled = false }) => {
+  return (
+    <button className={styles.button} onClick={onClick} disabled={disabled}>
+      {label}
+    </button>
+  );
+};
+
+export default Button;
+```
+
+### Explanation
+- **Background Color**: The `$primary-color` variable is used to maintain a consistent theme.
+- **Padding and Radius**: `$button-padding` and `$border-radius-hard` are used to apply uniform spacing and rounded corners.
+- **Hover and Disabled States**: Using `$disabled-color` ensures that button styles are consistent across different states.
+
+## 2. Mixins Usage
+
+### Example: Glassmorphic Card Component
+The mixins in `_mixins.scss` help create reusable components with consistent styles.
+
+#### `Card.module.scss`
 ```scss
+@import '../styles/_mixins.scss';
+
 .card {
-  border: 1px solid $color-border-glass;
-  box-shadow: $box-shadow-glass;
-  border-radius: $border-radius-glass;
+  @include glass-effect;
+  padding: $card-padding;
+  border-radius: $border-radius-soft;
 }
 ```
-Cet exemple applique une bordure semi-transparente et une ombre douce à une carte pour créer un effet d'élégance.
 
-## 2. Mixins
-Les mixins facilitent la réutilisation du code et la création de composants cohérents, tout en évitant les répétitions.
+#### `Card.tsx`
+```tsx
+import React from 'react';
+import styles from './Card.module.scss';
 
-### 2.1 Mixin de Centrage Flex
-La mixin `flex-center` permet de centrer facilement les éléments.
+type CardProps = {
+  children: React.ReactNode;
+};
 
-#### Exemple d'utilisation :
+const Card: React.FC<CardProps> = ({ children }) => {
+  return <div className={styles.card}>{children}</div>;
+};
+
+export default Card;
+```
+
+### Explanation
+- **Glass Effect**: The `@include glass-effect;` mixin applies the blurred background, transparency, and border that creates the glassmorphic effect.
+- **Padding and Border Radius**: `$card-padding` and `$border-radius-soft` are used to provide consistent spacing and rounded edges.
+
+## 3. Functions Usage
+
+### Example: Calculating Responsive Font Sizes
+Functions in `_functions.scss` can be used to create dynamic, responsive designs.
+
+#### `Heading.module.scss`
 ```scss
-.header {
-  @include flex-center(column, center, center);
-  height: 100vh;
-  background: $color-background-glass;
+@import '../styles/_functions.scss';
+@import '../styles/_variables.scss';
+
+.heading {
+  font-size: responsive-font-size(16, 32);
+  font-weight: $font-weight-bold;
+  color: $text-color-primary;
 }
 ```
-Cet exemple centre le contenu de `.header` à la fois horizontalement et verticalement, tout en appliquant un fond semi-transparent.
 
-### 2.2 Mixin de Bouton Glassmorphique
-La mixin `button-base` permet de créer facilement des boutons en utilisant des styles glassmorphiques.
+#### `Heading.tsx`
+```tsx
+import React from 'react';
+import styles from './Heading.module.scss';
 
-#### Exemple d'utilisation :
+type HeadingProps = {
+  text: string;
+};
+
+const Heading: React.FC<HeadingProps> = ({ text }) => {
+  return <h1 className={styles.heading}>{text}</h1>;
+};
+
+export default Heading;
+```
+
+### Explanation
+- **Responsive Font Size**: The `responsive-font-size(16, 32)` function generates a responsive CSS value that adapts between `16px` and `32px` depending on the viewport size.
+- **Font Weight and Color**: Variables like `$font-weight-bold` and `$text-color-primary` are used for consistency in appearance.
+
+## 4. Utilities Usage
+
+### Example: Utility Classes for Layout
+The utility classes in `_utilities.scss` are used for quick layout adjustments, ensuring consistency and reducing repetitive code.
+
+#### `UserProfile.tsx`
+```tsx
+import React from 'react';
+import styles from '../styles/_utilities.scss';
+
+type UserProfileProps = {
+  name: string;
+  bio: string;
+};
+
+const UserProfile: React.FC<UserProfileProps> = ({ name, bio }) => {
+  return (
+    <div className={`${styles.utility-flex-center} ${styles.utility-full-width}`}>
+      <div className={styles.utility-border-radius-soft}>
+        <h2 className={styles.utility-text-primary}>{name}</h2>
+        <p className={styles.utility-text-secondary}>{bio}</p>
+      </div>
+    </div>
+  );
+};
+
+export default UserProfile;
+```
+
+### Explanation
+- **Center Alignment**: `utility-flex-center` is used to align the profile content both vertically and horizontally.
+- **Full Width**: `utility-full-width` ensures that the profile container takes up the full width of its parent.
+- **Border Radius**: `utility-border-radius-soft` gives the profile container smooth rounded corners.
+- **Text Styling**: `utility-text-primary` and `utility-text-secondary` are used to style the name and bio with consistent colors.
+
+## 5. Combining All Components
+Here’s a practical example of using **variables**, **mixins**, **functions**, and **utilities** together in a React component:
+
+#### `ProfileCard.module.scss`
 ```scss
-.button-glass {
-  @include button-base($color-primary, $color-text-glass);
-  backdrop-filter: blur($blur-glass);
-  box-shadow: $box-shadow-strong-glass;
-}
-```
-Ce bouton a un fond semi-transparent, un effet de flou et une ombre pour accentuer l'effet glassmorphique.
+@import '../styles/_variables.scss';
+@import '../styles/_mixins.scss';
+@import '../styles/_functions.scss';
 
-## 3. Fonctions SCSS
-Les fonctions permettent de créer des valeurs calculées dynamiquement, ce qui améliore la flexibilité et la consistance du design.
-
-### 3.1 Fonction de Calcul de Rem
-La fonction `rem-calc` convertit les pixels en `rem` pour assurer une mise à l'échelle appropriée.
-
-#### Exemple d'utilisation :
-```scss
-.card {
-  padding: rem-calc(32); // Correspond à 2rem (32px / 16)
-}
-```
-Cela permet de rendre les espacements adaptatifs en fonction des préférences d'accessibilité des utilisateurs.
-
-### 3.2 Création de Variantes de Couleur
-La fonction `color-variant` permet d'éclaircir ou d'assombrir une couleur.
-
-#### Exemple d'utilisation :
-```scss
-.alert {
-  background-color: color-variant($color-error, 20%);
-}
-```
-Ici, la couleur d'alerte est éclaircie de 20%, ce qui permet de différencier les états de l'alerte.
-
-## 4. Utilitaires SCSS
-Les utilitaires sont des classes génériques prêtes à l'emploi, permettant d'appliquer rapidement des styles communs.
-
-### 4.1 Utilitaires de Margin et Padding
-Les mixins `margin-utilities` et `padding-utilities` génèrent des classes pour gérer les espacements.
-
-#### Exemple d'utilisation :
-```html
-<div class="mb-4 mt-6 px-8">
-  Contenu avec marge et padding adaptés.
-</div>
-```
-Dans cet exemple, `.mb-4`, `.mt-6` et `.px-8` appliquent respectivement des marges et du padding en utilisant les espacements prédéfinis.
-
-### 4.2 Utilitaires de Réactivité
-Le mixin `responsive-utilities` permet de créer des classes responsives.
-
-#### Exemple d'utilisation :
-```scss
-@include responsive-utilities($breakpoints);
-```
-Cela génère des classes préfixées (e.g., `.bp-md\:flex`) pour appliquer des styles spécifiques à un breakpoint.
-
-### 4.3 Utilitaires Glassmorphiques
-Pour appliquer des effets glassmorphiques préfabriqués à des éléments.
-
-#### Exemple d'utilisation :
-```html
-<div class="glass-reset">
-  <p>Effet glassmorphique appliqué à ce conteneur.</p>
-</div>
-```
-La classe `.glass-reset` applique un effet de verre avec flou, bordure et ombre pour un rendu élégant.
-
-## 5. Cas Pratique Complet
-### Création d'une Carte Glassmorphique Interactive
-Voici un exemple d'utilisation combinée des variables, mixins, fonctions et utilitaires pour créer une carte complète et interactive.
-
-#### HTML
-```html
-<div class="card-reset glass-reset">
-  <h2 class="text-center">Titre de la Carte</h2>
-  <p class="mb-4 px-6">
-    Ceci est une carte avec un effet glassmorphique, utilisant les styles SCSS avancés.
-  </p>
-  <button class="button-glass">Cliquer ici</button>
-</div>
-```
-#### SCSS
-```scss
-.card-reset {
-  padding: rem-calc(24);
-  backdrop-filter: blur($blur-glass);
-  border-radius: $border-radius-glass;
-  box-shadow: $box-shadow-glass;
-  background: $color-background-glass;
-  transition: box-shadow $transition-glass-hover;
+.profile-card {
+  @include glass-effect;
+  padding: spacing(large);
+  border-radius: border-radius(soft);
+  box-shadow: box-shadow(light);
+  color: $text-color-primary;
+  transition: all $transition-duration-normal $transition-timing-function;
 
   &:hover {
-    box-shadow: $box-shadow-strong-glass;
+    box-shadow: box-shadow(heavy);
   }
 }
 ```
-Cet exemple montre une carte avec une mise en page adaptive, utilisant les concepts de glassmorphisme, de blur, de transparence et d'effets d'ombre élaborés pour améliorer l'interaction utilisateur.
 
-## Conclusion
-En combinant ces variables, mixins, fonctions et utilitaires, vous pouvez créer une application entièrement stylée dans un thème glassmorphique moderne. Utilisez les exemples présentés ici comme point de départ pour construire des composants visuellement impressionnants, avec des interactions subtiles mais élégantes.
+#### `ProfileCard.tsx`
+```tsx
+import React from 'react';
+import styles from './ProfileCard.module.scss';
+
+type ProfileCardProps = {
+  name: string;
+  role: string;
+};
+
+const ProfileCard: React.FC<ProfileCardProps> = ({ name, role }) => {
+  return (
+    <div className={styles.profile-card}>
+      <h2>{name}</h2>
+      <p>{role}</p>
+    </div>
+  );
+};
+
+export default ProfileCard;
+```
+
+### Explanation
+- **Glassmorphic Effect**: The `glass-effect` mixin is used to give the card a modern and stylish glass appearance.
+- **Padding and Border Radius**: `spacing(large)` and `border-radius(soft)` are used to apply consistent padding and rounded edges.
+- **Box Shadow**: `box-shadow(light)` and `box-shadow(heavy)` provide depth effects on hover.
+
+## Summary
+This guide demonstrates how to effectively use the **variables**, **mixins**, **functions**, and **utilities** provided by Z-Craft to create a consistent, maintainable, and aesthetically pleasing design system. Using these SCSS components will enable you to:
+- Maintain consistent theming and styling across the project.
+- Reuse styles efficiently, reducing redundancy.
+- Easily adapt the design to different contexts (e.g., responsive layouts).
+
+Feel free to extend this guide as your project evolves to incorporate new components or design elements. If you need more details or further examples, don't hesitate to ask!
 

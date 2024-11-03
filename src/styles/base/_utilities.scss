@@ -1,254 +1,232 @@
-@use 'sass:color';
+// ===========================
+// _utilities.scss
+// ===========================
+/**
+ * Utilities SCSS - Utility classes to be used across the Z-Craft CV Manager application.
+ * This file contains utility classes and mixins for consistent styling and layout management throughout the application.
+ */
+
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
 
-// Text alignment utilities
-.text-center {
-  text-align: center;
-}
+// ===========================
+// Spacing Utilities
+// ===========================
 
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
-}
-
-// Margin utilities
-@mixin margin-utilities($spacing-map) {
-  @each $key, $value in $spacing-map {
-    .mb-#{$key} {
-      margin-bottom: $value;
-    }
-    .mt-#{$key} {
-      margin-top: $value;
-    }
-    .ml-#{$key} {
-      margin-left: $value;
-    }
-    .mr-#{$key} {
-      margin-right: $value;
-    }
-    .mx-#{$key} {
-      margin-left: $value;
-      margin-right: $value;
-    }
-    .my-#{$key} {
-      margin-top: $value;
-      margin-bottom: $value;
-    }
+/**
+ * Utility for Margin and Padding.
+ * Creates utility classes for spacing.
+ * @mixin spacing-utility
+ * @param {String} $type - 'margin' or 'padding'.
+ * @param {String} $size - Size of spacing to apply (e.g., $spacing-small).
+ * @example scss - Applying margin spacing
+ * .element {
+ *   @include spacing-utility(margin, $spacing-small);
+ * }
+ */
+@mixin spacing-utility($type, $size) {
+  @if $type == 'margin' {
+    margin: $size;
+  } @else if $type == 'padding' {
+    padding: $size;
+  } @else {
+    @warn "Unknown spacing type '#{$type}'. Please use 'margin' or 'padding'.";
   }
 }
 
-@include margin-utilities((1: $spacing-1, 2: $spacing-2, 4: $spacing-4, 6: $spacing-6, 8: $spacing-8, 10: $spacing-10, 12: $spacing-12));
+// ===========================
+// Responsive Utilities
+// ===========================
 
-// Padding utilities
-@mixin padding-utilities($spacing-map) {
-  @each $key, $value in $spacing-map {
-    .pb-#{$key} {
-      padding-bottom: $value;
-    }
-    .pt-#{$key} {
-      padding-top: $value;
-    }
-    .pl-#{$key} {
-      padding-left: $value;
-    }
-    .pr-#{$key} {
-      padding-right: $value;
-    }
-    .px-#{$key} {
-      padding-left: $value;
-      padding-right: $value;
-    }
-    .py-#{$key} {
-      padding-top: $value;
-      padding-bottom: $value;
-    }
+/**
+ * Utility for Responsive Text Alignment.
+ * Aligns text responsively based on screen size.
+ * @mixin responsive-text-align
+ * @param {String} $align - Alignment direction ('left', 'center', 'right').
+ * @example scss - Aligning text responsively
+ * .element {
+ *   @include responsive-text-align(center);
+ * }
+ */
+@mixin responsive-text-align($align) {
+  text-align: $align;
+
+  @include respond-to('tablet') {
+    text-align: left;
   }
 }
 
-@include padding-utilities((1: $spacing-1, 2: $spacing-2, 4: $spacing-4, 6: $spacing-6, 8: $spacing-8, 10: $spacing-10, 12: $spacing-12));
+// ===========================
+// Accessibility Utilities
+// ===========================
 
-// Width utilities
-.w-full {
-  width: 100%;
+/**
+ * Utility for Accessible Focus State.
+ * Adds accessible focus styles to elements to ensure good visibility.
+ * @mixin accessible-focus
+ * @example scss - Applying focus state
+ * .button {
+ *   @include accessible-focus;
+ * }
+ */
+@mixin accessible-focus {
+  outline: 2px solid $focus-outline-color;
+  outline-offset: 2px;
 }
 
-.w-auto {
-  width: auto;
-}
-
-// Flex utilities
-.flex {
-  display: flex;
-}
-
-.flex-col {
-  flex-direction: column;
-}
-
-.items-center {
-  align-items: center;
-}
-
-.items-start {
-  align-items: flex-start;
-}
-
-.items-end {
-  align-items: flex-end;
-}
-
-.justify-between {
-  justify-content: space-between;
-}
-
-.justify-center {
-  justify-content: center;
-}
-
-// Visibility utilities
-.hidden {
-  display: none;
-}
-
-// Utility for spacing between elements (e.g., grid or flex children)
-.space-y-2 > * + * {
-  margin-top: $spacing-2;
-}
-
-.space-y-4 > * + * {
-  margin-top: $spacing-4;
-}
-
-.space-y-6 > * + * {
-  margin-top: $spacing-6;
-}
-
-.space-y-8 > * + * {
-  margin-top: $spacing-8;
-}
-
-// Responsive utilities
-@mixin responsive-utilities($breakpoints) {
-  @each $name, $breakpoint in $breakpoints {
-    @media (min-width: $breakpoint) {
-      .bp-#{$name}\:flex {
-        display: flex;
-      }
-      .bp-#{$name}\:hidden {
-        display: none;
-      }
-      .bp-#{$name}\:block {
-        display: block;
-      }
-    }
-  }
-}
-
-@include responsive-utilities($breakpoints);
-
+// ===========================
 // Glassmorphism Utilities
-.glass {
-  background: $color-background-glass;
-  backdrop-filter: blur($blur-glass);
-  border-radius: $border-radius-glass;
-  box-shadow: $box-shadow-glass;
-  border: 1px solid $color-border-glass;
+// ===========================
+
+/**
+ * Utility for Adding Glass Effect.
+ * Applies a light glassmorphic effect to background elements.
+ * @class .bg-glass-light
+ * @example scss - Applying glass effect to a background
+ * .card {
+ *   @extend .bg-glass-light;
+ * }
+ */
+.bg-glass-light {
+  background: $glass-bg-color;
+  backdrop-filter: blur($glass-blur-radius-light);
+  border-radius: $border-radius-soft;
+  opacity: $glass-opacity-light;
 }
 
-.strong-glass {
-  background: $color-overlay;
-  backdrop-filter: blur($blur-glass-strong);
-  border-radius: $border-radius-xl;
-  box-shadow: $box-shadow-strong-glass;
-  border: 1px solid $color-border-glass;
+/**
+ * Utility for Adding Strong Glass Effect.
+ * Applies a stronger glassmorphic effect for more prominent elements.
+ * @class .bg-glass-strong
+ * @example scss - Applying strong glass effect to a modal
+ * .modal {
+ *   @extend .bg-glass-strong;
+ * }
+ */
+.bg-glass-strong {
+  background: $glass-bg-color;
+  backdrop-filter: blur($glass-blur-radius-strong);
+  border-radius: $border-radius-soft;
+  opacity: $glass-opacity-strong;
 }
 
-// Dark mode utilities
-.dark {
-  background-color: $color-background-dark;
-  color: $color-text-dark;
+// ===========================
+// Visibility Management Utilities
+// ===========================
 
-  .header, .footer, .cv-list__item, .cv-preview {
-    background-color: color.adjust($color-background-dark, $lightness: 5%);
-  }
-
-  .input, .textarea {
-    background-color: $color-background-dark;
-    color: $color-text-dark;
-    border-color: color.adjust($color-background-dark, $lightness: 10%);
-
-    &:focus {
-      border-color: $color-primary-dark;
-      box-shadow: 0 0 0 2px rgba($color-primary-dark, 0.25);
-    }
-  }
-
-  .card, .button, .input {
-    box-shadow: $box-shadow-dark;
-  }
-}
-
-// Light mode (default)
-.light {
-  background-color: $color-background;
-  color: $color-text;
-
-  .header, .footer, .cv-list__item, .cv-preview {
-    background-color: color.adjust($color-background, $lightness: -5%);
-  }
-
-  .input, .textarea {
-    background-color: $color-background;
-    color: $color-text;
-    border-color: $color-border;
-
-    &:focus {
-      border-color: $color-primary;
-      box-shadow: 0 0 0 2px rgba($color-primary, 0.25);
-    }
-  }
-
-  .card, .button, .input {
-    box-shadow: $box-shadow-light;
+/**
+ * Utility for Visibility Management on Mobile Devices.
+ * Hides an element on mobile screens.
+ * @class .hide-on-mobile
+ * @example scss - Hiding an element on mobile devices
+ * .sidebar {
+ *   @extend .hide-on-mobile;
+ * }
+ */
+.hide-on-mobile {
+  @include respond-to($breakpoint-mobile) {
+    display: none !important;
   }
 }
 
-// Button hover effect
-.button {
-  @include hover-effect;
-}
+/**
+ * Utility for Showing Only on Desktop.
+ * Shows an element only on desktop screens.
+ * @class .show-on-desktop
+ * @example scss - Showing an element only on desktop
+ * .banner {
+ *   @extend .show-on-desktop;
+ * }
+ */
+.show-on-desktop {
+  display: none;
 
-// Text color utilities for glassmorphism
-.text-glass {
-  color: $color-text-glass;
-}
-
-// Overlay utilities for glass effects
-.glass-overlay {
-  background: $color-overlay;
-  opacity: $opacity-glass-layer;
-  backdrop-filter: blur($blur-glass);
-  z-index: $z-index-glass-overlay;
-}
-
-// Smooth Transition Utility
-.smooth-transition {
-  @include smooth-transition;
-}
-
-// Responsive Padding Utility for Cards
-@mixin responsive-padding($breakpoints) {
-  @each $name, $breakpoint in $breakpoints {
-    @media (min-width: $breakpoint) {
-      .bp-#{$name}\:p-6 {
-        padding: $spacing-6;
-      }
-    }
+  @include respond-to('desktop') {
+    display: block;
   }
 }
 
-@include responsive-padding($breakpoints);
+// ===========================
+// Positioning Utilities
+// ===========================
+
+/**
+ * Utility for Absolute Centering.
+ * Centers an element absolutely within its parent container.
+ * @class .absolute-center
+ * @example scss - Centering an element absolutely
+ * .loader {
+ *   @extend .absolute-center;
+ * }
+ */
+.absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/**
+ * Utility for Fixed Full-Screen Positioning.
+ * Positions an element fixed and covers the entire screen.
+ * @class .fixed-fullscreen
+ * @example scss - Fullscreen overlay
+ * .overlay {
+ *   @extend .fixed-fullscreen;
+ * }
+ */
+.fixed-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $z-index-modal;
+}
+
+// ===========================
+// Display Utilities
+// ===========================
+
+/**
+ * Utility for Flex Centering.
+ * Centers content horizontally and vertically using flexbox.
+ * @class .flex-center
+ * @example scss - Applying flex centering
+ * .content {
+ *   @extend .flex-center;
+ * }
+ */
+.flex-center {
+  @include flex-center();
+}
+
+/**
+ * Utility for Inline Block Elements.
+ * Displays an element as inline-block for wrapping.
+ * @class .inline-block
+ * @example scss - Displaying an element as inline-block
+ * .tag {
+ *   @extend .inline-block;
+ * }
+ */
+.inline-block {
+  display: inline-block;
+}
+
+/**
+ * Utility for Floating Elements.
+ * Applies floating properties to elements.
+ * @class .float-right
+ * @example scss - Floating an element to the right
+ * .image {
+ *   @extend .float-right;
+ * }
+ */
+.float-right {
+  float: right;
+}
+
+.float-left {
+  float: left;
+}

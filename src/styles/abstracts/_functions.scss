@@ -1,64 +1,204 @@
-@use '../abstracts/variables' as *;
-@use '../abstracts/mixins' as *;
+// ===========================
+// _functions.scss
+// ===========================
+/**
+ * Functions SCSS - Contains helper functions for advanced styling.
+ */
+
 @use 'sass:color';
+@use 'variables' as *;
 
-// Functions for Utility and Reusability
+// ===========================
+// Functions
+// ===========================
 
-// Function to Convert px to rem
-// Helps maintain consistent units across the project
+/**
+ * Calculates the relative luminance of a color.
+ * This function helps to determine how bright a color is perceived.
+ *
+ * @function luminance
+ * @param {Color} $color - The color whose luminance is to be calculated.
+ * @return {Number} Relative luminance value.
+ * @example scss
+ * $lum: luminance($primary-color);
+ */
+@function luminance($color) {
+  $r: color.red($color) / 255;
+  $g: color.green($color) / 255;
+  $b: color.blue($color) / 255;
+
+  @if ($r <= 0.03928) {
+    $r: $r / 12.92;
+  } @else {
+    $r: pow(($r + 0.055) / 1.055, 2.4);
+  }
+
+  @if ($g <= 0.03928) {
+    $g: $g / 12.92;
+  } @else {
+    $g: pow(($g + 0.055) / 1.055, 2.4);
+  }
+
+  @if ($b <= 0.03928) {
+    $b: $b / 12.92;
+  } @else {
+    $b: pow(($b + 0.055) / 1.055, 2.4);
+  }
+
+  @return 0.2126 * $r + 0.7152 * $g + 0.0722 * $b;
+}
+
+/**
+ * Adjusts a color by lightening or darkening it by a given percentage.
+ * This function is used for creating hover states or color variations.
+ *
+ * @function adjust-color
+ * @param {Color} $color - The color to adjust.
+ * @param {Number} $amount - The percentage amount to adjust (-100 to 100).
+ * @return {Color} Adjusted color.
+ * @example scss
+ * $adjusted-color: adjust-color($primary-color, 20);
+ */
+@function adjust-color($color, $amount) {
+  @if $amount > 0 {
+    @return color.scale($color, $lightness: $amount);
+  } @else {
+    @return color.scale($color, $lightness: $amount);
+  }
+}
+
+/**
+ * Converts a pixel value to rem units for scalable and accessible typography.
+ * This ensures consistent units across the project.
+ *
+ * @function rem-calc
+ * @param {Number} $px-value - The pixel value to convert.
+ * @return {String} Converted rem value.
+ * @example scss
+ * font-size: rem-calc(16px);
+ */
 @function rem-calc($px-value) {
   @return $px-value / 16 * 1rem;
 }
 
-// Function to Create Color Variants
-// Lightens or darkens a color by a given percentage
-@function color-variant($color, $percentage) {
-  @return color.mix(white, $color, $percentage);
+/**
+ * Generates a gradient from two colors with an optional angle.
+ * Useful for creating visually appealing backgrounds.
+ *
+ * @function gradient-generator
+ * @param {Color} $color1 - The first color of the gradient.
+ * @param {Color} $color2 - The second color of the gradient.
+ * @param {Angle} $angle [135deg] - The angle of the gradient.
+ * @return {String} Linear gradient value.
+ * @example scss
+ * background: gradient-generator($primary-color, $accent-color);
+ */
+@function gradient-generator($color1, $color2, $angle: 135deg) {
+  @return linear-gradient($angle, $color1, $color2);
 }
 
-// Spacing Utility Function
-// Returns spacing values based on a multiplier for consistent padding/margin
-@function spacing($spacing-values, $multiplier) {
-  @return map-get($spacing-values, $multiplier);
-}
-
-// Responsive Value Utility Function
-// Returns responsive values based on breakpoint map
-@function responsive-value($values, $breakpoint) {
-  @return map-get($values, $breakpoint);
-}
-
-// Function to Generate Glassmorphic Background
-// Creates a semi-transparent background with optional blur effect for glassmorphic elements
-@function glassmorphic-background($color, $blur: $blur-glass) {
-  @return (
-          background: $color,
-          backdrop-filter: blur($blur)
-  );
-}
-
-// Function to Generate Glass Shadow Effect
-// Custom shadow to simulate the floating glass effect
-@function glass-shadow($shadow-type: light) {
-  @if $shadow-type == 'strong' {
-    @return $box-shadow-strong-glass;
-  } @else {
-    @return $box-shadow-glass;
-  }
-}
-
-// Function to Adjust Text Contrast
-// Ensures text remains readable on semi-transparent backgrounds
-@function adjust-text-contrast($background, $light-text: $color-text-light, $dark-text: $color-text-dark) {
-  @if color.luminance($background) > 0.5 {
+/**
+ * Determines the most readable text color for a given background.
+ * This function ensures good contrast and improves readability.
+ *
+ * @function adaptive-contrast
+ * @param {Color} $bg-color - The background color.
+ * @param {Color} $light-text [$text-color-primary] - Light text color option.
+ * @param {Color} $dark-text [$text-color-secondary] - Dark text color option.
+ * @return {Color} The text color that contrasts best with the background.
+ * @example scss
+ * color: adaptive-contrast($bg-color);
+ */
+@function adaptive-contrast($bg-color, $light-text: $text-color-primary, $dark-text: $text-color-secondary) {
+  @if luminance($bg-color) > 0.5 {
     @return $dark-text;
   } @else {
     @return $light-text;
   }
 }
 
-// Function for Gradient Backgrounds
-// Generates a gradient background for elements to enhance glassmorphism depth
-@function gradient-background($color1, $color2, $angle: 135deg) {
-  @return linear-gradient($angle, $color1, $color2);
+/**
+ * Clamps a value between a minimum and maximum.
+ * Useful for ensuring a value stays within a specific range.
+ *
+ * @function clamp-value
+ * @param {Number} $value - The value to clamp.
+ * @param {Number} $min - The minimum allowed value.
+ * @param {Number} $max - The maximum allowed value.
+ * @return {Number} Clamped value.
+ * @example scss
+ * $clamped-value: clamp-value(150, 0, 100);
+ */
+@function clamp-value($value, $min, $max) {
+  @if $value < $min {
+    @return $min;
+  } @else if $value > $max {
+    @return $max;
+  } @else {
+    @return $value;
+  }
 }
+
+/**
+ * Calculates spacing values based on a multiplier for consistent padding/margin.
+ * This helps maintain consistent spacing throughout the project.
+ *
+ * @function spacing-calc
+ * @param {Number} $multiplier - The multiplier to apply to base spacing.
+ * @return {Number} Calculated spacing value.
+ * @example scss
+ * margin: spacing-calc(2);
+ */
+@function spacing-calc($multiplier) {
+  @return $multiplier * $spacing-medium;
+}
+
+/**
+ * Generates a box shadow based on shadow intensity.
+ * Provides different levels of shadow intensity for various use cases.
+ *
+ * @function box-shadow-generator
+ * @param {String} $intensity - The intensity level ('light', 'medium', 'heavy').
+ * @return {String} Box shadow CSS value.
+ * @example scss
+ * box-shadow: box-shadow-generator('heavy');
+ */
+@function box-shadow-generator($intensity) {
+  @if $intensity == 'light' {
+    @return $box-shadow-light;
+  } @else if $intensity == 'medium' {
+    @return 0 6px 10px rgba(0, 0, 0, 0.15);
+  } @else if $intensity == 'heavy' {
+    @return $box-shadow-heavy;
+  } @else {
+    @warn "Invalid intensity level provided for box-shadow-generator.";
+    @return null;
+  }
+}
+
+/**
+ * Generates a glassmorphic effect background.
+ * Useful for applying glass-like backgrounds to elements for a modern aesthetic.
+ *
+ * @function glass-effect
+ * @param {Color} $bg-color - The base color for the glass effect.
+ * @param {Number} $blur-radius [$glass-blur-radius-strong] - Blur radius for the backdrop filter.
+ * @param {Number} $opacity [$glass-opacity-strong] - Opacity level for the background.
+ * @return {Map} Glassmorphic styles including background, backdrop-filter, and border.
+ * @example scss
+ * background: glass-effect($primary-color);
+ */
+@function glass-effect($bg-color, $blur-radius: $glass-blur-radius-strong, $opacity: $glass-opacity-strong) {
+  @return (
+          background: rgba($bg-color, $opacity),
+          backdrop-filter: blur($blur-radius),
+          border: 1px solid $glass-border-color
+  );
+}
+
+
+
+
+
+
+

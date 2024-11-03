@@ -8,7 +8,7 @@ import {
     useSkill,
     useLanguage,
 } from '@/hooks/useEntityHooks';
-import CVDetail from '@components/cv/CVDetail';
+import CVDetail from '@components/CVDetail';
 
 const CVDetailPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();

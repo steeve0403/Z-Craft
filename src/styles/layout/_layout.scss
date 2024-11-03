@@ -1,52 +1,92 @@
-// Importer les abstracts
+// ===========================
+// _layout.scss
+// ===========================
+/**
+ * Layout SCSS - This file contains styles for the main layout structure of the Z-Craft CV Manager application,
+ * ensuring a consistent and visually appealing structure throughout the different sections of the app.
+ */
+
 @use '../abstracts/variables' as *;
 @use '../abstracts/mixins' as *;
-@use '../abstracts/functions' as *;
 
-// Mise en page principale de l'application
+// ===========================
+// Layout Container
+// ===========================
 .layout {
-  position: relative;
-  @include flex-center(column, center, center);
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
-  background: $color-background-glass;
-  backdrop-filter: blur($blur-glass-strong);
-  color: $color-text;
+  background: $secondary-color;
+  color: $text-color-primary;
+  transition: background $transition-normal, color $transition-normal;
+}
 
-  // Smooth transition for the main content when the sidebar is toggled
-  @include smooth-transition;
+// ===========================
+// Main Content Styling
+// ===========================
+.layout__main {
+  flex: 1;
+  margin-left: 0;
+  padding: $spacing-large;
+  background: $glass-bg-color;
+  transition: margin-left $transition-normal;
+  z-index: 100;
 
-
-  // Sidebar styling
-  &__sidebar {
-    &--open {
-      transform: translateX(0);
-      @include smooth-transition;
-    }
+  &.main--shifted {
+    margin-left: 280px;
   }
 
-  // Main content styling
-  &__main {
-    width: 100%;
-    @include flex-center(column, center, center);
-    flex: 1;
-    padding: $spacing-6;
-    background: $color-background-glass;
-    backdrop-filter: blur($blur-glass);
-    transition: margin-left $transition-fast;
-
+  @include respond-to('tablet') {
     &.main--shifted {
-      margin-left: 250px; // Correspond à la largeur de la sidebar
+      margin-left: 320px;
     }
+  }
+
+  .container {
+    max-width: $container-width;
+    margin: 0 auto;
+    padding: $spacing-medium;
+    background: $glass-bg-color;
+    border-radius: $border-radius-soft;
+    box-shadow: $box-shadow-light;
   }
 }
 
-// Footer styling
-.footer {
+// ===========================
+// Responsive Styling
+// ===========================
+@media (max-width: $breakpoint-mobile) {
+  .layout__main.main--shifted {
+    margin-left: 240px;
+  }
 
-  padding: $spacing-4;
-  text-align: center;
-  background: $color-primary;
-  color: $color-text-glass;
-  backdrop-filter: blur($blur-glass);
-  box-shadow: $box-shadow-glass;
+  .container {
+    padding: $spacing-small;
+  }
 }
+
+// ===========================
+// Utility Classes
+// ===========================
+.error-message {
+  background-color: $error-color;
+  color: $text-color-primary;
+  padding: $spacing-medium;
+  border-radius: $border-radius-soft;
+  text-align: center;
+  margin: $spacing-medium 0;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: $z-index-modal;
+}
+
